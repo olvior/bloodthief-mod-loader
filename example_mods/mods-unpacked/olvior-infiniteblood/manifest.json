@@ -1,0 +1,17 @@
+{
+    "name": "Infiniteblood",
+    "name_pretty": "Infinite Blood",
+    "namespace": "olvior",
+    "version_number": "1.0.0",
+    "description": "Gives the player infinite blood",
+    "dependencies": [],
+
+    "extra": {
+        "godot": {
+            "authors": ["olvior"],
+            "tags": ["cheats"],
+            "description_rich": "Gives the player infinite blood.",
+            "incompatibilities": [],
+        }
+    }
+}
