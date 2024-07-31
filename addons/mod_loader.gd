@@ -1,6 +1,6 @@
 extends Node
 
-var all_mods = []
+var all_mods = {}
 
 func _ready():
 	print("Starting up the mod loader")
@@ -30,6 +30,10 @@ func _ready():
 			print("Failed to load " + mod_path + ", no mod_main.gd")
 			continue
 		
+		if not current_mod.file_exists("manifest.json"):
+			print("Failed to load " + mod_path + ", no manifest.json")
+			continue
+		
 		# load it
 		var current_script = load(mods_folder_path + "/" + mod_path + "/mod_main.gd")
 		print(current_script)
@@ -45,18 +49,27 @@ func _ready():
 			new_node.queue_free()
 			continue
 
+
+		# load manifest.json
+		var manifest_json = mods_folder_path + "/" + mod_path + "/manifest.json"
+		var manifest_text = FileAccess.get_file_as_string(manifest_json)
+		var manifest_dict = JSON.parse_string(manifest_text)
+		
+		# check incompatabilites
+		for mod in manifest_dict["extra"]["godot"]["incompatabilites"]:
+			if mod in all_mods.keys():
+				print("Failed to load " + mod_path + ", incompatable mod " + mod + " is present")
+				new_node.queue_free()
+				continue
+
+		all_mods[manifest_dict["name"]] = new_node
+
 		new_node.call("init")
 
 		self.add_child(new_node)
-		all_mods.append(new_node)
 
-		new_node.name = mod_path
+		new_node.name = manifest_dict["name"]
 	
+
 	get_tree().get_root().print_tree_pretty()
 
-var i = 0
-func _process(_delta):
-	i += 1
-	if i == 5000:
-		get_tree().get_root().print_tree_pretty()
-		i = 0
