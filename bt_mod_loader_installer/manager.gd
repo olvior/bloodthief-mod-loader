@@ -3,8 +3,7 @@ extends Control
 @onready var file_dialogue = $FileDialog
 @onready var path_label = $Path/VBoxContainer/Path
 @onready var error_label = $Label
-
-var path = ""
+@onready var main = get_parent()
 
 func _on_open_file_dialogue_button_up():
 	file_dialogue.show()
@@ -12,8 +11,8 @@ func _on_open_file_dialogue_button_up():
 func _on_file_dialog_file_selected(new_path):
 	var split = new_path.rsplit("/")
 	var length = len(split[-1])
-	path = new_path.substr(0, len(new_path) - length - 1)
-	path_label.text = path
+	main.path = new_path.substr(0, len(new_path) - length - 1)
+	path_label.text = main.path
 
 func _ready():
 	var probably_path = ""
@@ -33,14 +32,14 @@ func _ready():
 	var dir = DirAccess.open(probably_path)
 	
 	if dir:
-		path = probably_path
-		path_label.text = path
+		main.path = probably_path
+		path_label.text = main.path
 	else:
 		print("Failed")
 
 
 func _on_remove__mod_loader_button_up():
-	var folder = DirAccess.open(path)
+	var folder = DirAccess.open(main.path)
 	folder.rename("override.cfg", "nooverride.cfg")
 	error_label.text = "Disabled the mod loader"
 	
@@ -52,15 +51,16 @@ func _on_install_mod_loader_button_up():
 	out_of = 0
 	
 	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
-	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/override.cfg", path + "/override.cfg")
-	DirAccess.make_dir_absolute(path + "/addons")
-	DirAccess.make_dir_absolute(path + "/mods-unpacked")
-	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/addons/mod_loader.gd", path + "/addons/mod_loader.gd")
+	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/override.cfg", main.path + "/override.cfg")
+	DirAccess.make_dir_absolute(main.path + "/addons")
+	DirAccess.make_dir_absolute(main.path + "/mods-unpacked")
+	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/addons/mod_loader.gd", main.path + "/addons/mod_loader.gd")
 	
 
 var http_s = []
 func download(link, path):
 	out_of += 1
+	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
 	
 	var http = HTTPRequest.new()
 	add_child(http)

@@ -1,75 +1,38 @@
 extends Control
 
-@onready var file_dialogue = $FileDialog
-@onready var path_label = $Manager/Path/VBoxContainer/Path
-@onready var error_label = $Manager/Label
+@onready var loader_tab_button = $Title/MarginContainer3/HBoxContainer/LoaderTab
+@onready var mods_tab_button = $Title/MarginContainer3/HBoxContainer/ModsTab
+@onready var current_tab_main_node = $Manager
 
-var path = ""
+var current_tab = 0
+var main_nodes = [preload("res://manager_scene.tscn"), preload("res://mods_scene.tscn")]
+var path
 
-func _on_open_file_dialogue_button_up():
-	file_dialogue.show()
-
-func _on_file_dialog_file_selected(path):
-		path_label.text = path
-
-func _ready():
-	var probably_path = ""
-	if OS.get_name() == "Windows":
-		probably_path = "C:/Program Files (x86)/Steam/steamapps/common/Bloodthief Playtest"
-		print("Windows")
+func _on_loader_tab_button_down():
+	loader_tab_button.add_theme_color_override("font_color", Color("575757"))
+	mods_tab_button.add_theme_color_override("font_color", Color("ffffff"))
+	loader_tab_button.add_theme_color_override("font_hover_color", Color("575757"))
+	mods_tab_button.add_theme_color_override("font_hover_color", Color("ffffff"))
 	
-	elif OS.get_name() == "Linux":
-		probably_path = ".steam/steam/steamapps/common/Bloodthief Playtest"
-		print("Linux")
-		var data_dir = OS.get_data_dir() # ~/.local/share
-		var data_dir_split = data_dir.rsplit("/") # ["", "home", "home", ".local", "share"]
-		var home_dir = "/" + data_dir_split[1] + "/" + data_dir_split[2] + "/" # /home/home/
-		probably_path = home_dir + probably_path
+	if current_tab != 0:
+		current_tab_main_node.queue_free()
+		current_tab = 0
+		current_tab_main_node = main_nodes[0].instantiate()
+		self.add_child(current_tab_main_node)
+		current_tab_main_node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
-	
-	var dir = DirAccess.open(probably_path)
-	
-	if dir:
-		path = probably_path
-		path_label.text = path	
-	else:
-		print("Failed")
 
-
-func _on_remove__mod_loader_button_up():
-	var folder = DirAccess.open(path)
-	folder.rename("override.cfg", "nooverride.cfg")
-	error_label.text = "Disabled the mod loader"
+func _on_mods_tab_button_down():
+	loader_tab_button.add_theme_color_override("font_color", Color("ffffff"))
+	mods_tab_button.add_theme_color_override("font_color", Color("575757"))
+	loader_tab_button.add_theme_color_override("font_hover_color", Color("ffffff"))
+	mods_tab_button.add_theme_color_override("font_hover_color", Color("575757"))
 	
+	if current_tab != 1:
+		current_tab_main_node.queue_free()
+		current_tab = 1
+		current_tab_main_node = main_nodes[1].instantiate()
+		self.add_child(current_tab_main_node)
+		current_tab_main_node.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
 
-var n_of_downloads = 0
-var out_of = 0
-func _on_install_mod_loader_button_up():
-	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
-	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/override.cfg", path + "/override.cfg")
-	DirAccess.make_dir_absolute(path + "/addons")
-	DirAccess.make_dir_absolute(path + "/mods-unpacked")
-	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/addons/mod_loader.gd", path + "/addons/mod_loader.gd")
-	
-
-var http_s = []
-func download(link, path):
-	out_of += 1
-	
-	var http = HTTPRequest.new()
-	add_child(http)
-	http_s.append(http)
-	http.connect("request_completed", _http_request_completed)
-
-	http.set_download_file(path)
-	var request = http.request(link)
-	if request != OK:
-		push_error("Http request error")
-
-func _http_request_completed(result, _response_code, _headers, _body):
-	if result != OK:
-		push_error("Download Failed")
-	
-	n_of_downloads += 1
-	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
-	
