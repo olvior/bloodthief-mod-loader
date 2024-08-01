@@ -38,7 +38,10 @@ func _ready():
 
 
 func _on_remove__mod_loader_button_up():
-	pass # Replace with function body.
+	var folder = DirAccess.open(path)
+	folder.rename("override.cfg", "nooverride.cfg")
+	error_label.text = "Disabled the mod loader"
+	
 
 var n_of_downloads = 0
 var out_of = 0
