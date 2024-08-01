@@ -5,12 +5,10 @@
     "version_number": "1.0.0",
     "description": "A helper mod that makes it easier to add levels",
     "dependencies": [],
-    "extra": {
-        "godot": {
-            "authors": ["olvior"],
-            "tags": ["helper"],
-            "description_rich": "This mods makes it much simpler to add a level to the game.\nThe level will show up in the list and be enterable automaticaly.",
-            "incompatibilities": [],
-        }
-    }
+    "incompatibilities": [],
+    "authors": ["olvior"],
+    "tags": ["helper"],
+    "description_rich": "This mods makes it much simpler to add a level to the game.\nThe level will show up in the list and be enterable automaticaly.",
+    "download": "https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.1.1/olvior-LevelHelper.zip",
+    "repo": "https://github.com/olvior/bloodthief-mod-loader/tree/main/example_mods/mods-unpacked/olvior-LevelHelper"
 }
