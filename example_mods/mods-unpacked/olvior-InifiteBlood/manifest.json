@@ -5,13 +5,10 @@
     "version_number": "1.0.0",
     "description": "Gives the player infinite blood",
     "dependencies": [],
-
-    "extra": {
-        "godot": {
-            "authors": ["olvior"],
-            "tags": ["cheats"],
-            "description_rich": "Gives the player infinite blood.",
-            "incompatibilities": [],
-        }
-    }
+    "incompatibilities": [],
+    "authors": ["olvior"],
+    "tags": ["cheats"],
+    "description_rich": "It's a really cool mod that gives you infinite blood.\nAs a byproduct, it also gives infinite jumps and near invulnerability!",
+    "download": "https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.1.1/olvior-InifiteBlood.zip",
+    "repo": "https://github.com/olvior/bloodthief-mod-loader/tree/main/example_mods/mods-unpacked/olvior-InifiteBlood"
 }

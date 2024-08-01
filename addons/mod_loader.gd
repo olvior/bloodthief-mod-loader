@@ -68,7 +68,7 @@ func load_mod(mod_path):
 	var manifest_dict = JSON.parse_string(manifest_text)
 	
 	# check incompatabilites
-	for mod in manifest_dict["extra"]["godot"]["incompatabilites"]:
+	for mod in manifest_dict["incompatabilites"]:
 		if mod in all_mods.keys():
 			print("Failed to load " + mod_path + ", incompatable mod " + mod + " is present")
 			new_node.queue_free()
