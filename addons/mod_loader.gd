@@ -43,7 +43,7 @@ func _ready():
 		print(ProjectSettings.load_resource_pack(mods_folder_path + "/" + file_name))
 		print(mods_folder_path + "/" + file_name)
 
-		file_name = mods_folder.get_next()
+		file_name = mods_packed_folder.get_next()
 		
 	for mod in mod_zips:
 		var mod_name_wihout_zip = mod.substr(0, len(mod) - 4) 
