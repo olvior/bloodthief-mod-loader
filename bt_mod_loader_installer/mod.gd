@@ -7,14 +7,13 @@ var is_installed
 @onready var main = get_tree().get_root().get_child(0)
 
 func check_if_installed():
-	var mods_folder = DirAccess.open(main.path + "/mods-unpacked")
-	my_path = main.path + "/mods-unpacked/" + id
+	var mods_folder = DirAccess.open(main.path + "/mods")
+	my_path = main.path + "/mods/" + id
 	if DirAccess.dir_exists_absolute(my_path):
 		is_installed = true
 	
 	if is_installed:
 		$VBoxContainer/HBoxContainer/install.text = "Reinstall"
-	ProjectSettings.load_resource_pack("res://path/to/file.zip")
 
 func init(new_manifest):
 	manifest = new_manifest

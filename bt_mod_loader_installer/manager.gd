@@ -54,6 +54,7 @@ func _on_install_mod_loader_button_up():
 	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/override.cfg", main.path + "/override.cfg")
 	DirAccess.make_dir_absolute(main.path + "/addons")
 	DirAccess.make_dir_absolute(main.path + "/mods-unpacked")
+	DirAccess.make_dir_absolute(main.path + "/mods")
 	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/addons/mod_loader.gd", main.path + "/addons/mod_loader.gd")
 	
 
