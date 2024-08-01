@@ -1,0 +1,16 @@
+{
+    "name": "TestLevel",
+    "name_pretty": "Test Level",
+    "namespace": "olvior",
+    "version_number": "1.0.0",
+    "description": "A test example level",
+    "dependencies": ["olvior-LevelHelper"],
+    "extra": {
+        "godot": {
+            "authors": ["olvior"],
+            "tags": ["level"],
+            "description_rich": "Long mod description goes here",
+            "incompatibilities": [],
+        }
+    }
+}
