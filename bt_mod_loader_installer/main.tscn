@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7r31u1rwjl2q"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_5hoyq"]
 [ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://text.tres" id="1_mp33n"]
+[ext_resource type="PackedScene" uid="uid://bv3jjkqkmgmm1" path="res://manager_scene.tscn" id="3_ji723"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64oxx"]
 bg_color = Color(0, 0.015, 0.1, 1)
@@ -13,19 +13,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_5hoyq")
-
-[node name="FileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-initial_position = 3
-size = Vector2i(1304, 159)
-current_screen = 0
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-access = 2
-show_hidden_files = true
-use_native_dialog = true
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -36,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_64oxx")
 
-[node name="MarginContainer3" type="MarginContainer" parent="."]
+[node name="Title" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -47,11 +34,11 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer3"]
+[node name="MarginContainer2" type="MarginContainer" parent="Title"]
 layout_mode = 2
 theme_override_constants/margin_left = 700
 
-[node name="Label2" type="Label" parent="MarginContainer3/MarginContainer2"]
+[node name="Label2" type="Label" parent="Title/MarginContainer2"]
 layout_mode = 2
 theme = ExtResource("1_mp33n")
 theme_override_font_sizes/font_size = 27
@@ -60,12 +47,12 @@ horizontal_alignment = 2
 vertical_alignment = 2
 autowrap_mode = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer3"]
+[node name="MarginContainer" type="MarginContainer" parent="Title"]
 layout_mode = 2
 theme_override_constants/margin_left = 200
 theme_override_constants/margin_right = 200
 
-[node name="Label" type="Label" parent="MarginContainer3/MarginContainer"]
+[node name="Label" type="Label" parent="Title/MarginContainer"]
 layout_mode = 2
 theme = ExtResource("1_mp33n")
 theme_override_font_sizes/font_size = 70
@@ -74,93 +61,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="Manager" parent="." instance=ExtResource("3_ji723")]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -233.0
-offset_right = 565.0
-offset_bottom = -81.0
-grow_vertical = 2
-theme_override_constants/margin_left = 30
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_mp33n")
-theme_override_font_sizes/font_size = 30
-text = "Please enter the path to Bloodthief if it was not detected:"
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 30
-
-[node name="Open file dialogue" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer/MarginContainer"]
-layout_mode = 2
-focus_mode = 0
-text = "Open
-filesystem"
-
-[node name="Path" type="Label" parent="MarginContainer2/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_mp33n")
-theme_override_font_sizes/font_size = 25
-text = "Path not detected, please enter it yourself"
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 200
-theme_override_constants/margin_top = 355
-theme_override_constants/margin_right = 200
-theme_override_constants/margin_bottom = 320
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 200
-
-[node name="remove_ mod_loader" type="Button" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-theme = ExtResource("1_mp33n")
-theme_override_colors/font_color = Color(1, 0.976471, 1, 1)
-theme_override_font_sizes/font_size = 40
-text = "Remove mod loader"
-
-[node name="install_mod_loader" type="Button" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-theme = ExtResource("1_mp33n")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 40
-text = "Install mod loader"
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 686.0
-offset_top = 579.0
-offset_right = 726.0
-offset_bottom = 602.0
-theme = ExtResource("1_mp33n")
-text = "..."
-
-[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="button_up" from="MarginContainer2/VBoxContainer/HBoxContainer/MarginContainer/Open file dialogue" to="." method="_on_open_file_dialogue_button_up"]
-[connection signal="button_up" from="MarginContainer/HBoxContainer/remove_ mod_loader" to="." method="_on_remove__mod_loader_button_up"]
-[connection signal="button_up" from="MarginContainer/HBoxContainer/install_mod_loader" to="." method="_on_install_mod_loader_button_up"]

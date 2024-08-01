@@ -1,16 +1,19 @@
 extends Control
 
 @onready var file_dialogue = $FileDialog
-@onready var path_label = $Manager/Path/VBoxContainer/Path
-@onready var error_label = $Manager/Label
+@onready var path_label = $Path/VBoxContainer/Path
+@onready var error_label = $Label
 
 var path = ""
 
 func _on_open_file_dialogue_button_up():
 	file_dialogue.show()
 
-func _on_file_dialog_file_selected(path):
-		path_label.text = path
+func _on_file_dialog_file_selected(new_path):
+	var split = new_path.rsplit("/")
+	var length = len(split[-1])
+	path = new_path.substr(0, len(new_path) - length - 1)
+	path_label.text = path
 
 func _ready():
 	var probably_path = ""
@@ -31,7 +34,7 @@ func _ready():
 	
 	if dir:
 		path = probably_path
-		path_label.text = path	
+		path_label.text = path
 	else:
 		print("Failed")
 
@@ -42,9 +45,12 @@ func _on_remove__mod_loader_button_up():
 	error_label.text = "Disabled the mod loader"
 	
 
-var n_of_downloads = 0
-var out_of = 0
+var n_of_downloads
+var out_of
 func _on_install_mod_loader_button_up():
+	n_of_downloads = 0
+	out_of = 0
+	
 	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
 	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/override.cfg", path + "/override.cfg")
 	DirAccess.make_dir_absolute(path + "/addons")
