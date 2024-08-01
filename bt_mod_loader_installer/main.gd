@@ -15,7 +15,7 @@ func _on_file_dialog_file_selected(path):
 func _ready():
 	var probably_path = ""
 	if OS.get_name() == "Windows":
-		probably_path = "C:/Program Files (x86)/Steam/Bloodthief Playtest"
+		probably_path = "C:/Program Files (x86)/Steam/steamapps/common/Bloodthief Playtest"
 		print("Windows")
 	
 	elif OS.get_name() == "Linux":
