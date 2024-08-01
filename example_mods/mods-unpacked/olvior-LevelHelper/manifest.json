@@ -1,0 +1,16 @@
+{
+    "name": "LevelHelper",
+    "name_pretty": "Level Helper",
+    "namespace": "olvior",
+    "version_number": "1.0.0",
+    "description": "A helper mod that makes it easier to add levels",
+    "dependencies": [],
+    "extra": {
+        "godot": {
+            "authors": ["olvior"],
+            "tags": ["helper"],
+            "description_rich": "This mods makes it much simpler to add a level to the game.\nThe level will show up in the list and be enterable automaticaly.",
+            "incompatibilities": [],
+        }
+    }
+}
