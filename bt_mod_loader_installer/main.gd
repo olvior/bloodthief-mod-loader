@@ -9,10 +9,12 @@ var main_nodes = [preload("res://manager_scene.tscn"), preload("res://mods_scene
 var path
 
 func _on_loader_tab_button_down():
-	loader_tab_button.add_theme_color_override("font_color", Color("575757"))
-	mods_tab_button.add_theme_color_override("font_color", Color("ffffff"))
-	loader_tab_button.add_theme_color_override("font_hover_color", Color("575757"))
-	mods_tab_button.add_theme_color_override("font_hover_color", Color("ffffff"))
+	loader_tab_button.add_theme_color_override("font_color", Color("ffffff"))
+	mods_tab_button.add_theme_color_override("font_color", Color("575757"))
+	loader_tab_button.add_theme_color_override("font_hover_color", Color("ffffff"))
+	mods_tab_button.add_theme_color_override("font_hover_color", Color("575757"))
+	loader_tab_button.add_theme_color_override("font_pressed_color", Color("ffffff"))
+	mods_tab_button.add_theme_color_override("font_pressed_color", Color("575757"))
 	
 	if current_tab != 0:
 		current_tab_main_node.queue_free()
@@ -23,10 +25,12 @@ func _on_loader_tab_button_down():
 		
 
 func _on_mods_tab_button_down():
-	loader_tab_button.add_theme_color_override("font_color", Color("ffffff"))
-	mods_tab_button.add_theme_color_override("font_color", Color("575757"))
-	loader_tab_button.add_theme_color_override("font_hover_color", Color("ffffff"))
-	mods_tab_button.add_theme_color_override("font_hover_color", Color("575757"))
+	loader_tab_button.add_theme_color_override("font_color", Color("575757"))
+	mods_tab_button.add_theme_color_override("font_color", Color("ffffff"))
+	loader_tab_button.add_theme_color_override("font_hover_color", Color("575757"))
+	mods_tab_button.add_theme_color_override("font_hover_color", Color("ffffff"))
+	loader_tab_button.add_theme_color_override("font_pressed_color", Color("575757"))
+	mods_tab_button.add_theme_color_override("font_pressed_color", Color("ffffff"))
 	
 	if current_tab != 1:
 		current_tab_main_node.queue_free()
