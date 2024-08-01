@@ -23,31 +23,58 @@ func _ready():
 	
 	# loop over all the mod folders and add them in
 	for mod_path in mod_folders:
-		load_mod(mod_path)
+		load_mod(mods_folder_path + "/" + mod_path, mod_path, mods_folder_path)
+	
+
+
+
+	mods_folder_path = OS.get_executable_path().get_base_dir() + "/mods"
+	var mods_packed_folder = DirAccess.open(OS.get_executable_path().get_base_dir() + "/mods")
+
+	mods_packed_folder.list_dir_begin()
+
+	file_name = mods_packed_folder.get_next()
+	var mod_zips = []
+	
+	print("Starting to look through mods/")
+	while file_name != "":
+		print(file_name)
+		mod_zips.append(file_name)
+		print(ProjectSettings.load_resource_pack(mods_folder_path + "/" + file_name))
+		print(mods_folder_path + "/" + file_name)
+
+		file_name = mods_folder.get_next()
+		
+	for mod in mod_zips:
+		var mod_name_wihout_zip = mod.substr(0, len(mod) - 4) 
+		print(mod_name_wihout_zip)
+		load_mod("res://" + mod.substr(0, len(mod) - 4), mod_name_wihout_zip, mods_folder_path)
+
+	
 
 	get_tree().get_root().print_tree_pretty()
 
 
 
-func load_mod(mod_path):
-	if mod_path in all_mods:
+func load_mod(mod_path, mod_name, mods_folder_path):
+	if mod_name in all_mods:
 		return
 
-	var mods_folder_path = OS.get_executable_path().get_base_dir() + "/mods-unpacked"
+	#var mods_folder_path = OS.get_executable_path().get_base_dir() + "/mods-unpacked"
 	
-	var current_mod = DirAccess.open(mods_folder_path + "/" + mod_path)
+	var current_mod = DirAccess.open(mod_path)
 	
 	# make sure the mod has a mod_main.gd
 	if not current_mod.file_exists("mod_main.gd"):
-		print("Failed to load " + mod_path + ", no mod_main.gd")
+		print("Failed to load " + mod_name + ", no mod_main.gd")
 		return
 	
 	if not current_mod.file_exists("manifest.json"):
-		print("Failed to load " + mod_path + ", no manifest.json")
+		print("Failed to load " + mod_name + ", no manifest.json")
 		return
 	
 	# load it
-	var current_script = load(mods_folder_path + "/" + mod_path + "/mod_main.gd")
+	var current_script = load(mod_path + "/mod_main.gd")
 	print(current_script)
 
 	
@@ -63,14 +90,14 @@ func load_mod(mod_path):
 
 
 	# load manifest.json
-	var manifest_json = mods_folder_path + "/" + mod_path + "/manifest.json"
+	var manifest_json = mod_path + "/manifest.json"
 	var manifest_text = FileAccess.get_file_as_string(manifest_json)
 	var manifest_dict = JSON.parse_string(manifest_text)
 	
 	# check incompatabilites
 	for mod in manifest_dict["incompatabilites"]:
 		if mod in all_mods.keys():
-			print("Failed to load " + mod_path + ", incompatable mod " + mod + " is present")
+			print("Failed to load " + mod_name + ", incompatable mod " + mod + " is present")
 			new_node.queue_free()
 			return
 	
@@ -78,7 +105,7 @@ func load_mod(mod_path):
 	for mod in manifest_dict["dependencies"]:
 		if mod not in all_mods.keys():
 			print("Loading dependencies")
-			load_mod(mod)
+			load_mod(mods_folder_path + "/" + mod, mod, mods_folder_path)
 
 	all_mods[manifest_dict["namespace"] + "-" + manifest_dict["name"]] = new_node
 
