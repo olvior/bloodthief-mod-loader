@@ -1,8 +1,7 @@
-extends Node
+extends "res://addons/ModLoader/mod_node.gd"
 
 func init():
-	print("inifiteblood loaded")
-
+	ModLoader.mod_log(name_pretty + " mod loaded")
 
 func _process(_delta):
 	if is_instance_valid(GameManager.player):

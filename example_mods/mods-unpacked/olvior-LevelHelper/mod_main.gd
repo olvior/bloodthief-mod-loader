@@ -1,8 +1,7 @@
-extends Node
+extends "res://addons/ModLoader/mod_node.gd"
 
 func init():
-	print("Level Helper loaded")
-
+	ModLoader.mod_log("Level Helper loaded")
 
 func create_level(name, index, scene_path, display_name, leaderboard_name, medal_times, is_unlocked):
 	var new_level_config = LevelConfig.new()
@@ -21,6 +20,4 @@ func create_level(name, index, scene_path, display_name, leaderboard_name, medal
 	GameManager._level_configs.append(new_level_config)
 
 	GameManager.progress_data._level_completion_data[new_level_config.level_name] = new_level_completion_data
-
-	load(scene_path)
 
