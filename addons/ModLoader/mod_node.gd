@@ -3,7 +3,6 @@ class_name ModNode
 
 var path_to_dir: String # path to the mod's directory
 
-var _name: String
 var name_space: String
 var name_without_namespace: String
 
@@ -16,5 +15,29 @@ func init(): # should be overridden
 
 func get_class():
 	return "ModNode"
+
+func add_input_event(action_name: StringName, keys: Array[Key], mouses: Array[MouseButton] = [], physical: bool = true, deadzone: float = 0.5) -> Error:
+	if InputMap.has_action(action_name):
+		ModLoader.mod_log(name_pretty + " tried to add an input action that already exits!")
+		return FAILED
+	
+	InputMap.add_action(action_name, deadzone)
+	
+	for key in keys:
+		var new_event = InputEventKey.new()
+		if physical:
+			new_event.physical_keycode = key
+		else:
+			new_event.keycode = key
+		
+		InputMap.action_add_event(action_name, new_event)
+	
+	for mouse in mouses:
+		var new_event = InputEventMouseButton.new()
+		new_event.button_index = mouse
+		
+		InputMap.action_add_event(action_name, new_event)
+	
+	return OK
 
 
