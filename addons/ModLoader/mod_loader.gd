@@ -1,14 +1,21 @@
 extends Node
 
 var all_mods = {}
+var ModNode = preload("res://addons/ModLoader/mod_node.gd")
 
 func _ready():
 	init_logs()
+
+	var mod_node = Node.new()
+	mod_node.set_script(ModNode)
+	self.add_child(mod_node)
 	
 	mod_log("Starting up the mod loader")
 	mod_log('')
 
 	start_mod_loading()
+
+	get_tree().get_root().print_tree_pretty()
 
 
 
@@ -39,10 +46,10 @@ func start_mod_loading():
 	
 	# loop over all the mod folders and add them in
 	for mod_path in mod_folders:
-		load_mod(mods_folder_path + "/" + mod_path, mod_path, mods_folder_path)
+		var error = load_mod(mods_folder_path + "/" + mod_path, mod_path, mods_folder_path)
 	
 	mods_folder_path = OS.get_executable_path().get_base_dir() + "/mods"
-	var mods_packed_folder = DirAccess.open(OS.get_executable_path().get_base_dir() + "/mods")
+	var mods_packed_folder = DirAccess.open(mods_folder_path)
 	
 	mod_log('')
 	mod_log("Mods folder path: " + mods_folder_path)
@@ -68,7 +75,7 @@ func start_mod_loading():
 	for mod in mod_zips:
 		var mod_name_wihout_zip = mod.substr(0, len(mod) - 4) 
 		mod_log(mod_name_wihout_zip)
-		load_mod("res://" + mod.substr(0, len(mod) - 4), mod_name_wihout_zip, mods_folder_path)
+		var error = load_mod("res://" + mod.substr(0, len(mod) - 4), mod_name_wihout_zip, mods_folder_path)
 
 	
 
@@ -76,10 +83,10 @@ func start_mod_loading():
 
 
 
-func load_mod(mod_path, mod_name, mods_folder_path):
+func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
 	if mod_name in all_mods:
-		return
-
+		return OK
+	
 	#var mods_folder_path = OS.get_executable_path().get_base_dir() + "/mods-unpacked"
 	
 	var current_mod = DirAccess.open(mod_path)
@@ -87,28 +94,29 @@ func load_mod(mod_path, mod_name, mods_folder_path):
 	# make sure the mod has a mod_main.gd
 	if not current_mod.file_exists("mod_main.gd"):
 		mod_log("Failed to load " + mod_name + ", no mod_main.gd")
-		return
+		return FAILED
 	
 	if not current_mod.file_exists("manifest.json"):
 		mod_log("Failed to load " + mod_name + ", no manifest.json")
-		return
+		return FAILED
 	
 	# load it
 	var current_script = load(mod_path + "/mod_main.gd")
 	mod_log(mod_path + "/mod_main.gd")
 	mod_log(current_script)
 
+
 	
 	# add it as a child
-	var new_node = Node.new()
+	var new_node = ModNode.new()
 	new_node.set_script(current_script)
 	
-	# make sure all mod_main.gd scripts have the init function
-	if not new_node.has_method("init"):
-		mod_log("Failed to load " + mod_path + ", no init function")
-		new_node.queue_free()
-		return
-
+	# make sure it extends ModNode
+	if new_node.get_class() != "ModNode":
+		mod_log("Failed to load " + mod_path + ", it does not extend ModNode")
+		mod_log("It extends " + new_node.get_class() + " instead")
+		new_node.queue_free
+		return FAILED
 
 	# load manifest.json
 	var manifest_json = mod_path + "/manifest.json"
@@ -120,21 +128,36 @@ func load_mod(mod_path, mod_name, mods_folder_path):
 		if mod in all_mods.keys():
 			mod_log("Failed to load " + mod_name + ", incompatable mod " + mod + " is present")
 			new_node.queue_free()
-			return
+			return FAILED
 	
 	# load dependencies
 	for mod in manifest_dict["dependencies"]:
 		if mod not in all_mods.keys():
 			mod_log("Loading dependencies")
-			load_mod(mods_folder_path + "/" + mod, mod, mods_folder_path)
+			var error = load_mod(mods_folder_path + "/" + mod, mod, mods_folder_path)
+			if error:
+				mod_log("Failed to load " + mod_name + " due to dependencies not loading")
+				return FAILED
+		
+		new_node.dependencies[mod] = all_mods[mod]
 
 	all_mods[manifest_dict["namespace"] + "-" + manifest_dict["name"]] = new_node
 
-	new_node.call("init")
 
+
+	new_node.name = manifest_dict["namespace"] + "-" + manifest_dict["name"]
+	new_node.name_space = manifest_dict["namespace"]
+	new_node.name_without_namespace = manifest_dict["name"]
+
+	new_node.name_pretty = manifest_dict["name_pretty"]
+
+	new_node.path_to_dir = mod_path
+	
 	self.add_child(new_node)
+	new_node.call("init")
+	
+	return OK
 
-	new_node.name = manifest_dict["name"]
 
 
 func init_logs():
@@ -156,10 +179,9 @@ func mod_log(text, custom_path = ''):
 	text = str(text)
 
 	var log_path = "user://logs/mod_loader.log"
-	var log_file = FileAccess.open("user://logs/mod_loader.log", FileAccess.READ_WRITE)
+	var log_file = FileAccess.open(log_path, FileAccess.READ_WRITE)
 	
 	log_file.seek_end()
-	print(text, log_file, "help")
 
 	log_file.store_line(text)
 	log_file = null
