@@ -29,6 +29,7 @@ func get_data(link):
 func _http_request_completed(result, _response_code, _headers, body):
 	if result != OK:
 		push_error("Download Failed")
+		return
 	
 	mods_dict = JSON.parse_string(body.get_string_from_utf8())
 	populate_mods_list()

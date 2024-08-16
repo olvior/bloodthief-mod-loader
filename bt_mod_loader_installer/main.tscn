@@ -7,11 +7,11 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jqm1"]
 bg_color = Color(0, 0.015, 0.1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pwv2h"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ude4a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kqu2b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pwv2h"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -35,7 +35,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_6jqm1")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 109.0
+offset_bottom = 79.0
 grow_horizontal = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
@@ -45,7 +45,6 @@ theme_override_constants/margin_bottom = 10
 
 [node name="MarginContainer2" type="MarginContainer" parent="Title"]
 layout_mode = 2
-theme_override_constants/margin_left = 700
 
 [node name="Label2" type="Label" parent="Title/MarginContainer2"]
 layout_mode = 2
@@ -54,20 +53,18 @@ theme_override_font_sizes/font_size = 27
 text = "Font by Hewett Tsoi"
 horizontal_alignment = 2
 vertical_alignment = 2
-autowrap_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="Title"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 200
-theme_override_constants/margin_right = 200
+theme_override_constants/margin_left = 260
+theme_override_constants/margin_right = 640
 
 [node name="Label" type="Label" parent="Title/MarginContainer"]
 layout_mode = 2
 theme = ExtResource("1_mp33n")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 50
 text = "Bloodthief Mod Loader"
-horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
@@ -86,26 +83,26 @@ theme_override_constants/separation = 15
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_mp33n")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0.341176, 0.341176, 0.341176, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_ude4a")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_kqu2b")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
 text = "Loader"
 
 [node name="ModsTab" type="Button" parent="Title/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_mp33n")
-theme_override_colors/font_color = Color(0.341176, 0.341176, 0.341176, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.341176, 0.341176, 0.341176, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_ude4a")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_kqu2b")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
 text = "Mods"
 
 [node name="Manager" parent="." instance=ExtResource("3_ji723")]

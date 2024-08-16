@@ -39,4 +39,3 @@ func _on_mods_tab_button_down():
 		self.add_child(current_tab_main_node)
 		current_tab_main_node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
-
