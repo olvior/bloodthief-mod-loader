@@ -5,10 +5,6 @@ var ModNode = preload("res://addons/ModLoader/mod_node.gd")
 
 func _ready():
 	init_logs()
-
-	var mod_node = Node.new()
-	mod_node.set_script(ModNode)
-	self.add_child(mod_node)
 	
 	mod_log("Starting up the mod loader")
 	mod_log('')
@@ -16,8 +12,9 @@ func _ready():
 	start_loading_unpacked()
 	start_loading_packed()
 	
+	init_settings_menu()
+	
 	get_tree().get_root().print_tree_pretty()
-
 
 
 func start_loading_unpacked():
@@ -191,3 +188,7 @@ func mod_log(text):
 	print(text)
 
 
+
+func init_settings_menu():
+	var settings_menu_script = load("res://addons/ModLoader/mods_settings/settings_menu_override.gd")
+	settings_menu_script.take_over_path("res://scripts/ui/settings_menu.gd")

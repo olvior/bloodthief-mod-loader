@@ -10,10 +10,17 @@ var name_pretty: String
 
 var dependencies = {} # dict that holds the nodes
 
+var settings = {
+	"settings_page_name" = name_pretty,
+	"settings_list" = [
+		
+	]
+}
+
 func init(): # should be overridden
 	ModLoader.mod_log(name + " mod loaded")
 
-func get_class():
+func get_class(): # overrides function to tell the class apart
 	return "ModNode"
 
 func add_input_event(action_name: StringName, keys: Array[Key], mouses: Array[MouseButton] = [], physical: bool = true, deadzone: float = 0.5) -> Error:
@@ -41,3 +48,27 @@ func add_input_event(action_name: StringName, keys: Array[Key], mouses: Array[Mo
 	return OK
 
 
+class Setting:
+	var s_name: String
+	var s_name_pretty: String
+	var s_type
+	var s_selections: Array[String]
+	var value
+	
+	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION}
+	
+	func _init(setting_name: String, setting_name_pretty: String, setting_type, selections: Array[String] = []):
+		s_name = setting_name
+		s_name_pretty = setting_name_pretty
+		s_type = setting_type
+		if s_type == SETTING_SELECTION:
+			s_selections = selections
+			
+		match s_type:
+			SETTING_INT:
+				value = 0
+			SETTING_FLOAT:
+				value = 0.0
+			SETTING_SELECTION:
+				value = s_selections[0]
+	
