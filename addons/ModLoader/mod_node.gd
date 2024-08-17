@@ -49,18 +49,18 @@ func add_input_event(action_name: StringName, keys: Array[Key], mouses: Array[Mo
 
 
 class Setting:
-	var s_name: String
 	var s_name_pretty: String
 	var s_type
 	var s_selections: Array[String]
 	var value
+	var s_range
 	
-	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION}
+	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION, SETTING_BOOL}
 	
-	func _init(setting_name: String, setting_name_pretty: String, setting_type, selections: Array[String] = []):
-		s_name = setting_name
+	func _init(setting_name_pretty: String, setting_type, number_range = Vector2(0, 0), selections: Array[String] = []):
 		s_name_pretty = setting_name_pretty
 		s_type = setting_type
+		s_range = number_range
 		if s_type == SETTING_SELECTION:
 			s_selections = selections
 			
@@ -71,4 +71,6 @@ class Setting:
 				value = 0.0
 			SETTING_SELECTION:
 				value = s_selections[0]
+			SETTING_BOOL:
+				value = true
 	

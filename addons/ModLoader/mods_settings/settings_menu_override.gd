@@ -8,8 +8,10 @@ var back_button: Button
 var button_preload = preload("res://addons/ModLoader/mods_settings/button_generic.tscn")
 var mods_select_button_list: Array[Button] = []
 var mods_select_list: Array = []
+var current_mod_settings_scene: Control
+var mod_scene_preload = preload("res://addons/ModLoader/mods_settings/generic_mod_settings_scene.tscn")
 
-@onready var other_settings_scenes = [
+@onready var all_settings_scenes = [
 	main_settings_screen_control,
 	user_input_settings_screen,
 	volume_settings_screen,
@@ -80,16 +82,39 @@ func _on_mods_button_up():
 func show_mods_settings_screen():
 	self.visible = true
 	mods_settings_scene.visible = true
-	for scene in other_settings_scenes:
+	for scene in all_settings_scenes:
 		scene.visible = false
 	
 
 func _on_mod_scene_button_pressed(mod):
 	ModLoader.mod_log("Pressed button for " + mod.name_pretty)
+	
+	for scene in all_settings_scenes:
+		scene.visible = false
+	mods_settings_scene.visible = false
+	
+	generate_settings_scene_for_mod(mod)
 
+func generate_settings_scene_for_mod(mod):
+	current_mod_settings_scene = mod_scene_preload.instantiate()
+	current_mod_settings_scene.mod = mod
+	current_mod_settings_scene.connect_to = _go_back_to_mods_scene
+	self.add_child(current_mod_settings_scene)
+	
+	print(current_mod_settings_scene)
+	print(current_mod_settings_scene.get_script())
+	
+
+func _go_back_to_mods_scene():
+	current_mod_settings_scene.visible = false
+	current_mod_settings_scene.queue_free()
+	mods_settings_scene.visible = true
 
 func _process(delta):
 	super._process(delta)
 	if visible and InputService.is_action_just_pressed("pause"):
 		if mods_settings_scene.visible:
 			_on_mods_back_button_pressed()
+		if is_instance_valid(current_mod_settings_scene):
+			if current_mod_settings_scene.visible:
+				_go_back_to_mods_scene()
