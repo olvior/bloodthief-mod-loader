@@ -1,18 +1,29 @@
 extends Node
 
+# Dictionary with {"namespace-name": mod_node}
 var all_mods = {}
+
+# Contains the class ModNode. Since the class is not present
+# in the pck it has to be loaded in like this so that we can
+# make nodes with is
 var ModNode = preload("res://addons/ModLoader/mod_node.gd")
 
+
 func _ready():
+	# This creates the needed log files and moves the old ones
 	init_logs()
 	
-	mod_log("Starting up the mod loader")
-	mod_log('')
+	mod_log("Starting up the mod loader\n")
 	
+	# Searches though mods-unpacked/ to call `load_mod()` on the ones found
 	start_loading_unpacked()
+	
+	# Searches through mods/ to load zips in and then call `load_mod()`
 	start_loading_packed()
 	
+	# Overrites the original script with the custom one
 	init_settings_menu()
+	
 	
 	get_tree().get_root().print_tree_pretty()
 
@@ -30,6 +41,7 @@ func start_loading_unpacked():
 	
 	
 	mod_log("Searching through mods-unpacked/")
+	
 	# loop through it and add all nested folders into a list
 	mods_folder.list_dir_begin()
 	
@@ -47,16 +59,20 @@ func start_loading_unpacked():
 		var _error = load_mod(mods_folder_path + "/" + mod_path, mod_path, mods_folder_path)
 
 func start_loading_packed():
+	# open the mods/ directory
 	var mods_folder_path = OS.get_executable_path().get_base_dir() + "/mods"
 	var mods_packed_folder = DirAccess.open(mods_folder_path)
 	
 	mod_log('')
 	mod_log("Mods folder path: " + mods_folder_path)
 	
+	# make sure it exists
 	if not mods_packed_folder:
 		mod_log("Failed to open mods folder, make sure it exists")
 		return
 	
+	
+	# loop through it to find zips
 	mods_packed_folder.list_dir_begin()
 	
 	var file_name = mods_packed_folder.get_next()
@@ -65,6 +81,11 @@ func start_loading_packed():
 	mod_log("Searching through mods/")
 	while file_name != "":
 		mod_log(file_name)
+		if not file_name.substr(len(file_name) - 4, -1) == ".zip":
+			file_name = mods_packed_folder.get_next()
+			mod_log("File is not a zip")
+			continue
+			
 		mod_zips.append(file_name)
 		mod_log(ProjectSettings.load_resource_pack(mods_folder_path + "/" + file_name))
 		mod_log(mods_folder_path + "/" + file_name)
@@ -78,8 +99,6 @@ func start_loading_packed():
 	
 	
 	
-	get_tree().get_root().print_tree_pretty()
-
 
 
 func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
@@ -158,6 +177,9 @@ func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
 	return OK
 
 
+#############
+# LOG STUFF #
+#############
 
 func init_logs():
 	var logs_dir = DirAccess.open("user://logs")
@@ -187,7 +209,9 @@ func mod_log(text):
 	
 	print(text)
 
-
+##################
+# SETTINGS STUFF #
+##################
 
 func init_settings_menu():
 	var settings_menu_script = load("res://addons/ModLoader/mods_settings/settings_menu_override.gd")
