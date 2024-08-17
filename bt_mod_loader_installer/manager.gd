@@ -46,17 +46,43 @@ func _on_remove__mod_loader_button_up():
 
 var n_of_downloads
 var out_of
+var loader_download_url = "https://github.com/olvior/bloodthief-mod-loader/releases/download/mod_loader.zip"
 func _on_install_mod_loader_button_up():
 	n_of_downloads = 0
 	out_of = 0
 	
 	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
-	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/override.cfg", main.path + "/override.cfg")
-	DirAccess.make_dir_absolute(main.path + "/addons")
-	DirAccess.make_dir_absolute(main.path + "/mods-unpacked")
-	DirAccess.make_dir_absolute(main.path + "/mods")
-	download("https://raw.githubusercontent.com/olvior/bloodthief-mod-loader/main/addons/mod_loader.gd", main.path + "/addons/mod_loader.gd")
+	download(loader_download_url, "user://mod_loader.zip")
 	
+
+func move_mod_loader():
+	unzip("user://mod_loader.zip", main.path)
+
+func unzip(path_to_zip: String, path_to_unzipped: String) -> void:
+	var zr : ZIPReader = ZIPReader.new()
+	
+	if zr.open(path_to_zip) == OK:
+		for filepath in zr.get_files():
+			var zip_directory : String = path_to_zip.get_base_dir()
+		
+			var da : DirAccess = DirAccess.open(zip_directory)
+			
+			var extract_path : String = path_to_unzipped + '/'
+			
+			da.make_dir(extract_path)
+			
+			da = DirAccess.open(extract_path)
+			print(da)
+			
+			da.make_dir_recursive(filepath.get_base_dir())
+			
+			print(extract_path + filepath)
+			print(filepath, " is the path")
+			
+			var fa : FileAccess = FileAccess.open("%s/%s" % [extract_path, filepath], FileAccess.WRITE)
+			if fa:
+				fa.store_buffer(zr.read_file(filepath))
+
 
 var http_s = []
 func download(link, path):
@@ -70,6 +96,7 @@ func download(link, path):
 
 	http.set_download_file(path)
 	var request = http.request(link)
+	print("Downloading from " + link + " to " + path)
 	if request != OK:
 		push_error("Http request error")
 
@@ -80,3 +107,5 @@ func _http_request_completed(result, _response_code, _headers, _body):
 	n_of_downloads += 1
 	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
 	
+	if n_of_downloads == out_of:
+		move_mod_loader()
