@@ -57,18 +57,33 @@ func create_slider(generic: HBoxContainer, setting, range: Vector2, round: bool)
 	var new_slider: HSlider = slider_preload.instantiate()
 	new_slider.min_value = range.x
 	new_slider.max_value = range.y
+	new_slider.step = 0.01
 	new_slider.rounded = round
 	
 	var new_label: Label = generic.get_node("Label2")
 	new_label.text = str(new_slider.value)
-	new_label.name = "OMG HELP"
+	
+	if len(new_label.text) == 1:
+		new_label.text += "."
+	while len(new_label.text) < 4:
+		new_label.text += "0"
+	
+	new_label.name = "SliderLabel"
 
 	generic.add_child(new_slider)
 	generic.move_child(new_slider, 1)
 	
 	new_slider.value_changed.connect(_on_slider_value_changed.bind(setting, new_label))
+
 func _on_slider_value_changed(value, setting, label):
-	label.text = str(value)
+	var value_str = str(value)
+	if setting.s_type == setting.SETTING_FLOAT:
+		if len(value_str) == 1:
+			value_str += "."
+		while len(value_str) < 4:
+			value_str += "0"
+	
+	label.text = value_str
 	setting.value = value
 
 func create_setting_int(generic, setting):
@@ -82,4 +97,3 @@ func create_setting_float(generic, setting):
 
 func create_setting_selection(generic, setting):
 	pass
-
