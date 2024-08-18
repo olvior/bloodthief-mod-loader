@@ -8,8 +8,9 @@ var all_mods = {}
 # make nodes with is
 var ModNode = preload("res://addons/ModLoader/mod_node.gd")
 
+func _init():
+	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 
-func _ready():
 	# This creates the needed log files and moves the old ones
 	init_logs()
 	
@@ -25,6 +26,8 @@ func _ready():
 	init_settings_menu()
 	
 	
+
+func _ready():
 	get_tree().get_root().print_tree_pretty()
 
 
