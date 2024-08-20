@@ -1,0 +1,103 @@
+[gd_scene load_steps=17 format=3 uid="uid://c0b6hqka24405"]
+
+[ext_resource type="Script" path="res://scripts/entities/level.gd" id="1_yoqyc"]
+[ext_resource type="Script" path="res://scripts/resource_defs/level_config.gd" id="2_k8815"]
+[ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map.gd" id="3_3luk1"]
+[ext_resource type="PackedScene" uid="uid://dhy2lak2xclva" path="res://scenes/player.tscn" id="3_dghfv"]
+[ext_resource type="Resource" uid="uid://bkhxcqsquw1yg" path="res://addons/func_godot/func_godot_default_map_settings.tres" id="4_qu5mu"]
+[ext_resource type="Script" path="res://scripts/entities/end_level_area.gd" id="5_p51y0"]
+[ext_resource type="Script" path="res://scripts/entities/checkpoint_area.gd" id="6_3mip7"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/bow_knight.tscn" id="8_d5qtq"]
+
+[sub_resource type="Resource" id="Resource_r82l5"]
+script = ExtResource("2_k8815")
+level_name = "my_level"
+level_index = 2
+scene_path = "res://mods-unpacked/olvior-TestLevel/proper.tscn"
+display_name = "Super Cool Level"
+leaderboard_name = "my_level"
+next_level_name = ""
+achievement_for_beating = ""
+hex_medal_time_secs = 20.0
+blood_medal_time_secs = 30.0
+bone_medal_time_secs = 40.0
+is_automatically_unlocked = true
+display_in_level_select = true
+use_retro_shader = false
+
+[sub_resource type="BoxMesh" id="BoxMesh_r7oeu"]
+size = Vector3(20, 10, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c5fhw"]
+size = Vector3(20, 10, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3n7h2"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5alpw"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_us32b"]
+points = PackedVector3Array(-7.5, 5, -4.25, -7.5, -5, -4.25, 7.5, -5, -4.25, 7.5, 5, -4.25, -7.5, 5, 4.25, -7.5, -5, 4.25, 7.5, -5, 4.25, 7.5, 5, 4.25)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mfuxi"]
+points = PackedVector3Array(-2, 4.5, -3.75, -2, -4.5, -3.75, 2, -4.5, -3.75, 2, 4.5, -3.75, -2, 4.5, 3.75, -2, -4.5, 3.75, 2, -4.5, 3.75, 2, 4.5, 3.75)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_y8ow1"]
+points = PackedVector3Array(-2, 4.5, -3.75, -2, -4.5, -3.75, 2, -4.5, -3.75, 2, 4.5, -3.75, -2, 4.5, 3.75, -2, -4.5, 3.75, 2, -4.5, 3.75, 2, 4.5, 3.75)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_yoqyc")
+config = SubResource("Resource_r82l5")
+
+[node name="Player" parent="." instance=ExtResource("3_dghfv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.43198, 3.58548, 4.66319)
+
+[node name="FuncGodotMap" type="Node3D" parent="."]
+script = ExtResource("3_3luk1")
+map_settings = ExtResource("4_qu5mu")
+
+[node name="entity_0_worldspawn" type="StaticBody3D" parent="FuncGodotMap"]
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FuncGodotMap/entity_0_worldspawn"]
+mesh = SubResource("BoxMesh_r7oeu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FuncGodotMap/entity_0_worldspawn"]
+shape = SubResource("BoxShape3D_c5fhw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="FuncGodotMap/entity_0_worldspawn"]
+mesh = SubResource("BoxMesh_3n7h2")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="FuncGodotMap/entity_0_worldspawn"]
+shape = SubResource("BoxShape3D_5alpw")
+
+[node name="entity_18_vt_end_level_area" type="Area3D" parent="FuncGodotMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 2.08165e-12, -14.74)
+script = ExtResource("5_p51y0")
+
+[node name="entity_18_brush_0_collision_shape" type="CollisionShape3D" parent="FuncGodotMap/entity_18_vt_end_level_area"]
+shape = SubResource("ConvexPolygonShape3D_us32b")
+
+[node name="entity_97_vt_checkpoint_area" type="Area3D" parent="FuncGodotMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 3.12742, 5.47435)
+script = ExtResource("6_3mip7")
+checkpoint_index = 1
+spawn_rotation_degrees = Vector3(0, 90, 0)
+
+[node name="entity_97_brush_0_collision_shape" type="CollisionShape3D" parent="FuncGodotMap/entity_97_vt_checkpoint_area"]
+shape = SubResource("ConvexPolygonShape3D_mfuxi")
+
+[node name="entity_97_vt_checkpoint_area2" type="Area3D" parent="FuncGodotMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3329, 0.296936, -2.9125)
+script = ExtResource("6_3mip7")
+checkpoint_index = 2
+spawn_rotation_degrees = Vector3(0, 90, 0)
+
+[node name="entity_97_brush_0_collision_shape" type="CollisionShape3D" parent="FuncGodotMap/entity_97_vt_checkpoint_area2"]
+shape = SubResource("ConvexPolygonShape3D_y8ow1")
+
+[node name="entity_137_vt_bow_knight" parent="." node_paths=PackedStringArray("pursue_state") instance=ExtResource("8_d5qtq")]
+transform = Transform3D(-5.24537e-08, 0, 1.2, 0, 1.2, 0, -1.2, 0, -5.24537e-08, -5.31548, 1.11558, 4.66617)
+targetname = "ambush1"
+pursue_state = NodePath("")

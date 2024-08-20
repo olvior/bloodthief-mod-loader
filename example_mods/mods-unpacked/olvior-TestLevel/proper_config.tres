@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="LevelConfig" load_steps=2 format=3 uid="uid://cjdaxkmv6dqbw"]
+
+[ext_resource type="Script" path="res://scripts/resource_defs/level_config.gd" id="1_n8wkw"]
+
+[resource]
+script = ExtResource("1_n8wkw")
+level_name = "my_level"
+level_index = 2
+scene_path = "res://mods-unpacked/olvior-TestLevel/proper.tscn"
+display_name = "Super Cool Level"
+leaderboard_name = "my_level"
+next_level_name = ""
+achievement_for_beating = ""
+hex_medal_time_secs = 20.0
+blood_medal_time_secs = 30.0
+bone_medal_time_secs = 40.0
+is_automatically_unlocked = true
+display_in_level_select = true
+use_retro_shader = false
