@@ -47,6 +47,12 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 40
 text = " Install "
 
+[node name="uninstall" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = " Uninstall "
+
 [node name="disable" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
@@ -60,3 +66,6 @@ theme_override_font_sizes/font_size = 40
 text = " Enable "
 
 [connection signal="button_up" from="VBoxContainer/HBoxContainer/install" to="." method="_on_install_button_up"]
+[connection signal="button_up" from="VBoxContainer/HBoxContainer/uninstall" to="." method="_on_uninstall_button_up"]
+[connection signal="button_up" from="VBoxContainer/HBoxContainer/disable" to="." method="_on_disable_button_up"]
+[connection signal="button_up" from="VBoxContainer/HBoxContainer/enable" to="." method="_on_enable_button_up"]
