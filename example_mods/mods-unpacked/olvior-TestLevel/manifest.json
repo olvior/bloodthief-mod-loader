@@ -4,7 +4,7 @@
     "namespace": "olvior",
     "version_number": "1.0.0",
     "description": "A test example level",
-    "dependencies": ["],
+    "dependencies": [],
     "incompatibilities": [],
     "authors": ["olvior"],
     "tags": ["level"],
