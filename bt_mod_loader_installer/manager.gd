@@ -52,6 +52,8 @@ func _on_install_mod_loader_button_up():
 	out_of = 0
 	
 	error_label.text = "Downloaded " + str(n_of_downloads) + "/" + str(out_of)
+	DirAccess.make_dir_absolute(main.path + "/mods")
+	DirAccess.make_dir_absolute(main.path + "/mods-unpacked")
 	download(loader_download_url, "user://mod_loader.zip")
 	
 

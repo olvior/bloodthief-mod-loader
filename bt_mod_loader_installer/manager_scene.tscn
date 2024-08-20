@@ -15,7 +15,7 @@ script = ExtResource("1_x1kcx")
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 3
-size = Vector2i(1304, 175)
+size = Vector2i(1304, 180)
 current_screen = 0
 ok_button_text = "Open"
 dialog_hide_on_ok = true
