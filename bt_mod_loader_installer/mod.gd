@@ -70,7 +70,7 @@ func change_buttons(button_list: Array[bool]):
 	enable_button.disabled = button_list[3]
 
 func _on_install_button_up():
-	download(manifest["download"], my_path + ".zip")
+	download(manifest["download"], my_path)
 
 func _on_disable_button_up() -> void:
 	DirAccess.rename_absolute(my_path, my_disabled_path)
