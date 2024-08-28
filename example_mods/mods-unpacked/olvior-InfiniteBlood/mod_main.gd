@@ -1,6 +1,6 @@
 extends "res://addons/ModLoader/mod_node.gd"
 
-var blood_setting = Setting.new("Blood Amount", Setting.SETTING_FLOAT, Vector2(0, 6))
+var blood_setting = Setting.new("Blood Amount", Setting.SETTING_FLOAT, 6, Vector2(0, 6))
 
 
 func init():
