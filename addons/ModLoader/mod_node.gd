@@ -57,20 +57,12 @@ class Setting:
 	
 	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION, SETTING_BOOL}
 	
-	func _init(setting_name_pretty: String, setting_type, number_range = Vector2(0, 0), selections: Array[String] = []):
+	func _init(setting_name_pretty: String, setting_type, default_value, number_range = Vector2(0, 0), selections: Array[String] = []):
 		s_name_pretty = setting_name_pretty
 		s_type = setting_type
 		s_range = number_range
 		if s_type == SETTING_SELECTION:
 			s_selections = selections
 			
-		match s_type:
-			SETTING_INT:
-				value = 0
-			SETTING_FLOAT:
-				value = 0.0
-			SETTING_SELECTION:
-				value = s_selections[0]
-			SETTING_BOOL:
-				value = true
+		value = default_value
 	

@@ -47,6 +47,7 @@ func create_setting_generic(setting):
 
 func create_setting_bool(generic, setting):
 	var new_check_box: CheckBox = load("res://addons/ModLoader/mods_settings/check_box.tscn").instantiate()
+	new_check_box.button_pressed = setting.value
 	generic.add_child(new_check_box)
 	new_check_box.toggled.connect(_on_checkbox_toggled.bind(setting))
 
@@ -59,6 +60,7 @@ func create_slider(generic: HBoxContainer, setting, range: Vector2, round: bool)
 	new_slider.max_value = range.y
 	new_slider.step = 0.01
 	new_slider.rounded = round
+	new_slider.value = setting.value
 	
 	var new_label: Label = generic.get_node("Label2")
 	new_label.text = str(new_slider.value)
