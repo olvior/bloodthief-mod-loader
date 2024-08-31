@@ -1,15 +1,15 @@
 {
-    "name": "TestLevel",
-    "name_pretty": "Test Level",
-    "namespace": "olvior",
-    "version_number": "1.0.0",
-    "description": "A test example level",
-    "dependencies": [],
-    "incompatibilities": [],
-    "authors": ["olvior"],
-    "tags": ["level"],
-    "description_rich": "Long mod description goes here",
-    "incompatibilities": [],
-    "download": "https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.1.1/olvior-TestLevel.zip",
-    "repo": "https://github.com/olvior/bloodthief-mod-loader/tree/main/example_mods/mods-unpacked/olvior-InifiteBlood"
+	"name": "TestLevel",
+	"name_pretty": "Test Level",
+	"namespace": "olvior",
+	"version_number": "1.0.0",
+	"description": "A test example level",
+	"dependencies": [],
+	"incompatibilities": [],
+	"authors": ["olvior"],
+	"tags": ["level"],
+	"description_rich": "Long mod description goes here",
+	"incompatibilities": [],
+	"download": "https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.1.1/olvior-TestLevel.zip",
+	"repo": "https://github.com/olvior/bloodthief-mod-loader/tree/main/example_mods/mods-unpacked/olvior-InifiteBlood"
 }

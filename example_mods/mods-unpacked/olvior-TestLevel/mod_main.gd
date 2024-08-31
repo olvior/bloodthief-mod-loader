@@ -9,3 +9,7 @@ func _ready():
 	var level_config = load(path_to_dir + "/proper_config.tres")
 	level_config.scene_path = path_to_dir + "/proper.tscn"
 	GameManager._level_configs.append(level_config)
+	
+	level_config = load(path_to_dir + "/tbconfig.tres")
+	level_config.scene_path = path_to_dir + "/tbmap.tscn"
+	GameManager._level_configs.append(level_config)

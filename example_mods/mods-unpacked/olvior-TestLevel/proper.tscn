@@ -46,7 +46,7 @@ points = PackedVector3Array(-2, 4.5, -3.75, -2, -4.5, -3.75, 2, -4.5, -3.75, 2, 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_y8ow1"]
 points = PackedVector3Array(-2, 4.5, -3.75, -2, -4.5, -3.75, 2, -4.5, -3.75, 2, 4.5, -3.75, -2, 4.5, 3.75, -2, -4.5, 3.75, 2, -4.5, 3.75, 2, 4.5, 3.75)
 
-[node name="Node3D" type="Node3D"]
+[node name="Super Cool Level!!" type="Node3D"]
 script = ExtResource("1_yoqyc")
 config = SubResource("Resource_r82l5")
 
