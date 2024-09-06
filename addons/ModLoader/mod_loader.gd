@@ -222,6 +222,9 @@ func init_settings_menu():
 	var settings_menu_script = load("res://addons/ModLoader/mods_settings/settings_menu_override.gd")
 	settings_menu_script.take_over_path("res://scripts/ui/settings_menu.gd")
 
+###############
+# MAP LOADING #
+###############
 
 func load_maps():
 	mod_log("\n")
@@ -330,4 +333,4 @@ func set_next_level_config(level_config_and_completion: LevelConfigAndCompletion
 	print(level_config_and_completion)
 	current_config = level_config_and_completion.config
 	current_completion = level_config_and_completion.completion_data
-	print("SET LEVEL CONFIG AAAAAAAAAAAA")
+	print("SET LEVEL CONFIG TO", level_config_and_completion.config.level_name)

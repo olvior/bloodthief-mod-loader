@@ -23,6 +23,8 @@ func _ready():
 		print(i.resource_path)
 	
 	func_godot_map.global_map_file = path
+	print(path)
+	print(func_godot_map.verify_parameters())
 	func_godot_map.verify_and_build()
 
 func _build_complete() -> void:
