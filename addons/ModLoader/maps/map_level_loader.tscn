@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcj1xief0677b"]
+
+[ext_resource type="Script" path="res://scripts/resource_defs/level_config.gd" id="2_5r1se"]
+[ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map.gd" id="3_10dsc"]
+[ext_resource type="Script" path="res://addons/ModLoader/maps/map_level_loader.gd" id="3_qdax8"]
+[ext_resource type="Resource" uid="uid://bkhxcqsquw1yg" path="res://addons/func_godot/func_godot_default_map_settings.tres" id="4_dn1gn"]
+[ext_resource type="PackedScene" uid="uid://dhy2lak2xclva" path="res://scenes/player.tscn" id="5_n05at"]
+
+[sub_resource type="Resource" id="Resource_0nnfk"]
+script = ExtResource("2_5r1se")
+level_name = "MapLevelLoader"
+level_index = -1
+scene_path = "res://addons/ModLoader/maps/map_level_loader.tscn"
+display_name = "No one should see this"
+leaderboard_name = ""
+next_level_name = ""
+achievement_for_beating = ""
+hex_medal_time_secs = 0.0
+blood_medal_time_secs = 0.0
+bone_medal_time_secs = 0.0
+is_automatically_unlocked = false
+display_in_level_select = true
+use_retro_shader = false
+
+[node name="MapLevelLoader" type="Node"]
+script = ExtResource("3_qdax8")
+config = SubResource("Resource_0nnfk")
+
+[node name="FuncGodotMap" type="Node3D" parent="."]
+script = ExtResource("3_10dsc")
+map_settings = ExtResource("4_dn1gn")
+
+[node name="Player" parent="." instance=ExtResource("5_n05at")]

@@ -25,11 +25,16 @@ func _init():
 	# Overrites the original script with the custom one
 	init_settings_menu()
 	
+	load_maps()
 	
+	var level_override_path = "res://addons/ModLoader/maps/level_select_screen.gd"
+	var level_path = "res://scripts/ui/level_select/level_select_screen.gd"
+	
+	load(level_override_path).take_over_path(level_path)
 
 func _ready():
 	get_tree().get_root().print_tree_pretty()
-
+	
 
 func start_loading_unpacked():
 	# open the mods folder
@@ -92,16 +97,13 @@ func start_loading_packed():
 		mod_zips.append(file_name)
 		mod_log(ProjectSettings.load_resource_pack(mods_folder_path + "/" + file_name))
 		mod_log(mods_folder_path + "/" + file_name)
-	
+		
 		file_name = mods_packed_folder.get_next()
 		
 	for mod in mod_zips:
 		var mod_name_wihout_zip = mod.substr(0, len(mod) - 4) 
 		mod_log(mod_name_wihout_zip)
 		var _error = load_mod("res://" + mod.substr(0, len(mod) - 4), mod_name_wihout_zip, mods_folder_path)
-	
-	
-	
 
 
 func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
@@ -219,3 +221,113 @@ func mod_log(text):
 func init_settings_menu():
 	var settings_menu_script = load("res://addons/ModLoader/mods_settings/settings_menu_override.gd")
 	settings_menu_script.take_over_path("res://scripts/ui/settings_menu.gd")
+
+
+func load_maps():
+	mod_log("\n")
+	
+	var maps_folder_path = OS.get_executable_path().get_base_dir() + "/maps"
+	var maps_folder = DirAccess.open(maps_folder_path)
+	
+	mod_log("Maps path: " + maps_folder_path)
+	
+	if not maps_folder:
+		mod_log("Failed to open maps/ folder, make sure it exists")
+		return
+	
+	
+	mod_log("Searching through maps/")
+	
+	# loop through it and add all nested folders into a list
+	maps_folder.list_dir_begin()
+	
+	var file_name = maps_folder.get_next()
+	var map_folders_list = []
+	
+	while file_name != "":
+		if maps_folder.current_is_dir():
+			map_folders_list.append(maps_folder_path + '/' + file_name)
+		file_name = maps_folder.get_next()
+		
+	for i in map_folders_list:
+		mod_log(i)
+		mod_log("Loading folder")
+		load_map_folder(i)
+	
+
+func load_map_folder(path):
+	var folder = DirAccess.open(path)
+	
+	mod_log("Opening: " + path)
+	
+	if not folder:
+		mod_log("Failed to open " + path + " folder")
+		return
+	
+	
+	mod_log("Searching through maps/")
+	
+	folder.list_dir_begin()
+	
+	var file_name = folder.get_next()
+	var map_list = []
+	
+	while file_name != "":
+		if folder.current_is_dir():
+			pass
+		else:
+			if file_name.get_extension() == "map":
+				var base_name = file_name.get_basename()
+				var json_access = FileAccess.open(path + '/' + base_name + ".json", FileAccess.READ)
+				if json_access:
+					map_list.append(path + '/' + base_name)
+				else:
+					mod_log("Failed to open map " + path + '/' + base_name + ".json")
+			
+		file_name = folder.get_next()
+	
+	for i in map_list:
+		load_map(i)
+	
+	mod_log("\n")
+
+var map_file_by_index = {}
+
+func load_map(path_without_extension: String):
+	var json_path = path_without_extension + ".json"
+	var map_path = path_without_extension + ".map"
+	mod_log(path_without_extension)
+	
+	var json_text = FileAccess.get_file_as_string(json_path)
+	var map_json = JSON.parse_string(json_text)
+	
+	var new_config = LevelConfig.new()
+	
+	var level_index = len(GameManager._level_configs)
+	
+	new_config.level_name = map_json["level_name"]
+	new_config.level_index = level_index
+	
+	new_config.display_name = map_json["display_name"]
+	new_config.hex_medal_time_secs = map_json["medal_times"][0]
+	new_config.blood_medal_time_secs = map_json["medal_times"][1]
+	new_config.bone_medal_time_secs = map_json["medal_times"][2]
+	
+	new_config.is_automatically_unlocked = map_json["is_automatically_unlocked"]
+	
+	print(map_path)
+	map_file_by_index[level_index] = map_path
+	
+	new_config.scene_path = 'res://addons/ModLoader/maps/map_level_loader.tscn'
+	
+	GameManager._level_configs.append(new_config)
+
+
+var current_config: LevelConfig
+var current_completion: LevelCompletionData
+
+func set_next_level_config(level_config_and_completion: LevelConfigAndCompletionData):
+	print(level_config_and_completion)
+	current_config = level_config_and_completion.config
+	current_completion = level_config_and_completion.completion_data
+	print("SET LEVEL CONFIG AAAAAAAAAAAA")
