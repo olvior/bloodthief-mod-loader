@@ -306,7 +306,7 @@ func load_map(path_without_extension: String):
 	
 	var new_config = LevelConfig.new()
 	
-	var level_index = len(GameManager._level_configs)
+	var level_index = len(GameManager._level_configs) + 1
 	
 	new_config.level_name = map_json["level_name"]
 	new_config.level_index = level_index

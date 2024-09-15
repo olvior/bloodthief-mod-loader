@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="FuncGodotMapSettings" load_steps=4 format=3 uid="uid://57syh37w31ca"]
+
+[ext_resource type="Material" uid="uid://cvex6toty8yn7" path="res://addons/func_godot/textures/default_material.tres" id="1_25npl"]
+[ext_resource type="Resource" uid="uid://d10hui8assj31" path="res://func_godot/fgd/fgd_files/bloodthief_demo_fgd.tres" id="2_wltdq"]
+[ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map_settings.gd" id="3_hdluk"]
+
+[resource]
+script = ExtResource("3_hdluk")
+inverse_scale_factor = 32.0
+entity_fgd = ExtResource("2_wltdq")
+entity_name_property = ""
+base_texture_dir = "res://textures/"
+texture_file_extensions = Array[String](["png", "jpg", "jpeg", "bmp", "tga", "webp"])
+clip_texture = "special/clip"
+skip_texture = "special/skip"
+texture_wads = Array[Resource]([])
+material_file_extension = "tres"
+default_material = ExtResource("1_25npl")
+default_material_albedo_uniform = ""
+albedo_map_pattern = "%s_albedo.%s"
+normal_map_pattern = "%s_normal.%s"
+metallic_map_pattern = "%s_metallic.%s"
+roughness_map_pattern = "%s_roughness.%s"
+emission_map_pattern = "%s_emission.%s"
+ao_map_pattern = "%s_ao.%s"
+height_map_pattern = "%s_height.%s"
+unshaded = false
+save_generated_materials = true
+uv_unwrap_texel_size = 1.0
+use_trenchbroom_groups_hierarchy = false
