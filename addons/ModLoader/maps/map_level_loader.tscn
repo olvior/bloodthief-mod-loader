@@ -1,10 +1,52 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcj1xief0677b"]
+[gd_scene load_steps=14 format=3 uid="uid://bcj1xief0677b"]
 
 [ext_resource type="Script" path="res://scripts/resource_defs/level_config.gd" id="2_v4onh"]
 [ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map.gd" id="3_10dsc"]
 [ext_resource type="Script" path="res://addons/ModLoader/maps/map_level_loader.gd" id="3_qdax8"]
 [ext_resource type="Resource" uid="uid://57syh37w31ca" path="res://addons/ModLoader/maps/map_settings.tres" id="4_b2yif"]
 [ext_resource type="PackedScene" uid="uid://dhy2lak2xclva" path="res://scenes/player.tscn" id="5_n05at"]
+
+[sub_resource type="EventAsset" id="EventAsset_kqos5"]
+is_3d = true
+is_oneshot = true
+min_distance = 1.0
+max_distance = 20.0
+path = "event:/ambient/crickets"
+guid = "{24274fdd-94cb-4013-b1a0-d9bbed87e1cc}"
+name = "crickets"
+
+[sub_resource type="BankAsset" id="BankAsset_qes66"]
+file_path = "res://fmod/banks/Desktop/Master.bank"
+modified_time = 1723365341
+path = "bank:/Master"
+guid = "{5664deb7-2231-4f40-b0e3-435f6f6b53ad}"
+name = "Master"
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_2v40n"]
+data1 = 3455155488
+data2 = 175277781
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_qjuep"]
+name = "Intensity"
+id = SubResource("FMOD_STUDIO_PARAMETER_ID_2v40n")
+maximum = 1.0
+guid = "{c24b2001-1ea1-4e10-bf3f-3c589b4f88fe}"
+
+[sub_resource type="ParameterAsset" id="ParameterAsset_risaw"]
+parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_qjuep")
+path = "parameter:/Intensity"
+guid = "{c24b2001-1ea1-4e10-bf3f-3c589b4f88fe}"
+name = "Intensity"
+
+[sub_resource type="EventAsset" id="EventAsset_id1bi"]
+min_distance = 1.0
+max_distance = 20.0
+parameters = {
+"{c24b2001-1ea1-4e10-bf3f-3c589b4f88fe}": SubResource("ParameterAsset_risaw")
+}
+path = "event:/songs/kindling"
+guid = "{62718d38-45d2-42f3-9523-ba523a5aedc3}"
+name = "kindling"
 
 [sub_resource type="Resource" id="Resource_6daem"]
 script = ExtResource("2_v4onh")
@@ -15,6 +57,9 @@ display_name = "no one should see this"
 leaderboard_name = ""
 next_level_name = ""
 achievement_for_beating = ""
+fmod_bank_asset = SubResource("BankAsset_qes66")
+fmod_track_event_asset = SubResource("EventAsset_id1bi")
+fmod_ambient_event_asset = SubResource("EventAsset_kqos5")
 hex_medal_time_secs = 0.0
 blood_medal_time_secs = 0.0
 bone_medal_time_secs = 0.0
