@@ -46,7 +46,7 @@ func _on_remove__mod_loader_button_up():
 
 var n_of_downloads
 var out_of
-var loader_download_url = "https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/mod_loader.zip"
+var loader_download_url = "https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/mod_loader_maps_only.zip"
 func _on_install_mod_loader_button_up():
 	n_of_downloads = 0
 	out_of = 0

@@ -5,6 +5,7 @@ This is a map loader for Bloodthief
 ## Get started making a map
 
 To get started making a map, you'll have to start by setting up TrenchBroom.
+First install [TrenchBroom](https://trenchbroom.github.io/)
 
 - First, download the zip called `map_creation_files`.
 - Then unzip it anywhere
@@ -19,6 +20,10 @@ To get started making a map, you'll have to start by setting up TrenchBroom.
 TODO: ADD LINK TO DOWNLOAD
 
 ## How to load your map
+
+First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.x86_64) and install the mod loader
+
+Then download the [map creation files](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/map_creation_files.zip)
 
 From the original `map_creation_files`, move the `maps` folder into your Bloodthief game folder that Steam downloaded Bloodthief into.
 - You should edit the json file in the `example_map` folder within the `maps` folder
