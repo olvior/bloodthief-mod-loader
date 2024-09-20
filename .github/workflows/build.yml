@@ -1,0 +1,30 @@
+name: 'Build'
+
+on:
+  push:
+    branches: [ 'develop' ]
+
+env:
+  GODOT_VERSION: 4.3
+  VERSION_FILE: bt_mod_loader_installer/project.godot
+  VERSION_REGEX: config\/version=\"\K[0-9.\-A-z]*
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v3
+
+      - name: Install Godot
+        uses: CapsCollective/godot-actions/install-godot@v1.0
+        with:
+          godot-version: ${{ env.GODOT_VERSION }}
+          install-templates: true
+        id: install-godot
+
+      - name: Build and upload artifacts for all platforms
+        uses: CapsCollective/godot-actions/build-godot@v1.1
+        with:
+          godot-executable: ${{ steps.install-godot.outputs.godot-executable }}
+          
