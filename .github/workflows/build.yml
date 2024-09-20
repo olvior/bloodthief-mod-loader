@@ -25,5 +25,6 @@ jobs:
       - name: Build and upload artifacts for all platforms
         uses: CapsCollective/godot-actions/build-godot@v1.1
         with:
+          build-dir: bt_mod_loader_installer
           godot-executable: ${{ steps.install-godot.outputs.godot-executable }}
           
