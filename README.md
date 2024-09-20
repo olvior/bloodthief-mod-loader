@@ -23,7 +23,22 @@ TODO: ADD LINK TO DOWNLOAD
 From the original `map_creation_files`, move the `maps` folder into your Bloodthief game folder that Steam downloaded Bloodthief into.
 - You should edit the json file in the `example_map` folder within the `maps` folder
 - Make sure the json file has the same name as the map file
+- Rename the files and the folder for the name of your map, if you're making a map pack you can have multiple json and .map files in one folder
+- If youre going to share the map prefix the folder name with your username or something to make sure they end up unique
 
+Once you've done all that you're ready to load up a map file in trenchbroom
+
+Watch a trenbroom tutorial or read the manual to get started
+
+But the basics are you can create shapes and give them textures to make the geometry.
+
+Then for single point entities you drag them in from the side bar, these include enemies and keys.
+
+Then for areas you right click on a piece of geometry, click add brush entites, and whatever you want, for example a checkpoint area.
+
+On the side, for each entity, there key value pairs to edit, for example for a checkpoint area you edit the checkpoint index.
+
+For some more complicated behavior, such as doors, you need a trigger area. Then change the target to the name of what it should trigger. Then a mover, which moves when it gets triggered is the door. Make sure to change the targetname to what you enetered for the target.
 
 ---
 
