@@ -46,7 +46,8 @@ func _on_remove__mod_loader_button_up():
 
 var n_of_downloads
 var out_of
-var loader_download_url = "https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/mod_loader.zip"
+var loader_download_url = "https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/mod_loader_map_only.zip"
+
 func _on_install_mod_loader_button_up():
 	n_of_downloads = 0
 	out_of = 0
@@ -55,6 +56,7 @@ func _on_install_mod_loader_button_up():
 	DirAccess.make_dir_absolute(main.path + "/mods")
 	DirAccess.make_dir_absolute(main.path + "/mods/disabled")
 	DirAccess.make_dir_absolute(main.path + "/mods-unpacked")
+	DirAccess.make_dir_absolute(main.path + "/maps")
 	download(loader_download_url, "user://mod_loader.zip")
 	
 
