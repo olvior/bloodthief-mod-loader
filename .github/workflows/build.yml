@@ -1,9 +1,8 @@
 name: 'Build'
 
 on:
-  push:
-    branches: [ 'develop' ]
-
+  workflow_dispatch:
+  
 env:
   GODOT_VERSION: 4.3
   VERSION_FILE: bt_mod_loader_installer/project.godot
