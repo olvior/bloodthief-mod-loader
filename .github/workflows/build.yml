@@ -5,7 +5,7 @@ on:
   
 env:
   GODOT_VERSION: 4.3
-  VERSION_FILE: bt_mod_loader_installer/project.godot
+  VERSION_FILE: project.godot
   VERSION_REGEX: config\/version=\"\K[0-9.\-A-z]*
 
 jobs:
@@ -25,6 +25,5 @@ jobs:
       - name: Build and upload artifacts for all platforms
         uses: CapsCollective/godot-actions/build-godot@v1.1
         with:
-          build-dir: bt_mod_loader_installer
           godot-executable: ${{ steps.install-godot.outputs.godot-executable }}
           
