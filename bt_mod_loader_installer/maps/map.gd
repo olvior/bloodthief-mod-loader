@@ -6,8 +6,8 @@ var my_path: String
 var my_disabled_path: String
 var is_installed: bool
 var is_disabled: bool
-
 @onready var main = get_tree().get_root().get_child(0)
+@onready var debug_label: Label = main.current_tab_node.debug_label
 
 @onready var install_button: Button = $VBoxContainer/HBoxContainer/install
 @onready var uninstall_button: Button = $VBoxContainer/HBoxContainer/uninstall
@@ -19,8 +19,8 @@ var disabled_list: Array[bool] = [true, false, true, false]
 var uninstalled_list: Array[bool] = [false, true, true, true]
 
 func check_if_installed():
-	my_path = main.path + "/mods/" + id + ".zip"
-	my_disabled_path = main.path + "/mods/disabled/" + id + ".zip"
+	my_path = main.path + "/maps/" + id + ".zip"
+	my_disabled_path = main.path + "/maps/disabled/" + id + ".zip"
 	
 	if FileAccess.file_exists(my_path):
 		is_installed = true
@@ -32,8 +32,6 @@ func check_if_installed():
 	
 	else:
 		change_buttons(uninstalled_list)
-	
-	
 	
 	if not is_installed:
 		$VBoxContainer/HBoxContainer/disable.disabled = true
@@ -48,6 +46,7 @@ func init(new_manifest):
 
 
 func download(link: String, path: String):
+	debug_label.text = "Downloading"
 	var http = HTTPRequest.new()
 	add_child(http)
 	http.connect("request_completed", _http_request_completed)
@@ -55,12 +54,27 @@ func download(link: String, path: String):
 	http.set_download_file(path)
 	var request = http.request(link)
 	if request != OK:
+		debug_label.text = "Request failed"
 		push_error("Http request error")
 
 func _http_request_completed(result, _response_code, _headers, _body):
 	if result != OK:
+		debug_label.text = "Download failed"
 		push_error("Download Failed")
 	else:
+		var my_hash = main.hash_file(my_path)
+		if my_hash != manifest["SHA-256"]:
+			print("Hashes do not match")
+			print("Found: ", my_hash)
+			print("Was given: ", manifest["SHA-256"])
+			debug_label.text = "Hash does not match\nCanceled download"
+			DirAccess.remove_absolute(my_path)
+			
+			return
+		
+		print("Found: ", my_hash)
+		print("All good")
+		debug_label.text = "Downloaded"
 		change_buttons(enabled_list)
 
 
@@ -77,11 +91,13 @@ func _on_disable_button_up() -> void:
 	DirAccess.rename_absolute(my_path, my_disabled_path)
 	change_buttons(disabled_list)
 	is_disabled = true
+	debug_label.text = "Disabled mod"
 
 func _on_enable_button_up() -> void:
 	DirAccess.rename_absolute(my_disabled_path, my_path)
 	change_buttons(enabled_list)
 	is_disabled = false
+	debug_label.text = "Enabled mod"
 
 func _on_uninstall_button_up() -> void:
 	if is_disabled:
@@ -91,3 +107,4 @@ func _on_uninstall_button_up() -> void:
 	
 	change_buttons(uninstalled_list)
 	is_installed = false
+	debug_label.text = "Uninstalled mod"

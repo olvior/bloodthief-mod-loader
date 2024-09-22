@@ -41,3 +41,24 @@ func _on_tab_button_down(index: int):
 	self.add_child(current_tab_node)
 	
 	current_tab_index = index
+
+
+const CHUNK_SIZE = 1024
+func hash_file(path):
+	# Check that file exists.
+	if not FileAccess.file_exists(path):
+		return "NO"
+	# Start an SHA-256 context.
+	var ctx = HashingContext.new()
+	ctx.start(HashingContext.HASH_SHA256)
+	# Open the file to hash.
+	var file = FileAccess.open(path, FileAccess.READ)
+	# Update the context after reading each chunk.
+	while file.get_position() < file.get_length():
+		var remaining = file.get_length() - file.get_position()
+		ctx.update(file.get_buffer(min(remaining, CHUNK_SIZE)))
+	# Get the computed hash.
+	var res = ctx.finish()
+	# Print the result as hex string and array.
+	return res.hex_encode()
+	printt(res.hex_encode(), Array(res))
