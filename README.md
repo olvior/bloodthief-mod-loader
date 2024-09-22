@@ -15,7 +15,7 @@ First install [TrenchBroom](https://trenchbroom.github.io/)
 - Make sure the `Bloodthief` folder is inside the `games` folder
 - Then open TrenchBroom, click new map, click open preferences, click Bloodthief, set the game path to the same path as where you moved the `Bloodthief.zip` file to.
 - Create a map with Bloodthief
-- All the textures and entities should be loadded
+- All the textures and entities should be loaded
 
 TODO: ADD LINK TO DOWNLOAD
 
@@ -29,9 +29,9 @@ From the original `map_creation_files`, move the `maps` folder into your Bloodth
 - You should edit the json file in the `example_map` folder within the `maps` folder
 - Make sure the json file has the same name as the map file
 - Rename the files and the folder for the name of your map, if you're making a map pack you can have multiple json and .map files in one folder
-- If youre going to share the map prefix the folder name with your username or something to make sure they end up unique
+- If you're going to share the map prefix the folder name with your username to make sure they end up unique
 
-Once you've done all that you're ready to load up a map file in trenchbroom
+Once you've done all that you're ready to load up a map file in Trenchbroom
 
 Watch a trenbroom tutorial or read the manual to get started
 
@@ -43,11 +43,15 @@ Then for areas you right click on a piece of geometry, click add brush entites, 
 
 On the side, for each entity, there key value pairs to edit, for example for a checkpoint area you edit the checkpoint index.
 
-For some more complicated behavior, such as doors, you need a trigger area. Then change the target to the name of what it should trigger. Then a mover, which moves when it gets triggered is the door. Make sure to change the targetname to what you enetered for the target.
+For some more complicated behavior, such as doors, you need a trigger area. Then change the target to the name of what it should trigger. Then a mover, which moves when it gets triggered is the door. Make sure to change the targetname to what you entered for the target.
+
+More details:
+- You can use any map format in TrenchBroom (I think), but just stick to valve if unsure
+- There is no need to compile it to play the map, just have the map in a folder inside the maps folder, with a json file to accompany it
 
 ---
 
 Feel free to help develop the mod loader itself or the mod installer.
 
-Everything that I made is open source so you're free to do whatever, however Blargis' assets are copyrighted by him.
+Everything that I made is open source so you're free to do whatever, however Blargis's assets are copyrighted by him.
 
