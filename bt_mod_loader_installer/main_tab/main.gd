@@ -1,8 +1,5 @@
 extends Control
 
-@onready var loader_tab_button: Button = $Title/MarginContainer3/HBoxContainer/LoaderTab
-@onready var mods_tab_button: Button = $Title/MarginContainer3/HBoxContainer/ModsTab
-
 @onready var tab_buttons: Array[Control] = [$Title/MarginContainer3/HBoxContainer/LoaderTab,
 											$Title/MarginContainer3/HBoxContainer/ModsTab,
 											$Title/MarginContainer3/HBoxContainer/MapsTab]
