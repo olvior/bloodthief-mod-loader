@@ -49,6 +49,14 @@ More details:
 - You can use any map format in TrenchBroom (I think), but just stick to valve if unsure
 - There is no need to compile it to play the map, just have the map in a folder inside the maps folder, with a json file to accompany it
 
+
+<br>**The file structure should look a bit like this:**
+- Bloodthief folder
+  - maps
+    - <folder name, for this example let's call it "test">
+      - test.json
+      - test.map
+
 ---
 
 Feel free to help develop the mod loader itself or the mod installer.
