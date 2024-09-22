@@ -57,6 +57,23 @@ More details:
       - test.json
       - test.map
 
+<br>Then to upload your map as a zip, it should look like this inside the zip:
+- author-Name.zip
+  - maps/
+    - author-Name/
+      - map.json
+      - map.map
+      - fgd/
+        - my_entity.tres
+        - ...
+      - scenes/
+        - my_entity.tscn
+        - ...
+  - textures/
+    - textureone.png
+    - ...
+
+
 ---
 
 Feel free to help develop the mod loader itself or the mod installer.
