@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cy0mev45n45cm"]
 
-[ext_resource type="Script" path="res://mods_scene.gd" id="1_hlsr8"]
+[ext_resource type="Script" path="res://mods/mods_scene.gd" id="1_hlsr8"]
 
 [node name="mods_scene" type="Control"]
 layout_mode = 3

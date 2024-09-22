@@ -5,7 +5,7 @@ extends Control
 @onready var current_tab_main_node = $Manager
 
 var current_tab = 0
-var main_nodes = [preload("res://manager_scene.tscn"), preload("res://mods_scene.tscn")]
+var main_nodes = [preload("res://main_tab/manager_scene.tscn"), preload("res://mods/mods_scene.tscn")]
 var path
 
 func _on_loader_tab_button_down():

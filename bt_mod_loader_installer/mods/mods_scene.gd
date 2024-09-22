@@ -1,7 +1,7 @@
 extends Control
 
 var mods_dict
-var mod_scene = preload("res://mod.tscn")
+var mod_scene = preload("res://mods/mod.tscn")
 
 func _ready():
 	get_data("https://raw.githubusercontent.com/olvior/bloodthief-mod-list/main/list.json")
