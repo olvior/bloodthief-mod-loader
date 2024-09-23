@@ -17,8 +17,6 @@ First install [TrenchBroom](https://trenchbroom.github.io/)
 - Create a map with Bloodthief
 - All the textures and entities should be loaded
 
-TODO: ADD LINK TO DOWNLOAD
-
 ## How to load your map
 
 First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.x86_64) and install the mod loader
@@ -57,22 +55,20 @@ More details:
       - test.json
       - test.map
 
-<br>Then to upload your map as a zip, it should look like this inside the zip:
+## More advanced map creation
+
+<br>To allow for custom textures, add them like this:
 - author-Name.zip
   - maps/
     - author-Name/
       - map.json
       - map.map
-      - fgd/
-        - my_entity.tres
-        - ...
-      - scenes/
-        - my_entity.tscn
-        - ...
   - textures/
     - textureone.png
     - ...
 
+**Adding them without use of a zip does not currently work**
+**This will probably get reworked in the future**
 
 ---
 
