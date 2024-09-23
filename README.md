@@ -17,8 +17,6 @@ First install [TrenchBroom](https://trenchbroom.github.io/)
 - Create a map with Bloodthief
 - All the textures and entities should be loaded
 
-TODO: ADD LINK TO DOWNLOAD
-
 ## How to load your map
 
 First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.x86_64) and install the mod loader
@@ -48,6 +46,29 @@ For some more complicated behavior, such as doors, you need a trigger area. Then
 More details:
 - You can use any map format in TrenchBroom (I think), but just stick to valve if unsure
 - There is no need to compile it to play the map, just have the map in a folder inside the maps folder, with a json file to accompany it
+
+
+<br>**The file structure should look a bit like this:**
+- Bloodthief folder
+  - maps
+    - <folder name, for this example let's call it "test">
+      - test.json
+      - test.map
+
+## More advanced map creation
+
+<br>To allow for custom textures, add them like this:
+- author-Name.zip
+  - maps/
+    - author-Name/
+      - map.json
+      - map.map
+  - textures/
+    - textureone.png
+    - ...
+
+**Adding them without use of a zip does not currently work**
+**This will probably get reworked in the future**
 
 ---
 

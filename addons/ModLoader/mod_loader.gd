@@ -41,6 +41,11 @@ func load_maps():
 	while file_name != "":
 		if maps_folder.current_is_dir():
 			map_folders_list.append(maps_folder_path + '/' + file_name)
+		elif file_name.get_extension() == "zip":
+			print("Added res://maps/" + file_name.get_basename())
+			map_folders_list.append("res://maps/" + file_name.get_basename())
+			ProjectSettings.load_resource_pack(maps_folder_path + '/' + file_name)
+		
 		file_name = maps_folder.get_next()
 		
 	for i in map_folders_list:
