@@ -19,7 +19,7 @@ First install [TrenchBroom](https://trenchbroom.github.io/)
 
 ## How to load your map
 
-First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/bt_mod_installer.x86_64) and install the mod loader
+First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.x86_64) and install the mod loader
 
 Then download the [map creation files](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/map_creation_files.zip)
 
