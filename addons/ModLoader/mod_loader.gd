@@ -1,6 +1,7 @@
 extends Node
 
-func _init():
+
+func _ready():
 	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 	
 	load_maps()
@@ -9,8 +10,7 @@ func _init():
 	var level_path = "res://scripts/ui/level_select/level_select_screen.gd"
 	
 	load(level_override_path).take_over_path(level_path)
-
-func _ready():
+	
 	get_tree().get_root().print_tree_pretty()
 
 ###############
