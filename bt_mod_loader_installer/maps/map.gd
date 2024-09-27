@@ -76,6 +76,7 @@ func _http_request_completed(result, _response_code, _headers, _body):
 		print("All good")
 		debug_label.text = "Downloaded"
 		main.unzip(my_path + ".zip", main.path + "/maps")
+		DirAccess.remove_absolute(my_path + ".zip")
 		change_buttons(enabled_list)
 
 
