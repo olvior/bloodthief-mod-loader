@@ -2,6 +2,7 @@ extends Node
 
 
 func _ready():
+	print("MOD LOADER starting\n\n")
 	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 	
 	load_maps()
@@ -10,8 +11,8 @@ func _ready():
 	var level_path = "res://scripts/ui/level_select/level_select_screen.gd"
 	
 	load(level_override_path).take_over_path(level_path)
-	
-	get_tree().get_root().print_tree_pretty()
+
+	print("MOD LOADER finished\n\n")
 
 ###############
 # MAP LOADING #
@@ -40,6 +41,9 @@ func load_maps():
 	
 	while file_name != "":
 		if maps_folder.current_is_dir():
+			if file_name == "disabled":
+				file_name = maps_folder.get_next()
+				continue
 			map_folders_list.append([maps_folder_path + '/' + file_name, file_name])
 			
 		file_name = maps_folder.get_next()
