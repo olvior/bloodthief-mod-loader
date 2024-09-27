@@ -103,10 +103,26 @@ func _on_enable_button_up() -> void:
 
 func _on_uninstall_button_up() -> void:
 	if is_disabled:
-		DirAccess.remove_absolute(my_disabled_path)
+		delete_folder_recursive(my_disabled_path)
 	else:
-		DirAccess.remove_absolute(my_path)
+		delete_folder_recursive(my_path)
 	
 	change_buttons(uninstalled_list)
 	is_installed = false
 	debug_label.text = "Uninstalled mod"
+
+func delete_folder_recursive(path):
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				delete_folder_recursive(path + '/' + file_name)
+			else:
+				DirAccess.remove_absolute(path + '/' + file_name)
+			file_name = dir.get_next()
+		
+		DirAccess.remove_absolute(path)
+	else:
+		print("An error occurred when trying to access the path.")
