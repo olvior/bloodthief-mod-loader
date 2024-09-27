@@ -19,14 +19,14 @@ var disabled_list: Array[bool] = [true, false, true, false]
 var uninstalled_list: Array[bool] = [false, true, true, true]
 
 func check_if_installed():
-	my_path = main.path + "/maps/" + id + ".zip"
-	my_disabled_path = main.path + "/maps/disabled/" + id + ".zip"
+	my_path = main.path + "/maps/" + id
+	my_disabled_path = main.path + "/maps/disabled/" + id
 	
-	if FileAccess.file_exists(my_path):
+	if DirAccess.dir_exists_absolute(my_path):
 		is_installed = true
 		change_buttons(enabled_list)
 	
-	elif FileAccess.file_exists(my_disabled_path):
+	elif DirAccess.dir_exists_absolute(my_disabled_path):
 		is_disabled = true
 		change_buttons(disabled_list)
 	
@@ -62,19 +62,21 @@ func _http_request_completed(result, _response_code, _headers, _body):
 		debug_label.text = "Download failed"
 		push_error("Download Failed")
 	else:
-		var my_hash = main.hash_file(my_path)
+		var my_hash = main.hash_file(my_path + ".zip")
 		if my_hash != manifest["SHA-256"]:
 			print("Hashes do not match")
 			print("Found: ", my_hash)
 			print("Was given: ", manifest["SHA-256"])
 			debug_label.text = "Hash does not match\nCanceled download"
-			DirAccess.remove_absolute(my_path)
+			DirAccess.remove_absolute(my_path + ".zip")
 			
 			return
 		
 		print("Found: ", my_hash)
 		print("All good")
 		debug_label.text = "Downloaded"
+		main.unzip(my_path + ".zip", main.path + "/maps")
+		DirAccess.remove_absolute(my_path + ".zip")
 		change_buttons(enabled_list)
 
 
@@ -85,7 +87,7 @@ func change_buttons(button_list: Array[bool]):
 	enable_button.disabled = button_list[3]
 
 func _on_install_button_up():
-	download(manifest["download"], my_path)
+	download(manifest["download"], my_path + ".zip")
 
 func _on_disable_button_up() -> void:
 	DirAccess.rename_absolute(my_path, my_disabled_path)
@@ -101,10 +103,26 @@ func _on_enable_button_up() -> void:
 
 func _on_uninstall_button_up() -> void:
 	if is_disabled:
-		DirAccess.remove_absolute(my_disabled_path)
+		delete_folder_recursive(my_disabled_path)
 	else:
-		DirAccess.remove_absolute(my_path)
+		delete_folder_recursive(my_path)
 	
 	change_buttons(uninstalled_list)
 	is_installed = false
 	debug_label.text = "Uninstalled mod"
+
+func delete_folder_recursive(path):
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				delete_folder_recursive(path + '/' + file_name)
+			else:
+				DirAccess.remove_absolute(path + '/' + file_name)
+			file_name = dir.get_next()
+		
+		DirAccess.remove_absolute(path)
+	else:
+		print("An error occurred when trying to access the path.")

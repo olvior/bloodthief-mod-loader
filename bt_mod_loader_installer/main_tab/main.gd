@@ -62,3 +62,30 @@ func hash_file(path):
 	# Print the result as hex string and array.
 	return res.hex_encode()
 	printt(res.hex_encode(), Array(res))
+
+
+func unzip(path_to_zip: String, path_to_unzipped: String) -> void:
+	print("Unzipping " + path_to_zip + " to " + path_to_unzipped)
+	var zr : ZIPReader = ZIPReader.new()
+	
+	if zr.open(path_to_zip) == OK:
+		for filepath in zr.get_files():
+			var zip_directory : String = path_to_zip.get_base_dir()
+		
+			var da : DirAccess = DirAccess.open(zip_directory)
+			
+			var extract_path : String = path_to_unzipped + '/'
+			
+			da.make_dir(extract_path)
+			
+			da = DirAccess.open(extract_path)
+			print(da)
+			
+			da.make_dir_recursive(filepath.get_base_dir())
+			
+			print(extract_path + filepath)
+			print(filepath, " is the path")
+			
+			var fa : FileAccess = FileAccess.open("%s/%s" % [extract_path, filepath], FileAccess.WRITE)
+			if fa:
+				fa.store_buffer(zr.read_file(filepath))

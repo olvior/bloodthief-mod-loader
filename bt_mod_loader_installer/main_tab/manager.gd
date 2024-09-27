@@ -61,33 +61,7 @@ func _on_install_mod_loader_button_up():
 	
 
 func move_mod_loader():
-	unzip("user://mod_loader.zip", main.path)
-
-func unzip(path_to_zip: String, path_to_unzipped: String) -> void:
-	var zr : ZIPReader = ZIPReader.new()
-	
-	if zr.open(path_to_zip) == OK:
-		for filepath in zr.get_files():
-			var zip_directory : String = path_to_zip.get_base_dir()
-		
-			var da : DirAccess = DirAccess.open(zip_directory)
-			
-			var extract_path : String = path_to_unzipped + '/'
-			
-			da.make_dir(extract_path)
-			
-			da = DirAccess.open(extract_path)
-			print(da)
-			
-			da.make_dir_recursive(filepath.get_base_dir())
-			
-			print(extract_path + filepath)
-			print(filepath, " is the path")
-			
-			var fa : FileAccess = FileAccess.open("%s/%s" % [extract_path, filepath], FileAccess.WRITE)
-			if fa:
-				fa.store_buffer(zr.read_file(filepath))
-
+	main.unzip("user://mod_loader.zip", main.path)
 
 var http_s = []
 func download(link, path):

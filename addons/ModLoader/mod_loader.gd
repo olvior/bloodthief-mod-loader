@@ -1,6 +1,8 @@
 extends Node
 
-func _init():
+
+func _ready():
+	print("MOD LOADER starting\n\n")
 	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 	
 	load_maps()
@@ -10,8 +12,7 @@ func _init():
 	
 	load(level_override_path).take_over_path(level_path)
 
-func _ready():
-	get_tree().get_root().print_tree_pretty()
+	print("MOD LOADER finished\n\n")
 
 ###############
 # MAP LOADING #
@@ -40,19 +41,58 @@ func load_maps():
 	
 	while file_name != "":
 		if maps_folder.current_is_dir():
-			map_folders_list.append(maps_folder_path + '/' + file_name)
-		elif file_name.get_extension() == "zip":
-			print("Added res://maps/" + file_name.get_basename())
-			map_folders_list.append("res://maps/" + file_name.get_basename())
-			ProjectSettings.load_resource_pack(maps_folder_path + '/' + file_name)
-		
+			if file_name == "disabled":
+				file_name = maps_folder.get_next()
+				continue
+			map_folders_list.append([maps_folder_path + '/' + file_name, file_name])
+			
 		file_name = maps_folder.get_next()
 		
 	for i in map_folders_list:
 		print(i)
 		print("Loading folder")
-		load_map_folder(i)
+		load_map_folder(i[0])
+		
+		if DirAccess.dir_exists_absolute(i[0] + '/textures'):
+			load_textures(i[0] + '/textures', '', i[1])
 	
+
+func load_textures(path_to_textures, extra_path, mod_name):
+	var folder = DirAccess.open(path_to_textures + extra_path)
+	print("Opening for textures: " + path_to_textures + extra_path)
+	
+	if not folder:
+		print("Failed to open " + path_to_textures + extra_path + " folder")
+		return
+	
+	folder.list_dir_begin()
+	var file_name = folder.get_next()
+	
+	while file_name != "":
+		if folder.current_is_dir():
+			load_textures(path_to_textures, extra_path + '/' + file_name, mod_name)
+		else:
+			if file_name.get_extension() == "png":
+				var file_path = path_to_textures + extra_path + '/' + file_name
+				var take_over_path = "res://textures/" + mod_name + extra_path + '/' + file_name
+				var img = Image.new()
+				var err = img.load(file_path)
+				if err != OK:
+					file_name = folder.get_next()
+					continue
+				
+				
+				var newTexture = ImageTexture.create_from_image(img)
+				var thing = newTexture.create_placeholder()
+				
+				thing.take_over_path(take_over_path)
+				
+				print(file_path)
+				print("takes over")
+				print(take_over_path)
+				
+		file_name = folder.get_next()
+
 
 func load_map_folder(path):
 	var folder = DirAccess.open(path)
@@ -63,30 +103,24 @@ func load_map_folder(path):
 		print("Failed to open " + path + " folder")
 		return
 	
-	
-	print("Searching through maps/")
-	
+		
 	folder.list_dir_begin()
-	
 	var file_name = folder.get_next()
-	var map_list = []
 	
 	while file_name != "":
 		if folder.current_is_dir():
-			pass
+			load_map_folder(path + '/' + file_name)
 		else:
 			if file_name.get_extension() == "map":
 				var base_name = file_name.get_basename()
 				var json_access = FileAccess.open(path + '/' + base_name + ".json", FileAccess.READ)
 				if json_access:
-					map_list.append(path + '/' + base_name)
+					load_map(path + '/' + base_name)
 				else:
 					print("Failed to open map " + path + '/' + base_name + ".json")
 			
 		file_name = folder.get_next()
 	
-	for i in map_list:
-		load_map(i)
 	
 	print("\n")
 
