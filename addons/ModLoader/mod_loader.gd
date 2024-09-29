@@ -1,9 +1,10 @@
 extends Node
 
+func _init():
+	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 
 func _ready():
 	print("MOD LOADER starting\n\n")
-	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 	
 	load_maps()
 	
