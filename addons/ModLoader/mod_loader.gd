@@ -56,6 +56,10 @@ func load_maps():
 		
 		if DirAccess.dir_exists_absolute(i[0] + '/textures'):
 			load_textures(i[0] + '/textures', '', i[1])
+		
+		if DirAccess.dir_exists_absolute(i[0] + '/fgd'):
+			load_fgd(i[0] + '/fgd')
+		
 	
 
 func load_textures(path_to_textures, extra_path, mod_name):
@@ -156,6 +160,28 @@ func load_map(path_without_extension: String):
 	
 	GameManager._level_configs.append(new_config)
 
+var fgd_paths: Array[String] = []
+
+func load_fgd(path):
+	var folder = DirAccess.open(path)
+	print("Opening for fdg: " + path)
+	
+	if not folder:
+		print("Failed to open " + path + " folder")
+		return
+	
+	folder.list_dir_begin()
+	var file_name = folder.get_next()
+	
+	while file_name != "":
+		if folder.current_is_dir():
+			load_fgd(path + '/' + file_name)
+		else:
+			if file_name.get_extension() == "tres":
+				fgd_paths.append(path + '/' + file_name)
+				print("Adding " + file_name + " to fgd list")
+			
+		file_name = folder.get_next()
 
 var current_config: LevelConfig
 var current_completion: LevelCompletionData

@@ -5,6 +5,9 @@ extends Level
 
 func _ready():
 	await get_tree().physics_frame
+	
+	load_custom_fgd()
+	
 	func_godot_map.connect("build_complete", _build_complete)
 	func_godot_map.connect("build_failed", _build_failed)
 	func_godot_map.connect("unwrap_uv2_complete", _unwrap_uv2_complete)
@@ -13,11 +16,6 @@ func _ready():
 	config = ModLoader.current_config
 	var path = ModLoader.map_file_by_index[config.level_index]
 	
-	print(func_godot_map.map_settings.entity_fgd)
-	print(len(func_godot_map.map_settings.entity_fgd.entity_definitions))
-	print(func_godot_map.map_settings.entity_fgd.resource_path)
-	for i in func_godot_map.map_settings.entity_fgd.entity_definitions:
-		print(i.resource_path)
 	
 	func_godot_map.global_map_file = path
 	print(path)
@@ -38,3 +36,8 @@ func _unwrap_uv2_complete() -> void:
 func _bake_nav_finished():
 	print("Nav bake finished")
 	super._ready()
+
+
+func load_custom_fgd():
+	for i in ModLoader.fgd_paths:
+		func_godot_map.map_settings.entity_fgd.entity_definitions.append(load(i))
