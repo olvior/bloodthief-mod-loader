@@ -2,6 +2,15 @@
 
 This is a map loader for Bloodthief
 
+Contents:
+
+- [Get started making a map](#get-started-making-a-map)
+- [How to load your map](#how-to-load-your-map)
+- [Uploading or sharing maps](#uploading-or-sharing-maps)
+- [More advanced map creation](#more-advanced-map-creation)
+- [Ending notes](#ending-notes)
+
+
 ## Get started making a map
 
 To get started making a map, you'll have to start by setting up TrenchBroom.
@@ -31,7 +40,7 @@ From the original `map_creation_files`, move the `maps` folder into your Bloodth
 
 Once you've done all that you're ready to load up a map file in Trenchbroom
 
-Watch a trenbroom tutorial or read the manual to get started
+Watch a TrencBroom tutorial or read the manual to get started
 
 But the basics are you can create shapes and give them textures to make the geometry.
 
@@ -55,22 +64,27 @@ More details:
       - test.json
       - test.map
 
+## Uploading or sharing maps
+
+Compress your map as a zip file
+
+Edit and create a pull request in [this file](https://github.com/olvior/bloodthief-mod-list/blob/main/map_list.json), update the json file based on your map's information. Some things like the dependencies or tags aren't used yet, but will instead be used in the future so they are there for the sake of all maps using it later.
+
+WARNING: We make sure all the maps uploaded there are safe, but if you download a map from somewhere else they are not guaranteed to be safe.
+
 ## More advanced map creation
 
-<br>To allow for custom textures, add them like this:
-- author-Name.zip
-  - maps/
-    - author-Name/
-      - map.json
-      - map.map
-  - textures/
-    - textureone.png
-    - ...
+<br>To allow for custom entities, add them like this:
+- maps/
+  - your-map/
+    - fgd/
+      - entity.tres
 
-**Adding them without use of a zip does not currently work**
-**This will probably get reworked in the future**
+You have to use func_godot to create the entity definitions.
 
----
+It has not yet been tested, so it may or may not work.
+
+## Ending notes
 
 Feel free to help develop the mod loader itself or the mod installer.
 
