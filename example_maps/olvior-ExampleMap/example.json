@@ -1,0 +1,6 @@
+{
+  "level_name": "ExampleMap",
+  "display_name": "Example map",
+  "medal_times": [10, 15, 30],
+  "is_automatically_unlocked": true,
+}
