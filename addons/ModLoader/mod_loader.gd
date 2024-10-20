@@ -1,5 +1,7 @@
 extends Node
 
+var all_textures = []
+
 func _init():
 	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 
@@ -12,6 +14,7 @@ func _ready():
 	var level_path = "res://scripts/ui/level_select/level_select_screen.gd"
 	
 	load(level_override_path).take_over_path(level_path)
+
 
 	print("MOD LOADER finished\n\n")
 
@@ -52,7 +55,7 @@ func load_maps():
 	for i in map_folders_list:
 		print(i)
 		print("Loading folder")
-		load_map_folder(i[0])
+		load_map_folder(i[0], '', i[1])
 		
 		if DirAccess.dir_exists_absolute(i[0] + '/textures'):
 			load_textures(i[0] + '/textures', '', i[1])
@@ -74,28 +77,30 @@ func load_textures(path_to_textures, extra_path, mod_name):
 			load_textures(path_to_textures, extra_path + '/' + file_name, mod_name)
 		else:
 			if file_name.get_extension() == "png":
+				# we load in the texture now that we found it
 				var file_path = path_to_textures + extra_path + '/' + file_name
 				var take_over_path = "res://textures/" + mod_name + extra_path + '/' + file_name
-				var img = Image.new()
-				var err = img.load(file_path)
-				if err != OK:
-					file_name = folder.get_next()
-					continue
 				
+				# create an image and a texture
+				var image = Image.load_from_file(file_path)
+				var tex: Texture2D = ImageTexture.create_from_image(image)
 				
-				var newTexture = ImageTexture.create_from_image(img)
-				var thing = newTexture.create_placeholder()
+				# take over the other path, as func godot looks for textures
+				# in res://textures
+				tex.take_over_path(take_over_path)
+				# enter the global scope or else the texture will get garbage collected (i think)
+				all_textures.append(tex)
 				
-				thing.take_over_path(take_over_path)
-				
-				print(file_path)
-				print("takes over")
+				print(tex, " will take over")
+				tex.take_over_path(take_over_path)
 				print(take_over_path)
 				
+		
 		file_name = folder.get_next()
 
 
-func load_map_folder(path):
+func load_map_folder(original_path, extra, mod_name):
+	var path = original_path + extra
 	var folder = DirAccess.open(path)
 	
 	print("Opening: " + path)
@@ -110,13 +115,13 @@ func load_map_folder(path):
 	
 	while file_name != "":
 		if folder.current_is_dir():
-			load_map_folder(path + '/' + file_name)
+			load_map_folder(path, '/' + file_name, mod_name)
 		else:
 			if file_name.get_extension() == "map":
 				var base_name = file_name.get_basename()
 				var json_access = FileAccess.open(path + '/' + base_name + ".json", FileAccess.READ)
 				if json_access:
-					load_map(path + '/' + base_name)
+					load_map(original_path, path + '/' + base_name, mod_name)
 				else:
 					print("Failed to open map " + path + '/' + base_name + ".json")
 			
@@ -125,9 +130,14 @@ func load_map_folder(path):
 	
 	print("\n")
 
-var map_file_by_index = {}
+class Map:
+	var path: String
+	var pack_path: String
+	var mod_name: String
 
-func load_map(path_without_extension: String):
+var map_by_index = {}
+
+func load_map(original_path, path_without_extension: String, mod_name):
 	var json_path = path_without_extension + ".json"
 	var map_path = path_without_extension + ".map"
 	print(path_without_extension)
@@ -150,7 +160,12 @@ func load_map(path_without_extension: String):
 	new_config.is_automatically_unlocked = map_json["is_automatically_unlocked"]
 	
 	print(map_path)
-	map_file_by_index[level_index] = map_path
+	var new_map = Map.new()
+	new_map.path = map_path
+	new_map.pack_path = original_path
+	new_map.mod_name = mod_name
+	
+	map_by_index[level_index] = new_map
 	
 	new_config.scene_path = 'res://addons/ModLoader/maps/map_level_loader.tscn'
 	
