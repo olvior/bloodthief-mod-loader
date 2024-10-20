@@ -7,12 +7,12 @@ This is a map loader for Bloodthief
 To get started making a map, you'll have to start by setting up TrenchBroom.
 First install [TrenchBroom](https://trenchbroom.github.io/)
 
-- First, download the zip called `map_creation_files`.
+- First, download the zip called [`map_creation_files`](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/map_creation_files.zip).
 - Then unzip it anywhere
-- Then move the `Bloodthief.zip` file to the TrenchBroom game config folder 
+- Then move the `Bloodthief.zip` file to the TrenchBroom game config folder
     - Windows: C:\Users\<username>\AppData\Roaming\TrenchBroom\games
     - Linux: ~/.TrenchBroom/games
-- Make sure the `Bloodthief` folder is inside the `games` folder
+- Make sure the `Bloodthief` folder is inside the `games` folder, then unzip it
 - Then open TrenchBroom, click new map, click open preferences, click Bloodthief, set the game path to the same path as where you moved the `Bloodthief.zip` file to.
 - Create a map with Bloodthief
 - All the textures and entities should be loaded
@@ -29,9 +29,11 @@ From the original `map_creation_files`, move the `maps` folder into your Bloodth
 - Rename the files and the folder for the name of your map, if you're making a map pack you can have multiple json and .map files in one folder
 - If you're going to share the map prefix the folder name with your username to make sure they end up unique
 
-Once you've done all that you're ready to load up a map file in Trenchbroom
+## How to use TrenchBroom
 
-Watch a trenbroom tutorial or read the manual to get started
+Once you've done all that you're ready to load up a map file in TrenchBroom
+
+Watch a TrenchBroom tutorial or read the manual to get started
 
 But the basics are you can create shapes and give them textures to make the geometry.
 
@@ -57,18 +59,25 @@ More details:
 
 ## More advanced map creation
 
-<br>To allow for custom textures, add them like this:
-- author-Name.zip
-  - maps/
-    - author-Name/
-      - map.json
-      - map.map
-  - textures/
-    - textureone.png
-    - ...
+<br>To allow for custom textures, add them like this in your map folder:
+- maps/
+  - author-Name/
+    - map.json
+    - map.map
+    - textures/
+      - textureone.png
+      - ...
 
-**Adding them without use of a zip does not currently work**
-**This will probably get reworked in the future**
+Then for TrenchBroom to realise they exist, add them like so:
+- *TrenchBroom folder*
+  - games/
+    - Bloodthief/
+      - textures/
+        - author-Name/
+          - textureone.png
+          - ...
+
+Make sure to enable the folder in TrenchBroom. When you are in the face tab, in the texture browser click settings, then enable your folder
 
 ---
 
