@@ -2,6 +2,15 @@
 
 This is a map loader for Bloodthief
 
+Contents:
+- [Get started making a map](#get-started-making-a-map)
+- [How to load your map](#how-to-load-your-map)
+- [How to use TrenchBroom](#how-to-use-trenchbroom)
+- [More advanced map creation](#more-advanced-map-creation)
+- [Uploading or sharing maps](#uploading-or-sharing-maps)
+- [Ending notes](#ending-notes)
+
+
 ## Get started making a map
 
 To get started making a map, you'll have to start by setting up TrenchBroom.
@@ -79,7 +88,18 @@ Then for TrenchBroom to realise they exist, add them like so:
 
 Make sure to enable the folder in TrenchBroom. When you are in the face tab, in the texture browser click settings, then enable your folder
 
----
+## Uploading or sharing maps
+
+Compress your map as a zip file
+
+For someone to play it they will have to unzip it in the `maps/` directory in the main Bloodthief directory
+
+
+To upload it to the mod loader installer, upload the zip to github (or elsewhere). Then edit and create a pull request in [this file](https://github.com/olvior/bloodthief-mod-list/blob/main/map_list.json), update the json file based on your map's information. Some things like the dependencies or tags aren't used yet, but will probably be used in the future.
+
+Once that pull request has been merged the map will be downloadable.
+
+## Ending notes
 
 Feel free to help develop the mod loader itself or the mod installer.
 
