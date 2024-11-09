@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="FuncGodotMapSettings" load_steps=4 format=3 uid="uid://57syh37w31ca"]
 
-[ext_resource type="Material" uid="uid://cvex6toty8yn7" path="res://addons/func_godot/textures/default_material.tres" id="1_25npl"]
-[ext_resource type="Resource" uid="uid://d10hui8assj31" path="res://func_godot/fgd/fgd_files/bloodthief_demo_fgd.tres" id="2_wltdq"]
+[ext_resource type="Material" path="res://addons/func_godot/textures/default_material.tres" id="1_25npl"]
+[ext_resource type="Resource" uid="uid://c8vat23wsd30y" path="res://func_godot/fgd/fgd_files/bloodthief_demo_fgd.tres" id="2_wltdq"]
 [ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map_settings.gd" id="3_hdluk"]
 
 [resource]

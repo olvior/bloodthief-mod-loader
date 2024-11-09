@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDPointClass" load_steps=3 format=3 uid="uid://7c5h8y8rtjo8"]
+
+[ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_point_class.gd" id="1_quula"]
+[ext_resource type="PackedScene" uid="uid://ceaflegakuerc" path="res://addons/ModLoader/maps/fgd/custom_point_entity.tscn" id="2_upda7"]
+
+[resource]
+script = ExtResource("1_quula")
+scene_file = ExtResource("2_upda7")
+apply_rotation_on_map_build = true
+classname = "vt_custom_entity"
+description = "Use this to create custom entities"
+func_godot_internal = false
+base_classes = Array[Resource]([ExtResource("1_quula")])
+class_properties = {
+"custom_entity_path": ""
+}
+class_property_descriptions = {
+"custom_entity_path": "Make sure it's the same as the file path starting from the maps folder, so for example: author-ExampleMap/"
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+name_property = ""

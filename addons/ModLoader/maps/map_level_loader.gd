@@ -23,6 +23,10 @@ func _ready():
 	var map = ModLoader.map_by_index[config.level_index]
 	var path = map.path
 	
+	# we add in the custom point entity file
+	var custom_point_entity_fgd = load("res://addons/ModLoader/maps/fgd/point.tres")
+	func_godot_map.map_settings.entity_fgd.entity_definitions.append(custom_point_entity_fgd)
+	
 	# now we build
 	func_godot_map.global_map_file = path
 	print(path)

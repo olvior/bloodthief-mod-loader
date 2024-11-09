@@ -5,9 +5,10 @@ var all_textures = []
 func _init():
 	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
 
+
 func _ready():
-	print("MOD LOADER starting\n\n")
-	
+	load_lua()
+
 	load_maps()
 	
 	var level_override_path = "res://addons/ModLoader/maps/level_select_screen.gd"
@@ -17,6 +18,14 @@ func _ready():
 
 
 	print("MOD LOADER finished\n\n")
+
+# loads the lua script as a child node
+func load_lua() -> void:
+	var err = GDExtensionManager.load_extension("res://addons/luaAPI/luaAPI.gdextension")
+
+	if err != 0:
+		printerr("ERROR ", err, " when loading in the lua api")
+	
 
 ###############
 # MAP LOADING #

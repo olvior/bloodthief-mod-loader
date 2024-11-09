@@ -1,0 +1,86 @@
+[gd_scene load_steps=19 format=3 uid="uid://ceaflegakuerc"]
+
+[ext_resource type="Script" path="res://addons/ModLoader/maps/fgd/custom_point_entity.gd" id="1_djcwl"]
+[ext_resource type="PackedScene" uid="uid://bxskfs3bby5mv" path="res://scenes/components/restartable_enemy_component.tscn" id="2_tcmqs"]
+[ext_resource type="PackedScene" path="res://scenes/components/enemy_data_component.tscn" id="3_4jhg1"]
+[ext_resource type="PackedScene" path="res://scenes/components/air_dash_target.tscn" id="4_5d013"]
+[ext_resource type="PackedScene" path="res://scenes/components/enemy_death_component.tscn" id="5_uhfi1"]
+[ext_resource type="PackedScene" path="res://scenes/components/hurt_and_collide_component.tscn" id="6_oxleb"]
+[ext_resource type="PackedScene" path="res://scenes/components/state_machine.tscn" id="7_iro81"]
+[ext_resource type="PackedScene" path="res://scenes/particle_scenes/blood_particle.tscn" id="8_2wyem"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h675s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_whv66"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3b475"]
+
+[sub_resource type="Gradient" id="Gradient_dk4si"]
+colors = PackedColorArray(0.180843, 9.77656e-08, 3.60981e-08, 1, 0.180842, 8.6861e-07, 4.45209e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rdg8v"]
+gradient = SubResource("Gradient_dk4si")
+
+[sub_resource type="Curve" id="Curve_yh3o5"]
+min_value = -5.0
+max_value = 5.0
+_data = [Vector2(0, 2.81818), 0.0, 0.0, 0, 0, Vector2(0.989583, 1.27273), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nfm62"]
+curve = SubResource("Curve_yh3o5")
+
+[sub_resource type="Curve" id="Curve_7kfeu"]
+_data = [Vector2(0, 0.727273), 0.0, 0.0, 0, 0, Vector2(0.503472, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0090909), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_8kk2d"]
+curve = SubResource("Curve_7kfeu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uaak1"]
+resource_local_to_scene = true
+emission_shape = 3
+emission_box_extents = Vector3(10, 0.1, 10)
+gravity = Vector3(0, 4, 0)
+radial_accel_min = -2.0
+radial_accel_curve = SubResource("CurveTexture_nfm62")
+scale_min = 0.08
+scale_max = 0.08
+scale_curve = SubResource("CurveTexture_8kk2d")
+color_ramp = SubResource("GradientTexture1D_rdg8v")
+
+[node name="CustomPointEntity" type="CharacterBody3D"]
+collision_layer = 18432
+collision_mask = 542723
+script = ExtResource("1_djcwl")
+
+[node name="EnemyDeathComponent" parent="." instance=ExtResource("5_uhfi1")]
+dies_directionally = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_h675s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_whv66")
+
+[node name="RestartableEnemyComponent" parent="." instance=ExtResource("2_tcmqs")]
+oneshots_to_abort_on_restart = Array[String]([])
+
+[node name="EnemyDataComponent" parent="." instance=ExtResource("3_4jhg1")]
+
+[node name="AirDashTarget" parent="." instance=ExtResource("4_5d013")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0326636, 0)
+charge_time_multiplier = 1.5
+
+[node name="HurtAndCollideComponent" parent="." instance=ExtResource("6_oxleb")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtAndCollideComponent"]
+shape = SubResource("BoxShape3D_3b475")
+
+[node name="StateMachine" parent="." instance=ExtResource("7_iro81")]
+
+[node name="BloodParticle" parent="." instance=ExtResource("8_2wyem")]
+sub_emitter = NodePath(".")
+process_material = SubResource("ParticleProcessMaterial_uaak1")
+
+[connection signal="entity_dead" from="HurtAndCollideComponent" to="EnemyDeathComponent" method="_on_hurt_and_collide_component_entity_dead"]
