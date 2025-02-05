@@ -76,7 +76,7 @@ func unzip(path_to_zip: String, path_to_unzipped: String) -> void:
 			
 			var extract_path : String = path_to_unzipped + '/'
 			
-			da.make_dir(extract_path)
+			da.make_dir_recursive(extract_path)
 			
 			da = DirAccess.open(extract_path)
 			print(da)

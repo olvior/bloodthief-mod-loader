@@ -13,13 +13,13 @@ grow_vertical = 2
 script = ExtResource("1_x1kcx")
 
 [node name="FileDialog" type="FileDialog" parent="."]
-title = "Open a File"
+title = "Open a Directory"
 initial_position = 3
 size = Vector2i(1304, 180)
 current_screen = 0
-ok_button_text = "Open"
+ok_button_text = "Select Current Folder"
 dialog_hide_on_ok = true
-file_mode = 0
+file_mode = 2
 access = 2
 show_hidden_files = true
 use_native_dialog = true
@@ -112,6 +112,7 @@ offset_bottom = 602.0
 theme = ExtResource("1_b2vep")
 text = "..."
 
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="button_up" from="Path/VBoxContainer/HBoxContainer/MarginContainer/Open file dialogue" to="." method="_on_open_file_dialogue_button_up"]
 [connection signal="button_up" from="Manage mod loader/HBoxContainer/remove_ mod_loader" to="." method="_on_remove__mod_loader_button_up"]
