@@ -88,3 +88,8 @@ func _http_request_completed(result, _response_code, _headers, _body):
 	
 	if n_of_downloads == out_of:
 		move_mod_loader()
+
+
+func _on_file_dialog_dir_selected(dir: String) -> void:
+	main.path = dir
+	path_label.text = main.path
