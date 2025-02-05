@@ -5,6 +5,8 @@
 [ext_resource type="Script" path="res://addons/ModLoader/maps/map_level_loader.gd" id="3_qdax8"]
 [ext_resource type="Resource" uid="uid://57syh37w31ca" path="res://addons/ModLoader/maps/map_settings.tres" id="4_b2yif"]
 [ext_resource type="PackedScene" uid="uid://dhy2lak2xclva" path="res://scenes/player.tscn" id="5_n05at"]
+[ext_resource type="BankAsset" uid="uid://cf6kuu1tkaphm" path="res://addons/FMOD/editor/resources/banks/{5f938199-6098-49f5-b0dd-951f159503e8}.tres" id="4"]
+[ext_resource type="BankAsset" uid="uid://dn1xqiysffwo" path="res://addons/FMOD/editor/resources/banks/{404667d6-a74a-4f0f-a3fb-a332941082e9}.tres" id="5"]
 
 [sub_resource type="EventAsset" id="EventAsset_kqos5"]
 is_3d = true
@@ -80,6 +82,13 @@ config = SubResource("Resource_6daem")
 [node name="FuncGodotMap" type="Node3D" parent="." groups=["navigation_mesh_source_group"]]
 script = ExtResource("3_10dsc")
 map_settings = ExtResource("4_b2yif")
+
+[node name="StudioBankLoader" type="StudioBankLoader" parent="."]
+load_on = 1
+unload_on = 3
+num_banks = 2
+bank_0 = ExtResource("4")
+bank_1 = ExtResource("5")
 
 [node name="Player" parent="." instance=ExtResource("5_n05at")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 51.1124, 0)
