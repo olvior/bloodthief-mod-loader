@@ -93,3 +93,29 @@ func _http_request_completed(result, _response_code, _headers, _body):
 func _on_file_dialog_dir_selected(dir: String) -> void:
 	main.path = dir
 	path_label.text = main.path
+
+
+func _on_load_game_button_up() -> void:
+	error_label.text = "Launching Bloodthief..."
+	
+	var error_code : Error = OS.shell_open(main.path+"/bloodthief.exe")
+	
+	await error_code
+	
+	if error_code == OK:
+		error_label.text = "Bloodthief Running"
+	else:
+		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
+
+func _on_load_game_console_button_up() -> void:
+	error_label.text = "Launching Bloodthief..."
+	
+	var error_code : Error = OS.shell_open(main.path+"/bloodthief.console.exe")
+	
+	await error_code
+	
+	if error_code == OK:
+		error_label.text = "Bloodthief Running"
+	else:
+		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
+		error_label.text += "\nCheck Console for Errors."

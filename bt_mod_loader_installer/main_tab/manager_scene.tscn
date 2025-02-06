@@ -112,8 +112,36 @@ offset_bottom = 602.0
 theme = ExtResource("1_b2vep")
 text = "..."
 
+[node name="load_game" type="Button" parent="."]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 736.0
+offset_right = 176.0
+offset_bottom = 799.0
+size_flags_horizontal = 3
+focus_mode = 0
+theme = ExtResource("1_b2vep")
+theme_override_colors/font_color = Color(1, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 25
+text = "Launch Game"
+
+[node name="load_game_console" type="Button" parent="."]
+layout_mode = 2
+offset_left = 192.0
+offset_top = 736.0
+offset_right = 491.0
+offset_bottom = 799.0
+size_flags_horizontal = 3
+focus_mode = 0
+theme = ExtResource("1_b2vep")
+theme_override_colors/font_color = Color(1, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 25
+text = "Launch Game w/ Console"
+
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="button_up" from="Path/VBoxContainer/HBoxContainer/MarginContainer/Open file dialogue" to="." method="_on_open_file_dialogue_button_up"]
 [connection signal="button_up" from="Manage mod loader/HBoxContainer/remove_ mod_loader" to="." method="_on_remove__mod_loader_button_up"]
 [connection signal="button_up" from="Manage mod loader/HBoxContainer/install_mod_loader" to="." method="_on_install_mod_loader_button_up"]
+[connection signal="button_up" from="load_game" to="." method="_on_load_game_button_up"]
+[connection signal="button_up" from="load_game_console" to="." method="_on_load_game_console_button_up"]
