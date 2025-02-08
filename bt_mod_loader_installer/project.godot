@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Manager="*res://Manager.gd"
+Manager="*res://GlobalManager.gd"
 
 [display]
 

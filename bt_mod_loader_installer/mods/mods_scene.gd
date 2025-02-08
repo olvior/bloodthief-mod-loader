@@ -1,11 +1,12 @@
 extends Control
 
 var mods_dict :Dictionary= {}
+var database_mods_dict :Dictionary= {}
 var mod_scene :PackedScene= preload("res://mods/mod.tscn")
 
 func _ready():
 	scan_mod_folders()
-	
+	get_data("https://raw.githubusercontent.com/olvior/bloodthief-mod-list/main/list.json")
 	Manager.mods_scene = self
 
 func scan_mod_folders():
@@ -70,25 +71,29 @@ func parse_manifest(manifest_path):
 
 	mods_dict[manifest_data["namespace"] + "-" + manifest_data["name"]] = manifest_data
 
-func clear_mods_list() -> void:
-	for i : Node in $MarginContainer/ScrollContainer/VBoxContainer.get_children():
+func clear_mods_list(getContainer) -> void:
+	for i : Node in getContainer.get_children():
 		i.queue_free()
 
 func populate_mods_list():
-	clear_mods_list()
+	clear_mods_list($MarginContainer/ScrollContainer/VBoxContainer)
 	
 	print("Populating mod list...")
 	for mod in mods_dict.values():
-		add_mod_to_list(mod)
+		add_mod_to_list(mod, $MarginContainer/ScrollContainer/VBoxContainer)
 
-func add_mod_to_list(mod):
+func populate_database_mods_list():
+	clear_mods_list($ScrollContainer2/VBoxContainer)
+	
+	print("Populating database mod list...")
+	for mod in database_mods_dict.values():
+		add_mod_to_list(mod, $ScrollContainer2/VBoxContainer, true)
+
+func add_mod_to_list(mod, getContainer, fromDatabase :bool= false):
 	var new_mod_object :MarginContainer= mod_scene.instantiate()
-	$MarginContainer/ScrollContainer/VBoxContainer.add_child(new_mod_object)
-	new_mod_object.call("init", mod)
+	getContainer.add_child(new_mod_object)
+	new_mod_object.call("init", mod, fromDatabase)
 	print("Added mod to list:", mod.get("name_pretty", "Unknown"))
-
-func _on_install_button_up() -> void:
-	$FileDialog.visible = true
 
 func _on_file_dialog_dir_selected(dir: String) -> void:
 	var destination :String= Manager.main.path + "\\mods-unpacked"
@@ -142,3 +147,38 @@ func copy_directory(directory_path: String) -> void:
 		file_name = dir.get_next()
 
 	dir.list_dir_end()
+
+func get_data(link):
+	print("Downloading")
+	var http = HTTPRequest.new()
+	add_child(http)
+	http.connect("request_completed", _http_request_completed)
+	
+	var request = http.request(link)
+	if request != OK:
+		push_error("Http request error")
+
+func _http_request_completed(result, _response_code, _headers, body):
+	if result != OK:
+		push_error("Download Failed")
+		return
+	
+	database_mods_dict = JSON.parse_string(body.get_string_from_utf8())
+	populate_database_mods_list()
+	print("Downloaded")
+
+func _on_install_button_up() -> void:
+	if Manager.settings["viewed_local_mod_warning"]:
+		_on_accept_dialog_visibility_changed()
+		return
+	
+	$AcceptDialog.visible = true
+
+func _on_accept_dialog_visibility_changed() -> void:
+	if $AcceptDialog.visible: return
+	
+	if !Manager.settings["viewed_local_mod_warning"]:
+		Manager.settings["viewed_local_mod_warning"] = true
+		Manager.save_config()
+	
+	$FileDialog.visible = true

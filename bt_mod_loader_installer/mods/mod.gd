@@ -31,8 +31,30 @@ func check_if_installed():
 	elif DirAccess.dir_exists_absolute(mod_path + "_disabled"):
 		change_buttons(disabled_list)
 
+var my_path: String
+var my_disabled_path: String
+var is_disabled = false
+func check_if_database_installed():
+	my_path = main.path + "/mods/" + id + ".zip"
+	my_disabled_path = main.path + "/mods/disabled/" + id + ".zip"
+	
+	if FileAccess.file_exists(my_path):
+		is_installed = true
+		change_buttons(enabled_list)
+	
+	elif FileAccess.file_exists(my_disabled_path):
+		is_disabled = true
+		change_buttons(disabled_list)
+	
+	else:
+		change_buttons(uninstalled_list)
+	
+	
+	
+	if not is_installed:
+		$VBoxContainer/HBoxContainer/disable.disabled = true
 
-func init(new_manifest):
+func init(new_manifest, fromDatabase :bool= false):
 	manifest = new_manifest
 	id = manifest["namespace"] + "-" + manifest["name"]
 
@@ -42,24 +64,29 @@ func init(new_manifest):
 	#author_label.text = "Author(s): " + ", ".join(manifest.get("authors", []))
 	#tags_label.text = "Tags: " + ", ".join(manifest.get("tags", []))
 	description_label.text = manifest.get("description_rich", "No description available.")
-
-	check_if_installed()
+	
+	if fromDatabase:
+		check_if_database_installed()
+	else:
+		check_if_installed()
 
 func download(link: String, path: String):
 	var http = HTTPRequest.new()
 	add_child(http)
 	http.connect("request_completed", _http_request_completed)
-
+	printerr(path)
 	http.set_download_file(path)
 	var request = http.request(link)
 	if request != OK:
 		push_error("Http request error")
+	
+	Manager.mods_scene.scan_mod_folders()
 
 func _http_request_completed(result, _response_code, _headers, _body):
 	if result != OK:
 		push_error("Download Failed")
 	else:
-		change_buttons(enabled_list)
+		check_if_database_installed()
 
 func change_buttons(button_list: Array[bool]):
 	install_button.disabled = button_list[0]
@@ -68,7 +95,8 @@ func change_buttons(button_list: Array[bool]):
 	enable_button.disabled = button_list[3]
 
 func _on_install_button_up():
-	download(manifest["download"], mod_path)
+	download(manifest["download"], my_path)
+	#Manager.mods_scene.populate_database_mods_list()
 
 func _on_disable_button_up():
 	if DirAccess.rename_absolute(mod_path, mod_path + "_disabled"):
