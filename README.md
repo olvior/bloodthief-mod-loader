@@ -1,7 +1,8 @@
 # Mod loader for Bloodthief (Demo)
 
-This is a fork of ['Olvior's Mod/Map Loader'](https://github.com/olvior/bloodthief-mod-loader/tree/map_loading_minimal), that simply restores the Mod Support
-and makes it better. Do be advised that Mods could contain malicous code, so please make sure you're downloading them from Trusted Sources and check their source code.
+This is a fork of ['Olvior's Mod/Map Loader'](https://github.com/olvior/bloodthief-mod-loader/tree/map_loading_minimal), that simply restores the Mod Support and allows you to install mods locally
+
+## Do be advised that Mods could contain malicous code, so please make sure you're downloading them from Trusted Sources and check their source code.
 
 Contents:
 
