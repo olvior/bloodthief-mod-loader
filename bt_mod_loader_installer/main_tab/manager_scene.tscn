@@ -133,6 +133,7 @@ offset_right = 491.0
 offset_bottom = 799.0
 size_flags_horizontal = 3
 tooltip_text = "Disabled for now"
+
 focus_mode = 0
 theme = ExtResource("1_b2vep")
 theme_override_colors/font_color = Color(1, 0.976471, 1, 1)

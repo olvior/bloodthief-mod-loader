@@ -27,7 +27,8 @@ func _ready():
 		var data_dir_split = data_dir.rsplit("/") # ["", "home", "home", ".local", "share"]
 		var home_dir = "/" + data_dir_split[1] + "/" + data_dir_split[2] + "/" # /home/home/
 		probably_path = home_dir + probably_path
-
+	$load_game_console.disabled = true
+	$load_game_console.tooltip_text = "Disabled for now"
 
 	var dir = DirAccess.open(probably_path)
 
@@ -105,20 +106,6 @@ func _on_load_game_button_up() -> void:
 	else:
 		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
 
-
-var terminal_paths = [
-	"x-terminal-emulator",
-	"gnome-terminal",
-	"konsole",
-	"xfce4-terminal",
-	"alacritty",
-	"lxterminal",
-	"mate-terminal",
-	"terminator",
-	"urxvt",
-	"rxvt"
-]
-
 func _on_load_game_console_button_up() -> void:
 	error_label.text = "Launching Bloodthief..."
 	var error_code
@@ -142,3 +129,17 @@ func _on_load_game_console_button_up() -> void:
 	else:
 		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
 	
+
+func _on_load_game_console_button_up() -> void:
+	error_label.text = "Launching Bloodthief..."
+	
+	var error_code : Error = OS.shell_open(main.path+"/bloodthief.console.exe")
+	
+	await error_code
+	
+	if error_code == OK:
+		error_label.text = "Bloodthief Running"
+	else:
+		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
+		error_label.text += "\nCheck Console for Errors."
+
