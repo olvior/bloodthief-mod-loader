@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cy0mev45n45cm"]
+[gd_scene load_steps=3 format=3 uid="uid://cy0mev45n45cm"]
 
 [ext_resource type="Script" path="res://mods/mods_scene.gd" id="1_e62wr"]
+[ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://assets/text.tres" id="2_746ni"]
 
 [node name="mods_scene" type="Control"]
 layout_mode = 3
@@ -30,6 +31,36 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 0.25
 theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 752.0
+offset_right = 653.0
+offset_bottom = 809.0
+theme = ExtResource("2_746ni")
+theme_override_font_sizes/font_size = 23
+text = "Note: Please check the mods you download and make sure they're safe!"
+autowrap_mode = 3
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+position = Vector2i(0, 36)
+size = Vector2i(641, 480)
+popup_window = true
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[node name="Install" type="Button" parent="."]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 28.0
+theme = ExtResource("2_746ni")
+theme_override_font_sizes/font_size = 21
+text = "Install Mod(s)"
+
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
+[connection signal="button_up" from="Install" to="." method="_on_install_button_up"]

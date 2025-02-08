@@ -6,7 +6,7 @@ var my_path: String
 var my_disabled_path: String
 var is_installed: bool
 var is_disabled: bool
-@onready var main = get_tree().get_root().get_child(0)
+@onready var main = Manager.main
 @onready var debug_label: Label = main.current_tab_node.debug_label
 
 @onready var install_button: Button = $VBoxContainer/HBoxContainer/install

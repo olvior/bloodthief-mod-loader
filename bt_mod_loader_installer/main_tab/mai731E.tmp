@@ -1,0 +1,127 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7r31u1rwjl2q"]
+
+[ext_resource type="Script" path="res://main_tab/main.gd" id="1_5hoyq"]
+[ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://assets/text.tres" id="1_mp33n"]
+[ext_resource type="PackedScene" uid="uid://bv3jjkqkmgmm1" path="res://main_tab/manager_scene.tscn" id="3_ji723"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jqm1"]
+bg_color = Color(0, 0.015, 0.1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ude4a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kqu2b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pwv2h"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5hoyq")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6jqm1")
+
+[node name="Title" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 79.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MarginContainer2" type="MarginContainer" parent="Title"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Title/MarginContainer2"]
+layout_mode = 2
+theme = ExtResource("1_mp33n")
+theme_override_font_sizes/font_size = 27
+text = "Font by Hewett Tsoi"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Title"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 305
+theme_override_constants/margin_right = 465
+
+[node name="Label" type="Label" parent="Title/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_mp33n")
+theme_override_font_sizes/font_size = 50
+text = "Bloodthief Mod Loader"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="MarginContainer3" type="MarginContainer" parent="Title"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 1015
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Title/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LoaderTab" type="Button" parent="Title/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_mp33n")
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ude4a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kqu2b")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
+text = "Loader"
+
+[node name="ModsTab" type="Button" parent="Title/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_mp33n")
+theme_override_colors/font_hover_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ude4a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kqu2b")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
+text = "Mods"
+
+[node name="MapsTab" type="Button" parent="Title/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_mp33n")
+theme_override_colors/font_hover_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ude4a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kqu2b")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
+text = "Maps"
+
+[node name="Manager" parent="." instance=ExtResource("3_ji723")]
+layout_mode = 1
+mouse_filter = 2
+
+[connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/LoaderTab" to="." method="_on_tab_button_down" binds= [0]]
+[connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/ModsTab" to="." method="_on_tab_button_down" binds= [1]]
+[connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/MapsTab" to="." method="_on_tab_button_down" binds= [2]]

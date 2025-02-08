@@ -8,10 +8,13 @@ extends Control
 var current_tab_index = 0
 var main_nodes = [
 					preload("res://main_tab/manager_scene.tscn"),
-					preload("res://mods/mods_scene.tscn"),
+					preload("res://mods/mods_scene_not_here.tscn"),
 					preload("res://maps/maps_scene.tscn"),
 				]
 var path
+
+func _ready() -> void:
+	Manager.main = self
 
 func set_button_theme_on(button: Button):
 	button.add_theme_color_override("font_color", Color("ffffff"))
