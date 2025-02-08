@@ -106,6 +106,19 @@ func _on_load_game_button_up() -> void:
 	else:
 		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
 
+var terminal_paths = [
+	"x-terminal-emulator",
+	"gnome-terminal",
+	"konsole",
+	"xfce4-terminal",
+	"alacritty",
+	"lxterminal",
+	"mate-terminal",
+	"terminator",
+	"urxvt",
+	"rxvt"
+]
+
 func _on_load_game_console_button_up() -> void:
 	error_label.text = "Launching Bloodthief..."
 	var error_code
