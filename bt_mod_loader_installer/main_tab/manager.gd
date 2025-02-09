@@ -141,5 +141,3 @@ func _on_load_game_console_button_up() -> void:
 		error_label.text = "Bloodthief Running"
 	else:
 		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
-
-

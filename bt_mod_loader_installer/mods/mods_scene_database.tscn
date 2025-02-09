@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy0mev45n45cm"]
+
+[ext_resource type="Script" path="res://mods/mods_scene_database.gd" id="1_ffpfc"]
+[ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://assets/text.tres" id="2_logvx"]
+
+[node name="mods_scene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ffpfc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 0.25
+theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 752.0
+offset_right = 653.0
+offset_bottom = 809.0
+theme = ExtResource("2_logvx")
+theme_override_font_sizes/font_size = 23
+text = "Note: Please check the mods you download and make sure they're safe!"
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 93.0
+offset_right = 276.0
+offset_bottom = 116.0
+theme = ExtResource("2_logvx")
+theme_override_font_sizes/font_size = 23
+text = "Database Mods"
+autowrap_mode = 3

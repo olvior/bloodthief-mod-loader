@@ -1,16 +1,21 @@
 extends Control
 
-@onready var tab_buttons: Array[Control] = [$Title/MarginContainer3/HBoxContainer/LoaderTab,
-											$Title/MarginContainer3/HBoxContainer/ModsTab,
-											$Title/MarginContainer3/HBoxContainer/MapsTab]
+@onready var tab_buttons: Array[Control] = [
+	$Title/MarginContainer3/HBoxContainer/LoaderTab,
+	$Title/MarginContainer3/HBoxContainer/ModsTab,
+	$Title/MarginContainer3/HBoxContainer/ModsTabLocal,
+	$Title/MarginContainer3/HBoxContainer/MapsTab
+]
 @onready var current_tab_node: Control = $Manager
 
 var current_tab_index = 0
 var main_nodes = [
-					preload("res://main_tab/manager_scene.tscn"),
-					preload("res://mods/mods_scene_not_here.tscn"),
-					preload("res://maps/maps_scene.tscn"),
-				]
+	preload("res://main_tab/manager_scene.tscn"),
+	preload("res://mods/mods_scene_database.tscn"),
+	preload("res://mods/mods_scene_local.tscn"),
+	preload("res://maps/maps_scene.tscn"),
+]
+
 var path
 
 func _ready() -> void:

@@ -6,7 +6,6 @@ var mod_scene :PackedScene= preload("res://mods/mod.tscn")
 
 func _ready():
 	scan_mod_folders()
-	get_data("https://raw.githubusercontent.com/olvior/bloodthief-mod-list/main/list.json")
 	Manager.mods_scene = self
 
 func scan_mod_folders():
@@ -82,13 +81,6 @@ func populate_mods_list():
 	for mod in mods_dict.values():
 		add_mod_to_list(mod, $MarginContainer/ScrollContainer/VBoxContainer)
 
-func populate_database_mods_list():
-	clear_mods_list($ScrollContainer2/VBoxContainer)
-	
-	print("Populating database mod list...")
-	for mod in database_mods_dict.values():
-		add_mod_to_list(mod, $ScrollContainer2/VBoxContainer, true)
-
 func add_mod_to_list(mod, getContainer, fromDatabase :bool= false):
 	var new_mod_object :MarginContainer= mod_scene.instantiate()
 	getContainer.add_child(new_mod_object)
@@ -147,25 +139,6 @@ func copy_directory(directory_path: String) -> void:
 		file_name = dir.get_next()
 
 	dir.list_dir_end()
-
-func get_data(link):
-	print("Downloading")
-	var http = HTTPRequest.new()
-	add_child(http)
-	http.connect("request_completed", _http_request_completed)
-	
-	var request = http.request(link)
-	if request != OK:
-		push_error("Http request error")
-
-func _http_request_completed(result, _response_code, _headers, body):
-	if result != OK:
-		push_error("Download Failed")
-		return
-	
-	database_mods_dict = JSON.parse_string(body.get_string_from_utf8())
-	populate_database_mods_list()
-	print("Downloaded")
 
 func _on_install_button_up() -> void:
 	if Manager.settings["viewed_local_mod_warning"]:
