@@ -22,9 +22,14 @@ var enabled_list: Array[bool] = [true, false, false, true]
 var disabled_list: Array[bool] = [true, false, true, false]
 var uninstalled_list: Array[bool] = [false, true, true, true]
 
+var no_format_check: bool = false
 func check_if_installed():
-	my_path = main.path + "/maps/" + id
-	my_disabled_path = main.path + "/maps/disabled/" + id
+	if not no_format_check:
+		my_path = main.path + "/maps/" + id
+		my_disabled_path = main.path + "/maps/disabled/" + id
+	else:
+		my_path = main.path + "/maps/" + manifest["name"]
+		my_disabled_path = main.path + "/maps/disabled/" + manifest["name"]
 	
 	if DirAccess.dir_exists_absolute(my_path):
 		is_installed = true
@@ -39,6 +44,10 @@ func check_if_installed():
 	
 	if not is_installed:
 		$VBoxContainer/HBoxContainer/disable.disabled = true
+		
+		if not no_format_check:
+			no_format_check = true
+			check_if_installed()
 	
 
 func init(new_manifest):
