@@ -13,10 +13,12 @@ var is_installed: bool
 @onready var enable_button: Button = $VBoxContainer/HBoxContainer/enable
 
 @onready var name_label: Label = $VBoxContainer/name
-@onready var version_label: Label = $VBoxContainer/version
-@onready var author_label: Label = $VBoxContainer/authors
-@onready var tags_label: Label = $VBoxContainer/tags
+#@onready var version_label: Label = $VBoxContainer/version
+#@onready var author_label: Label = $VBoxContainer/authors
+#@onready var tags_label: Label = $VBoxContainer/tags
 @onready var description_label: Label = $VBoxContainer/description
+
+var from_database = true
 
 var enabled_list: Array[bool] = [true, false, false, true]
 var disabled_list: Array[bool] = [true, false, true, false]
@@ -54,7 +56,8 @@ func check_if_database_installed():
 	if not is_installed:
 		$VBoxContainer/HBoxContainer/disable.disabled = true
 
-func init(new_manifest, fromDatabase :bool= false):
+func init(new_manifest, fromDatabase: bool):
+	from_database = fromDatabase
 	manifest = new_manifest
 	id = manifest["namespace"] + "-" + manifest["name"]
 
@@ -65,7 +68,7 @@ func init(new_manifest, fromDatabase :bool= false):
 	#tags_label.text = "Tags: " + ", ".join(manifest.get("tags", []))
 	description_label.text = manifest.get("description_rich", "No description available.")
 	
-	if fromDatabase:
+	if from_database:
 		check_if_database_installed()
 	else:
 		check_if_installed()
@@ -99,17 +102,33 @@ func _on_install_button_up():
 	#Manager.mods_scene.populate_database_mods_list()
 
 func _on_disable_button_up():
-	if DirAccess.rename_absolute(mod_path, mod_path + "_disabled"):
-		change_buttons(disabled_list)
+	if from_database:
+		DirAccess.rename_absolute(my_path, my_disabled_path)
+	
+	else:
+		DirAccess.rename_absolute(mod_path, mod_path + "_disabled")
+	
+	change_buttons(disabled_list)
 
 func _on_enable_button_up():
-	if DirAccess.rename_absolute(mod_path + "_disabled", mod_path):
-		change_buttons(enabled_list)
+	if from_database:
+		DirAccess.rename_absolute(my_disabled_path, my_path)
+	
+	else:
+		DirAccess.rename_absolute(mod_path + "_disabled", mod_path)
+	
+	change_buttons(enabled_list)
 
 func _on_uninstall_button_up():
-	print(mod_path)
-	OS.move_to_trash(mod_path)
+	print(my_path)
+	if from_database:
+		OS.move_to_trash(my_path)
+	
+	else:
+		OS.move_to_trash(mod_path)
+		Manager.mods_scene.populate_mods_list()
+		(Manager.mods_scene.mods_dict as Dictionary).erase(id)
+	
+	
 	change_buttons(uninstalled_list)
 	is_installed = false
-	Manager.mods_scene.populate_mods_list()
-	(Manager.mods_scene.mods_dict as Dictionary).erase(id)
