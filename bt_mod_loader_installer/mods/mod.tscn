@@ -7,6 +7,8 @@
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -581.0
+offset_bottom = -624.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
@@ -17,7 +19,7 @@ script = ExtResource("2_t5vt0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 0
 
 [node name="name" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -25,6 +27,14 @@ size_flags_vertical = 1
 theme = ExtResource("1_6qsjx")
 theme_override_font_sizes/font_size = 60
 text = "Mod name"
+vertical_alignment = 1
+
+[node name="authors" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1_6qsjx")
+theme_override_font_sizes/font_size = 20
+text = "Author"
 vertical_alignment = 1
 
 [node name="description" type="Label" parent="VBoxContainer"]

@@ -57,7 +57,7 @@ vertical_alignment = 2
 [node name="MarginContainer" type="MarginContainer" parent="Title"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 395
+theme_override_constants/margin_left = 305
 theme_override_constants/margin_right = 465
 
 [node name="Label" type="Label" parent="Title/MarginContainer"]
@@ -105,19 +105,6 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_kqu2b")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
 text = "Mods"
 
-[node name="ModsTabLocal" type="Button" parent="Title/MarginContainer3/HBoxContainer"]
-layout_mode = 2
-focus_mode = 0
-theme = ExtResource("1_mp33n")
-theme_override_colors/font_hover_color = Color(0.341176, 0.341176, 0.341176, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_color = Color(0.341176, 0.341176, 0.341176, 1)
-theme_override_font_sizes/font_size = 30
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ude4a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_kqu2b")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_pwv2h")
-text = "Local"
-
 [node name="MapsTab" type="Button" parent="Title/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
@@ -137,5 +124,4 @@ mouse_filter = 2
 
 [connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/LoaderTab" to="." method="_on_tab_button_down" binds= [0]]
 [connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/ModsTab" to="." method="_on_tab_button_down" binds= [1]]
-[connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/ModsTabLocal" to="." method="_on_tab_button_down" binds= [2]]
-[connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/MapsTab" to="." method="_on_tab_button_down" binds= [3]]
+[connection signal="button_down" from="Title/MarginContainer3/HBoxContainer/MapsTab" to="." method="_on_tab_button_down" binds= [2]]

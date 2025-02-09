@@ -47,7 +47,7 @@ func _on_remove__mod_loader_button_up():
 
 var n_of_downloads
 var out_of
-var loader_download_url = "https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/mod_loader_maps_only.zip"
+var loader_download_url = "https://github.com/carlosfruitcup/bloodthief-mod-loader/releases/download/modaddon/mod_map_loader.zip"
 func _on_install_mod_loader_button_up():
 	n_of_downloads = 0
 	out_of = 0
@@ -106,15 +106,38 @@ func _on_load_game_button_up() -> void:
 	else:
 		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
 
+var terminal_paths = [
+	"x-terminal-emulator",
+	"gnome-terminal",
+	"konsole",
+	"xfce4-terminal",
+	"alacritty",
+	"lxterminal",
+	"mate-terminal",
+	"terminator",
+	"urxvt",
+	"rxvt"
+]
+
 func _on_load_game_console_button_up() -> void:
 	error_label.text = "Launching Bloodthief..."
+	var error_code
 	
-	var error_code : Error = OS.shell_open(main.path+"/bloodthief.console.exe")
 	
-	await error_code
 	
-	if error_code == OK:
+	print(OS.get_name())
+	
+	if OS.get_name().contains("Windows"):
+		error_code = OS.execute("cmd.exe", ["-c",main.path + "/bloodthief.console"], [], true, true)
+	elif OS.get_name().contains("Linux") || OS.get_name().contains("BSD"):
+		for terminal in terminal_paths:
+			error_code = OS.execute("bash", ["-c", "steam steam://rungameid/2941730"])
+			if error_code == OK:
+				break  # Stop after the first successful launch
+	
+	print(error_code)
+	
+	if error_code != -1:
 		error_label.text = "Bloodthief Running"
 	else:
 		error_label.text = "Something went wrong. \nError Code: " + str(error_code)
-		error_label.text += "\nCheck Console for Errors."

@@ -1,2 +1,5 @@
 bt_mod_loader_installer/.godot
 bt_mod_loader_installer/export_presets.cfg
+*.import
+*.import
+/bt_mod_loader_installer/exports

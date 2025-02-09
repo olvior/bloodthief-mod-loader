@@ -6,7 +6,7 @@ var my_path: String
 var my_disabled_path: String
 var is_installed: bool
 var is_disabled: bool
-@onready var main = get_tree().get_root().get_child(0)
+@onready var main = Manager.main
 @onready var debug_label: Label = main.current_tab_node.debug_label
 
 @onready var install_button: Button = $VBoxContainer/HBoxContainer/install
@@ -14,13 +14,22 @@ var is_disabled: bool
 @onready var disable_button: Button = $VBoxContainer/HBoxContainer/disable
 @onready var enable_button: Button = $VBoxContainer/HBoxContainer/enable
 
+@onready var name_label: Label = $VBoxContainer/name
+@onready var author_label: Label = $VBoxContainer/authors
+@onready var description_label: Label = $VBoxContainer/description
+
 var enabled_list: Array[bool] = [true, false, false, true]
 var disabled_list: Array[bool] = [true, false, true, false]
 var uninstalled_list: Array[bool] = [false, true, true, true]
 
+var no_format_check: bool = false
 func check_if_installed():
-	my_path = main.path + "/maps/" + id
-	my_disabled_path = main.path + "/maps/disabled/" + id
+	if not no_format_check:
+		my_path = main.path + "/maps/" + id
+		my_disabled_path = main.path + "/maps/disabled/" + id
+	else:
+		my_path = main.path + "/maps/" + manifest["name"]
+		my_disabled_path = main.path + "/maps/disabled/" + manifest["name"]
 	
 	if DirAccess.dir_exists_absolute(my_path):
 		is_installed = true
@@ -35,13 +44,19 @@ func check_if_installed():
 	
 	if not is_installed:
 		$VBoxContainer/HBoxContainer/disable.disabled = true
+		
+		if not no_format_check:
+			no_format_check = true
+			check_if_installed()
 	
 
 func init(new_manifest):
 	manifest = new_manifest
 	id = manifest["namespace"] + "-" + manifest["name"]
-	$VBoxContainer/name.text = manifest["name_pretty"]
-	$VBoxContainer/description.text = manifest["description"]
+	name_label.text = manifest["name_pretty"]
+	description_label.text = manifest["description"]
+	author_label.text = "Author(s): " + ", ".join(manifest.get("authors", []))
+	
 	check_if_installed()
 
 

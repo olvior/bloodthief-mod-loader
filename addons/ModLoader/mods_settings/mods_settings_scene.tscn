@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://c37u6ka0q6r7n"]
+
+[ext_resource type="Theme" uid="uid://bb7h7n8r6jn5t" path="res://themes/main_theme.tres" id="1_7mfsd"]
+[ext_resource type="PackedScene" uid="uid://dhwryvc1vh2jg" path="res://addons/ModLoader/mods_settings/button_generic.tscn" id="2_xs11v"]
+
+[node name="ModsSettingsScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7mfsd")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 201
+text = "Mods"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 200
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 40
+
+[node name="BackButton" parent="MarginContainer/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_xs11v")]
+layout_mode = 2
+text = "Back"

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dhwryvc1vh2jg"]
+
+[node name="Button" type="Button"]
+size_flags_horizontal = 4
+text = "button text"

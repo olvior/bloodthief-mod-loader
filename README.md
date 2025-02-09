@@ -1,15 +1,31 @@
-# Mod loader for Bloodthief (Playtest)
+# Mod loader for Bloodthief (Demo)
 
-This is a map loader for Bloodthief
+This is a Map/Mod Loader for Bloodthief Demo.
+
+## Do be advised that Mods could contain malicious code, so please make sure you're downloading them from Trusted Sources and check their source code.
 
 Contents:
+
 - [Get started making a map](#get-started-making-a-map)
 - [How to load your map](#how-to-load-your-map)
 - [How to use TrenchBroom](#how-to-use-trenchbroom)
 - [More advanced map creation](#more-advanced-map-creation)
 - [Uploading or sharing maps](#uploading-or-sharing-maps)
+- [How to create a Mod](#how-to-create-a-mod)
 - [Ending notes](#ending-notes)
 
+
+## How does it work?
+
+The mod loader is made up of two main parts: The `override.cfg` file and `addons/ModLoader/mod_loader.gd` file.
+
+The `override.cfg` essentially acts like another `project.godot`, except it will override the settings in the original `project.godot` if there is overlap.
+
+The only thing the `override.cfg` file does is it creates an autoload that launches the `mod_loader.gd` script.
+
+Once that script is launched, it searches through the `mods/` folder in the game's base directory for zip files that are mods, and in the `mods-unpacked/` folder for mods that are not zipped. Zips are for sharing them, and the unpacked ones are for development.
+
+The script then creates a child node for each mod found and also calls the `init()` function.
 
 ## Get started making a map
 
@@ -48,7 +64,7 @@ But the basics are you can create shapes and give them textures to make the geom
 
 Then for single point entities you drag them in from the side bar, these include enemies and keys.
 
-Then for areas you right click on a piece of geometry, click add brush entites, and whatever you want, for example a checkpoint area.
+Then for areas you right click on a piece of geometry, click add brush entities, and whatever you want, for example a checkpoint area.
 
 On the side, for each entity, there key value pairs to edit, for example for a checkpoint area you edit the checkpoint index.
 
@@ -99,9 +115,26 @@ To upload it to the mod loader installer, upload the zip to github (or elsewhere
 
 Once that pull request has been merged the map will be downloadable.
 
+
+## How to create a mod:
+
+Create a folder with the structure `namespace-mod_name`, this is also your mod's id or name.
+
+Within that folder create a `manifest.json` using the template found [here](https://github.com/olvior/bloodthief-mod-list/blob/main/manifest_template.json).
+
+Then also create a `mod_main.gd` which needs to extend `res://ModLoader/mod_node.gd`, it should inherit from `"res://addons/ModLoader/mod_node.gd"`.
+
+Then you can run whatever code you want!
+
+Your mod's files can be found at the variable `path_to_dir`.
+
+There are a few helpful functions that you can use, `ModLoader.mod_log('text')` to log something in a separate file. You can create a new input easily. Check `addons/ModLoader/mod_node.gd` for the details.
+
+You can also make settings that can be changed in game (wip) with the `Settings` class, check the example infinite blood mod to see how.
+
 ## Ending notes
 
 Feel free to help develop the mod loader itself or the mod installer.
 
-Everything that I made is open source so you're free to do whatever, however Blargis's assets are copyrighted by him.
+Everything that we made here is open source so you're free to do whatever, however Blargis's assets are copyrighted by him.
 
