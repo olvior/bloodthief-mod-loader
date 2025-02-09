@@ -14,6 +14,10 @@ var is_disabled: bool
 @onready var disable_button: Button = $VBoxContainer/HBoxContainer/disable
 @onready var enable_button: Button = $VBoxContainer/HBoxContainer/enable
 
+@onready var name_label: Label = $VBoxContainer/name
+@onready var author_label: Label = $VBoxContainer/authors
+@onready var description_label: Label = $VBoxContainer/description
+
 var enabled_list: Array[bool] = [true, false, false, true]
 var disabled_list: Array[bool] = [true, false, true, false]
 var uninstalled_list: Array[bool] = [false, true, true, true]
@@ -40,8 +44,10 @@ func check_if_installed():
 func init(new_manifest):
 	manifest = new_manifest
 	id = manifest["namespace"] + "-" + manifest["name"]
-	$VBoxContainer/name.text = manifest["name_pretty"]
-	$VBoxContainer/description.text = manifest["description"]
+	name_label.text = manifest["name_pretty"]
+	description_label.text = manifest["description"]
+	author_label.text = "Author(s): " + ", ".join(manifest.get("authors", []))
+	
 	check_if_installed()
 
 

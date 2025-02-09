@@ -29,6 +29,14 @@ theme_override_font_sizes/font_size = 60
 text = "Mod name"
 vertical_alignment = 1
 
+[node name="authors" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1_6qsjx")
+theme_override_font_sizes/font_size = 20
+text = "Author"
+vertical_alignment = 1
+
 [node name="description" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1

@@ -14,7 +14,7 @@ var is_installed: bool
 
 @onready var name_label: Label = $VBoxContainer/name
 #@onready var version_label: Label = $VBoxContainer/version
-#@onready var author_label: Label = $VBoxContainer/authors
+@onready var author_label: Label = $VBoxContainer/authors
 #@onready var tags_label: Label = $VBoxContainer/tags
 @onready var description_label: Label = $VBoxContainer/description
 
@@ -64,7 +64,7 @@ func init(new_manifest, fromDatabase: bool):
 	# Display mod info
 	name_label.text = manifest.get("name_pretty", "Unknown Mod")
 #	version_label.text = "Version: " + manifest.get("version_number", "Unknown")
-	#author_label.text = "Author(s): " + ", ".join(manifest.get("authors", []))
+	author_label.text = "Author(s): " + ", ".join(manifest.get("authors", []))
 	#tags_label.text = "Tags: " + ", ".join(manifest.get("tags", []))
 	description_label.text = manifest.get("description_rich", "No description available.")
 	
