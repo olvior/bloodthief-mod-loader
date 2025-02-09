@@ -37,12 +37,13 @@ theme_override_constants/separation = 40
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
+offset_left = 10.0
 offset_top = 752.0
-offset_right = 653.0
+offset_right = 663.0
 offset_bottom = 809.0
 theme = ExtResource("2_logvx")
 theme_override_font_sizes/font_size = 23
-text = "Note: Please check the mods you download and make sure they're safe!"
+text = "Note: These mods are vetted and are probably safe, but there is still a risk to installing them"
 autowrap_mode = 3
 
 [node name="Label3" type="Label" parent="."]
