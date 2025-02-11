@@ -1,0 +1,7 @@
+The textures and assets contained in this folder are the intellectual property of Blargis 
+and are protected under copyright law. These files are provided for the purpose of creating 
+modifications (mods) exclusively for the game "Bloodthief". Any use of these textures outside 
+of this context, including but not limited to redistribution, resale, or use in other games 
+or projects, is strictly prohibited without prior written consent from Blargis.
+
+2024 Blargis. All rights reserved
