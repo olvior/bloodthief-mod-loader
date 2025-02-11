@@ -1,48 +1,48 @@
-@PointClass color(213 213 0) size(-8 -8 -8, 8 8 8) = vt_torch : "Will instance as a torch scene" 
+@PointClass color(213 213 0) size(-8 -8 -8, 8 8 8) = vt_torch : "Will be a torch in-game. Rotating the torch will affect the direction of its light" 
 [
 	mangle(string) : "" : "0 0 0"
 ]
 
-@PointClass color(218 0 218) size(-8 -8 -8, 8 8 8) = vt_portcullis : "Will be a portcullis in game" 
+@PointClass color(218 0 218) size(-8 -8 -8, 8 8 8) = vt_portcullis : "Will be a portcullis in-game"
 [
 	mangle(string) : "" : "0 0 0"
 ]
 
-@SolidClass color(204 204 204) = vt_lava : "This is lava in Godot and will hurt the player" []
+@SolidClass color(204 204 204) = vt_lava : "This is lava in-game and will hurt the player" []
 
-@PointClass color(255 0 0) size(-8 -8 -8, 8 8 8) base(Target) = vt_generic_knight : "A normal knight" 
+@PointClass color(255 0 0) size(-8 -8 -8, 8 8 8) base(Target) = vt_generic_knight : "A footsoldier knight" 
 [
 	dont_spawn_after_checkpoint(integer) : "" : 999
 	mangle(string) : "" : "0 0 0"
 ]
 
-@PointClass color(213 86 0) size(-4 -4 -4, 4 4 4) = vt_lever : "Will instance as a lever scene" 
+@PointClass color(213 86 0) size(-4 -4 -4, 4 4 4) = vt_lever : "Will a lever in-game. Press the 'E' key to trigger it" 
 [
 	mangle(string) : "" : "0 0 0"
 	required_keys_comma_sep(string) : "" : ""
 	target(string) : "" : ""
 ]
 
-@SolidClass color(204 204 204) = vt_water : "This is water in Godot" []
+@SolidClass color(204 204 204) = vt_water : "This is water in-game" []
 
-@PointClass color(245 245 177) size(-8 -8 -8, 8 8 8) = vt_sup_light : "vt_sup_light" 
+@PointClass color(245 245 177) size(-8 -8 -8, 8 8 8) = vt_sup_light : "A bright light" 
 [
 	mangle(string) : "" : "0 0 0"
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) base(Target) = vt_health_pickup : "A blood vial" 
-[
-	mangle(string) : "" : "0 0 0"
-	target(string) : "" : ""
-]
-
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_bow_pickup : "A crossbow" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) base(Target) = vt_health_pickup : "A blood vial that will fill the player's blood meter" 
 [
 	mangle(string) : "" : "0 0 0"
 	target(string) : "" : ""
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_sword_pickup : "A sword (doesn't do anything)" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_bow_pickup : "A crossbow. Press the 'F' key to fire arrows from it in-game" 
+[
+	mangle(string) : "" : "0 0 0"
+	target(string) : "" : ""
+]
+
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_sword_pickup : "A sword (currently has no function)" 
 [
 	mangle(string) : "" : "0 0 0"
 	target(string) : "" : ""
@@ -50,15 +50,15 @@
 
 @SolidClass color(204 204 204) base(Breakable, GlobalIllumination) = vt_breakable : "vt_breakable" []
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_slide_pickup : "A super slide powerup" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_slide_pickup : "Activates the super slide powerup" 
 [
 	mangle(string) : "" : "0 0 0"
 	target(string) : "" : ""
 ]
 
-@SolidClass color(204 204 204) = vt_secret_area : "A secret trigger" []
+@SolidClass color(204 204 204) = vt_secret_area : "Triggers the 'secret' toast and counts towards one of the map's secrets" []
 
-@SolidClass color(204 204 204) base(func_detail) = vt_end_level_area : "The end of the level" []
+@SolidClass color(204 204 204) base(func_detail) = vt_end_level_area : "Triggers the end of the level on interaction" []
 
 @SolidClass color(204 204 204) base(Toast) = vt_toast_area : "vt_toast_area" 
 [
@@ -66,7 +66,7 @@
 	toast_text(string) : "" : ""
 ]
 
-@SolidClass color(204 204 204) base(func_detail_illusionary) = vt_checkpoint_area : "A checkpoint area" 
+@SolidClass color(204 204 204) base(func_detail_illusionary) = vt_checkpoint_area : "The player will respawn in this area" 
 [
 	angle(float) : "" : "0"
 	checkpoint_index(integer) : "" : 0
@@ -79,25 +79,25 @@
 	mangle(string) : "" : "0 0 0"
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_arrow_pickup : "vt_arrow_pickup" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_arrow_pickup : "Gives the player arrows on pick up. The default arrow count is '3'" 
 [
 	arrow_count(integer) : "" : 3
 	target(string) : "" : ""
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) base(Target) = vt_key_pickup : "A key" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) base(Target) = vt_key_pickup : "A key. Collecting it will trigger a 'pick up' toast and unlock a locked door" 
 [
 	key_name(string) : "" : ""
 	pick_up_message(string) : "" : ""
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_bouncy_dash_pickup : "vt_bouncy_dash_pickup" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_bouncy_dash_pickup : "Activates the bouncy air-dash pickup" 
 [
 	mangle(string) : "" : "0 0 0"
 	target(string) : "" : ""
 ]
 
-@SolidClass color(204 204 204) base(Target) = vt_trigger_area : "A trigger area used to make something happen" 
+@SolidClass color(204 204 204) base(Target) = vt_trigger_area : "A trigger area used to make something happen, most commonly with key pick ups" 
 [
 	required_keys_comma_sep(string) : "List of keys required" : ""
 	trigger_dependency_count(integer) : "" : 0
@@ -107,15 +107,15 @@
 @SolidClass base(Target, GlobalIllumination, PositionMod) = vt_mover : "For things that move" 
 [
 	auto_move_after_checkpoint(integer) : "Automaticaly moves after a checkpoint, leave at 999 for nothing" : 999
-	duration(float) : "How long the move takes (seconds)" : "1"
+	duration(float) : "Movement time (seconds)" : "1"
 	end_motion_target(string) : "" : ""
 	move_delay(float) : "Delay" : "0"
 	start_motion_target(string) : "" : ""
 	translation(string) : "How it will change" : "0 0 0"
-  targetname(string) : "The name of this thing so it can get triggered" : ""
+  targetname(string) : "The name of the triggered target" : ""
 ]
 
-@SolidClass color(204 204 204) base(Func, Surface) = func_geo : "Static geometry entity." 
+@SolidClass color(204 204 204) base(Func, Surface) = func_geo : "Static geometry entity" 
 [
 	extra_cull_margin(float) : "" : "0.5"
 ]
@@ -151,49 +151,49 @@
 	trigger_count(integer) : "" : 1
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) base(Target) = vt_triggerable_toast : "vt_triggerable_toast" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) base(Target) = vt_triggerable_toast : "Will display a toast when triggered instead of on player interaction" 
 [
 	should_pause(integer) : "" : 0
 	toast_text(string) : "" : ""
 ]
 
-@SolidClass color(204 204 204) = vt_blood_area : "This is blood" []
+@SolidClass color(204 204 204) = vt_blood_area : "A pool of blood, which the player can replenish their blood meter from" []
 
-@SolidClass base(GlobalIllumination, PositionMod) = vt_damage_mover : "For things that move and damage" 
+@SolidClass base(GlobalIllumination, PositionMod) = vt_damage_mover : "For things that move and damage the player" 
 [
 	auto_move_after_checkpoint(integer) : "" : 999
 	duration(float) : "" : "1"
 	translation(string) : "" : "0 0 0"
 ]
 
-@PointClass color(47 85 183) model({"path": "qodot_definitions/tb_models/tb_test_arrow.glb", "scale" : 32 }) size(-16 -16 -32, 16 16 16) = vt_test_arrow : "vt_test_arrow" 
+@PointClass color(47 85 183) model({"path": "qodot_definitions/tb_models/tb_test_arrow.glb", "scale" : 32 }) size(-16 -16 -32, 16 16 16) = vt_test_arrow : "An unused, simplified arrow model. Probably designed as a prototype" 
 [
 	arrow_count(integer) : "" : 3
 	target(string) : "" : ""
 ]
 
-@SolidClass = vt_damage_area : "For things that damage on hit" 
+@SolidClass = vt_damage_area : "For things that damage the player on interaction" 
 [
 	auto_move_after_checkpoint(integer) : "" : 999
 	duration(float) : "" : "1"
 	translation(string) : "" : "0 0 0"
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_generic_pickup : "vt_generic_pickup" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_generic_pickup : "A generic form of a pickup item, (maybe) spawned when triggered instead of on pick up. The default option activates the slide to kill powerup" 
 [
 	mangle(string) : "" : "0 0 0"
 	powerup_type(string) : "" : "SLIDE_TO_KILL"
 	target(string) : "" : ""
 ]
 
-@SolidClass color(204 204 204) = vt_intensity_change_area : "vt_intensity_change_area" 
+@SolidClass color(204 204 204) = vt_intensity_change_area : "Changes the intensity of... something, we're not sure exactly what" 
 [
 	intensity_level(float) : "" : "-1"
 ]
 
 @BaseClass color(204 204 204) size(-8 -8 -8, 8 8 8) = Surface
 [
-	surface_type(choices) : "The type of the surface for foot step sounds etc" : 0 = 
+	surface_type(choices) : "Which footstep sound should play while moving across a surface" : 0 = 
 	[
 		1 : "dirt"
 		0 : "floor"
@@ -237,14 +237,14 @@
 
 @SolidClass color(204 204 204) = group : "Builds a StaticBody3D with a single MeshInstance3D and a single convex CollisionShape3D shape. Also builds Occluder3D to aid in render culling of other VisualInstance3D nodes." []
 
-@PointClass color(79 0 79) size(-8 -8 -8, 8 8 8) = vt_fmod_sound : "A sound that will loop and exist in 3d" 
+@PointClass color(79 0 79) size(-8 -8 -8, 8 8 8) = vt_fmod_sound : "A sound that will loop and exist in-game, triggered by FMOD" 
 [
 	guid(string) : "" : ""
 ]
 
 @BaseClass color(204 204 204) size(-8 -8 -8, 8 8 8) = Toast
 [
-	toast_type(choices) : "The type of the toast" : 4 = 
+	toast_type(choices) : "How the toast should display to the player" : 4 = 
 	[
 		4 : "area_closed"
 		1 : "display_timed"
@@ -257,7 +257,7 @@
 
 @BaseClass color(204 204 204) size(-8 -8 -8, 8 8 8) = Breakable
 [
-	breakable_type(choices) : "The type of the breakable" : 1 = 
+	breakable_type(choices) : "How the breakable surface should be interacted with" : 1 = 
 	[
 		3 : "explosion_only"
 		2 : "glass"
@@ -267,12 +267,12 @@
 	]
 ]
 
-@PointClass color(79 0 79) size(-8 -8 -8, 8 8 8) = vt_player_start : "Where the player should start" 
+@PointClass color(79 0 79) size(-8 -8 -8, 8 8 8) = vt_player_start : "Where the player starts in the map" 
 [
 	angle(float) : "" : "0"
 ]
 
-@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_tutorial_pickup : "Use for a tutorial overlay" 
+@PointClass color(47 85 183) size(-8 -8 -8, 8 8 8) = vt_tutorial_pickup : "Used for a tutorial overlay. (Probably) becomes a book in-game" 
 [
 	tutorial_data_path(string) : "" : ""
 ]
