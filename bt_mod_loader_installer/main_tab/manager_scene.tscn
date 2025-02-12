@@ -85,14 +85,27 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 200
 
-[node name="remove_ mod_loader" type="Button" parent="Manage mod loader/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Manage mod loader/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="remove_ mod_loader" type="Button" parent="Manage mod loader/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("1_b2vep")
 theme_override_colors/font_color = Color(1, 0.976471, 1, 1)
 theme_override_font_sizes/font_size = 40
-text = "Remove mod loader"
+text = "Disable mod loader"
+
+[node name="enable_ mod_loader" type="Button" parent="Manage mod loader/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme = ExtResource("1_b2vep")
+theme_override_colors/font_color = Color(1, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 40
+text = "Enable mod loader"
 
 [node name="install_mod_loader" type="Button" parent="Manage mod loader/HBoxContainer"]
 layout_mode = 2
@@ -143,7 +156,8 @@ text = "Launch Game w/ Console"
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="button_up" from="Path/VBoxContainer/HBoxContainer/MarginContainer/Open file dialogue" to="." method="_on_open_file_dialogue_button_up"]
-[connection signal="button_up" from="Manage mod loader/HBoxContainer/remove_ mod_loader" to="." method="_on_remove__mod_loader_button_up"]
+[connection signal="button_up" from="Manage mod loader/HBoxContainer/VBoxContainer/remove_ mod_loader" to="." method="_on_remove__mod_loader_button_up"]
+[connection signal="button_up" from="Manage mod loader/HBoxContainer/VBoxContainer/enable_ mod_loader" to="." method="_on_enable__mod_loader_button_up"]
 [connection signal="button_up" from="Manage mod loader/HBoxContainer/install_mod_loader" to="." method="_on_install_mod_loader_button_up"]
 [connection signal="button_up" from="load_game" to="." method="_on_load_game_button_up"]
 [connection signal="button_up" from="load_game_console" to="." method="_on_load_game_console_button_up"]

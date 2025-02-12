@@ -105,3 +105,7 @@ func _http_request_completed(result, _response_code, _headers, body):
 	database_mods_dict = JSON.parse_string(body.get_string_from_utf8())
 	populate_database_mods_list()
 	print("Downloaded")
+
+
+func _on_open_mod_folder_button_up() -> void:
+	OS.shell_open(Manager.main.path + "/mods")

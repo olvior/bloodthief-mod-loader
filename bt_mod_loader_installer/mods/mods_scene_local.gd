@@ -155,3 +155,9 @@ func _on_accept_dialog_visibility_changed() -> void:
 		Manager.save_config()
 	
 	$FileDialog.visible = true
+
+func _on_open_mod_folder_button_up() -> void:
+	OS.shell_open(Manager.main.path + "/mods")
+
+func _on_open_unpacked_mods_folder_button_up() -> void:
+	OS.shell_open(Manager.main.path + "/mods-unpacked")
