@@ -32,7 +32,7 @@ The script then creates a child node for each mod found and also calls the `init
 To get started making a map, you'll have to start by setting up TrenchBroom.
 First install [TrenchBroom](https://trenchbroom.github.io/)
 
-- First, download the zip called [`map_creation_files`](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/map_creation_files.zip).
+- First, download the zip called [`map_creation_files`](./map_creation_files).
 - Then unzip it anywhere
 - Then move the `Bloodthief.zip` file to the TrenchBroom game config folder
     - Windows: C:\Users\<username>\AppData\Roaming\TrenchBroom\games
@@ -46,9 +46,9 @@ First install [TrenchBroom](https://trenchbroom.github.io/)
 
 First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.x86_64) and install the mod loader
 
-Then download the [map creation files](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.5.0/map_creation_files.zip)
+Then download the [map creation files](./map_creation_files)
 
-From the original `map_creation_files`, move the `maps` folder into your Bloodthief game folder that Steam downloaded Bloodthief into.
+From the `map_creation_files`, move the `maps` folder into the game folder that Steam downloaded Bloodthief into.
 - You should edit the json file in the `example_map` folder within the `maps` folder
 - Make sure the json file has the same name as the map file
 - Rename the files and the folder for the name of your map, if you're making a map pack you can have multiple json and .map files in one folder
@@ -56,9 +56,9 @@ From the original `map_creation_files`, move the `maps` folder into your Bloodth
 
 ## How to use TrenchBroom
 
-Once you've done all that you're ready to load up a map file in TrenchBroom
+Once you've done all that, you're ready to load up a map file in TrenchBroom.
 
-Watch a TrenchBroom tutorial or read the manual to get started
+Watch a TrenchBroom tutorial or read the manual to get started.
 
 But the basics are you can create shapes and give them textures to make the geometry.
 
