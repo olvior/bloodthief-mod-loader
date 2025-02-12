@@ -56,3 +56,14 @@ theme = ExtResource("2_logvx")
 theme_override_font_sizes/font_size = 23
 text = "Database Mods"
 autowrap_mode = 3
+
+[node name="OpenModFolder" type="Button" parent="."]
+offset_left = 194.0
+offset_top = 90.0
+offset_right = 374.0
+offset_bottom = 118.0
+theme = ExtResource("2_logvx")
+theme_override_font_sizes/font_size = 21
+text = "Open Mods Folder"
+
+[connection signal="button_up" from="OpenModFolder" to="." method="_on_open_mod_folder_button_up"]

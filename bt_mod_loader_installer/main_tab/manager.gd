@@ -5,6 +5,9 @@ extends Control
 @onready var error_label = $Label
 @onready var main = get_parent()
 
+@onready var disable_button = $"Manage mod loader/HBoxContainer/VBoxContainer/remove_ mod_loader"
+@onready var enable_button = $"Manage mod loader/HBoxContainer/VBoxContainer/enable_ mod_loader"
+
 func _on_open_file_dialogue_button_up():
 	file_dialogue.show()
 
@@ -37,13 +40,33 @@ func _ready():
 		path_label.text = main.path
 	else:
 		print("Failed")
+	
+	if FileAccess.file_exists(main.path + "/override.cfg"):
+		enable_button.disabled = true
+		disable_button.disabled = false
+	else:
+		enable_button.disabled = false
+		disable_button.disabled = true
+		
+		if !FileAccess.file_exists(main.path + "/nooverride.cfg"):
+			enable_button.disabled = true
+			disable_button.disabled = true
+		
+	
 
+func _on_enable__mod_loader_button_up() -> void:
+	var folder = DirAccess.open(main.path)
+	folder.rename("nooverride.cfg", "override.cfg")
+	error_label.text = "Enabled the mod loader"
+	enable_button.disabled = true
+	disable_button.disabled = false
 
 func _on_remove__mod_loader_button_up():
 	var folder = DirAccess.open(main.path)
 	folder.rename("override.cfg", "nooverride.cfg")
 	error_label.text = "Disabled the mod loader"
-
+	enable_button.disabled = false
+	disable_button.disabled = true
 
 var n_of_downloads
 var out_of
@@ -59,7 +82,8 @@ func _on_install_mod_loader_button_up():
 	DirAccess.make_dir_absolute(main.path + "/maps/disabled")
 	DirAccess.make_dir_absolute(main.path + "/mods-unpacked")
 	download(loader_download_url, "user://mod_loader.zip")
-
+	enable_button.disabled = false
+	disable_button.disabled = true
 
 func move_mod_loader():
 	main.unzip("user://mod_loader.zip", main.path)

@@ -77,6 +77,26 @@ theme = ExtResource("2_cyadk")
 theme_override_font_sizes/font_size = 21
 text = "Install Mod(s)"
 
+[node name="OpenUPModsFolder" type="Button" parent="."]
+layout_mode = 0
+offset_left = 425.0
+offset_top = 112.0
+offset_right = 569.0
+offset_bottom = 140.0
+theme = ExtResource("2_cyadk")
+theme_override_font_sizes/font_size = 21
+text = "Open Unpacked Mods Folder"
+
+[node name="OpenModFolder" type="Button" parent="."]
+layout_mode = 0
+offset_left = 720.445
+offset_top = 112.0
+offset_right = 900.445
+offset_bottom = 140.0
+theme = ExtResource("2_cyadk")
+theme_override_font_sizes/font_size = 21
+text = "Open Mods Folder"
+
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 initial_position = 1
 size = Vector2i(424, 288)
@@ -92,4 +112,6 @@ dialog_autowrap = true
 
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="button_up" from="Install" to="." method="_on_install_button_up"]
+[connection signal="button_up" from="OpenUPModsFolder" to="." method="_on_open_unpacked_mods_folder_button_up"]
+[connection signal="button_up" from="OpenModFolder" to="." method="_on_open_mod_folder_button_up"]
 [connection signal="visibility_changed" from="AcceptDialog" to="." method="_on_accept_dialog_visibility_changed"]
