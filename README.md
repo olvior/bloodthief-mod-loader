@@ -32,7 +32,7 @@ The script then creates a child node for each mod found and also calls the `init
 To get started making a map, you'll have to start by setting up TrenchBroom.
 First install [TrenchBroom](https://trenchbroom.github.io/)
 
-- First, download the zip called [`map_creation_files`](./map_creation_files).
+- First, download the zip called [`map_creation_files`](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.7.0/map_creation_files.zip).
 - Then unzip it anywhere
 - Then move the `Bloodthief.zip` file to the TrenchBroom game config folder
     - Windows: C:\Users\<username>\AppData\Roaming\TrenchBroom\games
@@ -46,7 +46,7 @@ First install [TrenchBroom](https://trenchbroom.github.io/)
 
 First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.x86_64) and install the mod loader
 
-Then download the [map creation files](./map_creation_files)
+Then download the [map creation files](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.7.0/map_creation_files.zip)
 
 From the `map_creation_files`, move the `maps` folder into the game folder that Steam downloaded Bloodthief into.
 - You should edit the json file in the `example_map` folder within the `maps` folder
@@ -139,6 +139,8 @@ Finally, you can uploads mods into the [`mod_list`](https://github.com/olvior/bl
 ## Ending notes
 
 Feel free to help develop the mod loader itself or the mod installer.
+
+Join the Bloodthief moddng Discord if you have any questions or want to help out with development, link [here](https://discord.gg/hpAKq35Jf)
 
 Everything that we made here is open source so you're free to do whatever, however Blargis's assets are copyrighted by him.
 
