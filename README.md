@@ -128,9 +128,13 @@ Then you can run whatever code you want!
 
 Your mod's files can be found at the variable `path_to_dir`.
 
-There are a few helpful functions that you can use, `ModLoader.mod_log('text')` to log something in a separate file. You can create a new input easily. Check `addons/ModLoader/mod_node.gd` for the details.
+There are a few helpful functions that you can use, `ModLoader.mod_log('text')` to log something in a separate file. You can create a new input easily. Check [`addons/ModLoader/mod_node.gd`](./addons/ModLoader/mod_node.gd) for the details.
 
-You can also make settings that can be changed in game (wip) with the `Settings` class, check the example infinite blood mod to see how.
+You can also make settings that can be changed in game (wip) with the `Settings` class, check the example [infinite blood mod](./example_mods/mods-unpacked/olvior-InfiniteBlood/) to see how.
+
+Additionally, see this [wiki](https://github.com/carlosfruitcup/bloodthief-modding-docs/wiki) for some documentation that can be used to help your modding endeavours.
+
+Finally, you can uploads mods into the [`mod_list`](https://github.com/olvior/bloodthief-mod-list/blob/main/list.json) just like you can for maps.
 
 ## Ending notes
 
