@@ -276,3 +276,49 @@
 [
 	tutorial_data_path(string) : "" : ""
 ]
+
+@PointClass color(236 125 0) size(-16.0 -16.0 -1.0, 16.0 16.0 1.0) base(Target) = vt_eyeball_shrine : "An eyeball shrine." 
+[
+	artifact_part_name(string) : "" : "NO_ARTIFACT_NAME"
+	mangle(string) : "" : "0.0 0.0 0.0"
+	target(string) : "" : ""
+]
+
+@PointClass color(47 85 183) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target) = vt_eyeball_pickup : "An eyeball pickup for ghosts." 
+[
+	eyeball_name(string) : "" : "eyeball_001"
+	mangle(string) : "" : "0.0 0.0 0.0"
+	target(string) : "" : ""
+]
+
+@PointClass color(255 0 0) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target) = vt_skull : "A skull" 
+[
+	dont_spawn_after_checkpoint(integer) : "" : 999
+	radius(float) : "" : "5.0"
+	speed(float) : "" : "2.0"
+]
+
+@PointClass color(47 85 183) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target) = vt_artifact_pickup : "A pickup for an artifact part." 
+[
+	artifact_part_name(string) : "" : "NO_ARTIFACT_NAME"
+	mangle(string) : "" : "0.0 0.0 0.0"
+	target(string) : "" : ""
+]
+
+@PointClass color(255 0 0) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target) = vt_vampire : "A vampire" 
+[
+	dont_spawn_after_checkpoint(integer) : "" : 999
+]
+
+@SolidClass = vt_launchpad : "A thing that bounces things that hit it." 
+[
+	bounce_force(float) : "" : "5.0"
+	bounce_force_max(float) : "" : "20.0"
+]
+
+@PointClass color(255 0 0) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target) = vt_black_knight : "A black knight" 
+[
+	dont_spawn_after_checkpoint(integer) : "" : 999
+	radius(float) : "" : "5.0"
+	speed(float) : "" : "2.0"
+]
