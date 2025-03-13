@@ -367,9 +367,17 @@ func load_map(original_path, path_without_extension: String, mod_name):
 	new_config.level_index = level_index
 
 	new_config.display_name = map_json["display_name"]
-	new_config.hex_medal_time_secs = map_json["medal_times"][0]
-	new_config.blood_medal_time_secs = map_json["medal_times"][1]
-	new_config.bone_medal_time_secs = map_json["medal_times"][2]
+	if len(map_json["medal_times"]) == 3:
+		new_config.hex_medal_time_secs = map_json["medal_times"][0]
+		new_config.blood_medal_time_secs = map_json["medal_times"][1]
+		new_config.bone_medal_time_secs = map_json["medal_times"][2]
+
+	else:
+		new_config.god_killer_medal_time_secs = map_json["medal_times"][0]
+		new_config.hex_medal_time_secs = map_json["medal_times"][1]
+		new_config.blood_medal_time_secs = map_json["medal_times"][2]
+		new_config.bone_medal_time_secs = map_json["medal_times"][3]
+
 
 	new_config.is_automatically_unlocked = map_json["is_automatically_unlocked"]
 	new_config.display_in_level_select = true
