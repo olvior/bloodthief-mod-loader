@@ -9,20 +9,22 @@ var connect_to
 var button_preload = preload("res://addons/ModLoader/mods_settings/button_generic.tscn")
 var generic_setting = preload("res://addons/ModLoader/mods_settings/generic_setting.tscn")
 var slider_preload = preload("res://addons/ModLoader/mods_settings/h_slider.tscn")
+var line_edit_preload = preload("res://addons/ModLoader/mods_settings/line_edit.tscn")
 
 func _ready():
 	label.text = mod.settings["settings_page_name"]
 	print(back_button)
 	print("huh setup")
 	back_button.pressed.connect(connect_to)
-	
+
 	populate()
 
 
 func populate():
 	for setting in mod.settings["settings_list"]:
 		var generic = create_setting_generic(setting)
-		
+		print(setting.s_type)
+
 		match setting.s_type:
 			setting.SETTING_BOOL:
 				create_setting_bool(generic, setting)
@@ -36,13 +38,18 @@ func populate():
 					create_slider(generic, setting, setting.s_range, false)
 			setting.SETTING_SELECTION:
 				create_setting_selection(generic, setting)
+			setting.SETTING_TEXT_INPUT:
+				create_text_input(generic, setting)
+
+
+
 
 func create_setting_generic(setting):
 	var new_setting = generic_setting.instantiate()
 	new_setting.get_node("Label").text = setting.s_name_pretty
 	vbox.add_child(new_setting)
 	vbox.move_child(new_setting, 0)
-	
+
 	return new_setting
 
 func create_setting_bool(generic, setting):
@@ -54,6 +61,17 @@ func create_setting_bool(generic, setting):
 func _on_checkbox_toggled(on: bool, setting):
 	setting.value = on
 
+func create_text_input(generic, setting):
+	var new_line_input = line_edit_preload.instantiate()
+	new_line_input.text = setting.value
+
+	generic.add_child(new_line_input)
+	generic.move_child(new_line_input, 1)
+	new_line_input.text_changed.connect(_on_text_changed.bind(setting))
+
+func _on_text_changed(text, setting):
+	setting.value = text
+
 func create_slider(generic: HBoxContainer, setting, range: Vector2, round: bool):
 	var new_slider: HSlider = slider_preload.instantiate()
 	new_slider.min_value = range.x
@@ -61,20 +79,20 @@ func create_slider(generic: HBoxContainer, setting, range: Vector2, round: bool)
 	new_slider.step = 0.01
 	new_slider.rounded = round
 	new_slider.value = setting.value
-	
+
 	var new_label: Label = generic.get_node("Label2")
 	new_label.text = str(new_slider.value)
-	
+
 	if len(new_label.text) == 1:
 		new_label.text += "."
 	while len(new_label.text) < 4:
 		new_label.text += "0"
-	
+
 	new_label.name = "SliderLabel"
 
 	generic.add_child(new_slider)
 	generic.move_child(new_slider, 1)
-	
+
 	new_slider.value_changed.connect(_on_slider_value_changed.bind(setting, new_label))
 
 func _on_slider_value_changed(value, setting, label):
@@ -84,7 +102,7 @@ func _on_slider_value_changed(value, setting, label):
 			value_str += "."
 		while len(value_str) < 4:
 			value_str += "0"
-	
+
 	label.text = value_str
 	setting.value = value
 

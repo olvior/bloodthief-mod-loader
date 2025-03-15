@@ -8,4 +8,4 @@ text = "Super cool name"
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 2
-text = "sss"
+text = ""
