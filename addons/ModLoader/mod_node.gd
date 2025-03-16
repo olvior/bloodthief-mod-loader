@@ -13,7 +13,7 @@ var dependencies = {} # dict that holds the nodes
 var settings = {
 	"settings_page_name" = name_pretty,
 	"settings_list" = [
-		
+
 	]
 }
 
@@ -27,24 +27,24 @@ func add_input_event(action_name: StringName, keys: Array[Key], mouses: Array[Mo
 	if InputMap.has_action(action_name):
 		ModLoader.mod_log(name_pretty + " tried to add an input action that already exits!")
 		return FAILED
-	
+
 	InputMap.add_action(action_name, deadzone)
-	
+
 	for key in keys:
 		var new_event = InputEventKey.new()
 		if physical:
 			new_event.physical_keycode = key
 		else:
 			new_event.keycode = key
-		
+
 		InputMap.action_add_event(action_name, new_event)
-	
+
 	for mouse in mouses:
 		var new_event = InputEventMouseButton.new()
 		new_event.button_index = mouse
-		
+
 		InputMap.action_add_event(action_name, new_event)
-	
+
 	return OK
 
 
@@ -54,15 +54,15 @@ class Setting:
 	var s_selections: Array[String]
 	var value
 	var s_range
-	
-	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION, SETTING_BOOL}
-	
+
+	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION, SETTING_BOOL, SETTING_TEXT_INPUT}
+
 	func _init(setting_name_pretty: String, setting_type, default_value, number_range = Vector2(0, 0), selections: Array[String] = []):
 		s_name_pretty = setting_name_pretty
 		s_type = setting_type
 		s_range = number_range
 		if s_type == SETTING_SELECTION:
 			s_selections = selections
-			
+
 		value = default_value
-	
+

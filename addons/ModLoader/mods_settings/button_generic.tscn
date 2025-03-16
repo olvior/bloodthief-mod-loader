@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://dhwryvc1vh2jg"]
 
 [node name="Button" type="Button"]
-size_flags_horizontal = 4
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
 text = "button text"
+alignment = 0
