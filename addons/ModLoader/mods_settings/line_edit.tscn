@@ -1,3 +1,4 @@
 [gd_scene format=3 uid="uid://bfat6x1ekjslx"]
 
 [node name="LineEdit" type="LineEdit"]
+expand_to_text_length = true
