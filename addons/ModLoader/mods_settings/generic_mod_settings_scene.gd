@@ -40,6 +40,8 @@ func populate():
 				create_setting_selection(generic, setting)
 			setting.SETTING_TEXT_INPUT:
 				create_text_input(generic, setting)
+			setting.SETTING_BUTTON:
+				create_button_setting(generic, setting)
 
 
 
@@ -105,6 +107,21 @@ func _on_slider_value_changed(value, setting, label):
 
 	label.text = value_str
 	setting.value = value
+
+func create_button_setting(generic: HBoxContainer, setting):
+	var new_button = button_preload.instantiate()
+	new_button.text = setting.s_name_pretty
+
+	var parent = self.get_parent()
+	new_button.add_theme_stylebox_override("hover", parent.good_stylebox_hover)
+	new_button.add_theme_stylebox_override("normal", parent.good_stylebox_normal)
+
+	generic.add_child(new_button)
+	generic.move_child(new_button, 1)
+	generic.get_child(0).queue_free()
+
+
+	new_button.button_up.connect(setting.value)
 
 func create_setting_int(generic, setting):
 	if setting.s_range:

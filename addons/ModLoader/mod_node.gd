@@ -55,7 +55,7 @@ class Setting:
 	var value
 	var s_range
 
-	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION, SETTING_BOOL, SETTING_TEXT_INPUT}
+	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION, SETTING_BOOL, SETTING_TEXT_INPUT, SETTING_BUTTON}
 
 	func _init(setting_name_pretty: String, setting_type, default_value, number_range = Vector2(0, 0), selections: Array[String] = []):
 		s_name_pretty = setting_name_pretty
@@ -65,4 +65,5 @@ class Setting:
 			s_selections = selections
 
 		value = default_value
+
 
