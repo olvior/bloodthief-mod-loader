@@ -64,6 +64,7 @@ func add_input_event(action_name: StringName, keys: Array[Key], mouses: Array[Mo
 
 
 class Setting:
+	var setting_data = {}
 	var parent_class
 	var s_name_pretty: String
 	var s_type
