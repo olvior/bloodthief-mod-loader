@@ -10,7 +10,7 @@ func create_material(texture_name: String) -> Material:
 		if loaded_material:
 			material_dict[material_path] = loaded_material
 		else:
-			print("No material found: " + texture_name)
+			printerr("No material found: " + texture_name)
 	
 	
 	# If material already exists, use it

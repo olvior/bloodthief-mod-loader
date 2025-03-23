@@ -60,9 +60,9 @@ func create_mods_settings_scene():
 func populate_mods_settings_scene():
 	for mod_name in ModLoader.all_mods:
 		var mod = ModLoader.all_mods[mod_name]
-		ModLoader.mod_log("Setting up button for " + mod.name)
+		ModLoader.debug_log("Setting up button for " + mod.name)
 		if not mod.settings["settings_list"]:
-			ModLoader.mod_log("Skipped " + mod.name)
+			ModLoader.debug_log("Skipped " + mod.name)
 			continue
 
 		var settings_dict = mod.settings
@@ -100,7 +100,7 @@ func show_mods_settings_screen():
 
 
 func _on_mod_scene_button_pressed(mod):
-	ModLoader.mod_log("Pressed button for " + mod.name_pretty)
+	ModLoader.debug_log("Pressed button for " + mod.name_pretty)
 
 	for scene in all_settings_scenes:
 		scene.visible = false
@@ -114,8 +114,8 @@ func generate_settings_scene_for_mod(mod):
 	current_mod_settings_scene.connect_to = _go_back_to_mods_scene
 	self.add_child(current_mod_settings_scene)
 
-	print(current_mod_settings_scene)
-	print(current_mod_settings_scene.get_script())
+	ModLoader.debug_log(current_mod_settings_scene)
+	ModLoader.debug_log(current_mod_settings_scene.get_script())
 
 
 func _go_back_to_mods_scene():

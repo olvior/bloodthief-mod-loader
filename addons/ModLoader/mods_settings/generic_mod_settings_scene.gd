@@ -13,8 +13,8 @@ var line_edit_preload = preload("res://addons/ModLoader/mods_settings/line_edit.
 
 func _ready():
 	label.text = mod.settings["settings_page_name"]
-	print(back_button)
-	print("huh setup")
+	ModLoader.debug_log(back_button)
+	ModLoader.debug_log("button setup")
 	back_button.pressed.connect(connect_to)
 
 	populate()
@@ -23,18 +23,18 @@ func _ready():
 func populate():
 	for setting in mod.settings["settings_list"]:
 		var generic = create_setting_generic(setting)
-		print(setting.s_type)
+		ModLoader.debug_log(setting.s_type)
 
 		match setting.s_type:
 			setting.SETTING_BOOL:
 				create_setting_bool(generic, setting)
 			setting.SETTING_INT:
 				if setting.s_range:
-					ModLoader.mod_log("Created int setting")
+					ModLoader.debug_log("Created int setting")
 					create_slider(generic, setting, setting.s_range, true)
 			setting.SETTING_FLOAT:
 				if setting.s_range:
-					ModLoader.mod_log("Created float setting")
+					ModLoader.debug_log("Created float setting")
 					create_slider(generic, setting, setting.s_range, false)
 			setting.SETTING_SELECTION:
 				create_setting_selection(generic, setting)
@@ -121,7 +121,7 @@ func create_button_setting(generic: HBoxContainer, setting):
 	generic.get_child(0).queue_free()
 
 
-	new_button.button_up.connect(setting.value)
+	new_button.button_up.connect(setting.callback)
 
 func create_setting_int(generic, setting):
 	if setting.s_range:
