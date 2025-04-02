@@ -88,8 +88,7 @@ func add_mod_to_list(mod, getContainer, fromDatabase: bool = false):
 	print("Added mod to list:", mod.get("name_pretty", "Unknown"))
 
 func _on_file_dialog_dir_selected(dir: String) -> void:
-	var destination: String= Manager.main.path + "/mods-unpacked"
-	
+	var destination: String= Manager.main.path + "/mods-unpacked"	
 	var dest: DirAccess = DirAccess.open(destination)
 	
 	if !dest.dir_exists(destination):

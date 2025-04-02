@@ -25,21 +25,21 @@ func _ready():
 
 	# now we build
 	new_func_godot_map.global_map_file = path
-	print(path)
-	print(new_func_godot_map.verify_parameters())
+	ModLoader.debug_log(path)
+	ModLoader.debug_log(new_func_godot_map.verify_parameters())
 	new_func_godot_map.verify_and_build()
 
 func _build_complete() -> void:
-	print("Success! Unwrapping UV2...")
+	ModLoader.debug_log("Success! Unwrapping UV2...")
 	new_func_godot_map.unwrap_uv2()
 
 func _build_failed() -> void:
 	printerr("Failed to build the map file! :(")
 
 func _unwrap_uv2_complete() -> void:
-	print("UV2 unwrapping completed!")
+	ModLoader.debug_log("UV2 unwrapping completed!")
 	nav_region.bake_navigation_mesh()
 
 func _bake_nav_finished():
-	print("Nav bake finished")
+	ModLoader.debug_log("Nav bake finished")
 	super._ready()
