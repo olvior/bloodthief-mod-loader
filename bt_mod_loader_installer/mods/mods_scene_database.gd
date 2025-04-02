@@ -81,7 +81,8 @@ func populate_database_mods_list():
 		add_mod_to_list(mod, list_node, true)
 
 func add_mod_to_list(mod, getContainer, fromDatabase :bool= false):
-	var new_mod_object :MarginContainer= mod_scene.instantiate()
+	var new_mod_object: MarginContainer = mod_scene.instantiate()
+	new_mod_object.debug_label = $DebugLabel
 	getContainer.add_child(new_mod_object)
 	new_mod_object.call("init", mod, fromDatabase)
 	print("Added mod to list:", mod.get("name_pretty", "Unknown"))

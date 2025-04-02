@@ -5,6 +5,8 @@ var id: String
 var mod_path: String
 var is_installed: bool
 
+var debug_label: Label
+
 @onready var main = Manager.main
 
 @onready var install_button: Button = $VBoxContainer/HBoxContainer/install
@@ -74,6 +76,7 @@ func init(new_manifest, fromDatabase: bool):
 		check_if_installed()
 
 func download(link: String, path: String):
+	debug_label.text = "Downloading"
 	var http = HTTPRequest.new()
 	add_child(http)
 	http.connect("request_completed", _http_request_completed)
@@ -89,6 +92,17 @@ func _http_request_completed(result, _response_code, _headers, _body):
 	if result != OK:
 		push_error("Download Failed")
 	else:
+		var my_hash = main.hash_file(my_path)
+		if my_hash != manifest["SHA-256"]:
+			print("Hashes do not match")
+			print("Found: ", my_hash)
+			print("Was given: ", manifest["SHA-256"])
+			debug_label.text = "Hash does not match\nCanceled download"
+			DirAccess.remove_absolute(my_path)
+			
+			return
+		
+		debug_label.text = "Installed"
 		check_if_database_installed()
 
 func change_buttons(button_list: Array[bool]):

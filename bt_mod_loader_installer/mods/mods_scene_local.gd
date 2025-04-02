@@ -81,16 +81,16 @@ func populate_mods_list():
 	for mod in mods_dict.values():
 		add_mod_to_list(mod, $MarginContainer/ScrollContainer/VBoxContainer)
 
-func add_mod_to_list(mod, getContainer, fromDatabase :bool= false):
-	var new_mod_object :MarginContainer= mod_scene.instantiate()
+func add_mod_to_list(mod, getContainer, fromDatabase: bool = false):
+	var new_mod_object: MarginContainer = mod_scene.instantiate()
 	getContainer.add_child(new_mod_object)
 	new_mod_object.call("init", mod, fromDatabase)
 	print("Added mod to list:", mod.get("name_pretty", "Unknown"))
 
 func _on_file_dialog_dir_selected(dir: String) -> void:
-	var destination :String= Manager.main.path + "\\mods-unpacked"
+	var destination: String= Manager.main.path + "/mods-unpacked"
 	
-	var dest :DirAccess= DirAccess.open(destination)
+	var dest: DirAccess = DirAccess.open(destination)
 	
 	if !dest.dir_exists(destination):
 		dest.make_dir(destination)
