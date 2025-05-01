@@ -104,6 +104,12 @@ Then for TrenchBroom to realise they exist, add them like so:
 
 Make sure to enable the folder in TrenchBroom. When you are in the face tab, in the texture browser click settings, then enable your folder
 
+<br> To allow for custom music, simply place an mp3 file with the same name as the map and json next to them, it should then get loaded in and played on loop. Make sure the structure is like this:
+- *Map folder*
+  - example_map.map
+  - example_map.json
+  - example_map.mp3
+
 ## Uploading or sharing maps
 
 Compress your map as a zip file
