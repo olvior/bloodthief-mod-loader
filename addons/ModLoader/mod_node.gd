@@ -125,6 +125,8 @@ class Setting:
 		if FileAccess.file_exists(file_path):
 			var data_string = FileAccess.get_file_as_string(file_path)
 			data = JSON.to_native(JSON.parse_string(data_string), true)
+			if data == null:
+				data = {}
 		else:
 			DirAccess.make_dir_recursive_absolute(self.parent_class.save_file_folder)
 
