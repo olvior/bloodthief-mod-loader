@@ -347,11 +347,19 @@ func load_map_folder(original_path, extra, mod_name):
 		else:
 			if file_name.get_extension() == "map":
 				var base_name = file_name.get_basename()
+
+				var music_path = "%s/%s.mp3" % [path, base_name]
+				var music_access = FileAccess.open(music_path, FileAccess.READ)
+				if not music_access:
+					music_path = null
+					debug_log("No music found for %s/%s.map" % [path, base_name])
+
 				var json_access = FileAccess.open("%s/%s.json" % [path, base_name], FileAccess.READ)
 				if json_access:
-					load_map(original_path, "%s/%s" % [path, base_name], mod_name)
+					load_map(original_path, "%s/%s" % [path, base_name], mod_name, music_path)
 				else:
 					debug_log("Failed to open map %s/%s.json" % [path, base_name])
+
 
 		file_name = folder.get_next()
 
@@ -360,12 +368,13 @@ func load_map_folder(original_path, extra, mod_name):
 
 class Map:
 	var path: String
+	var music_path: String
 	var pack_path: String
 	var mod_name: String
 
 var map_by_index = {}
 
-func load_map(original_path, path_without_extension: String, mod_name):
+func load_map(original_path, path_without_extension: String, mod_name, music_path):
 	var json_path = path_without_extension + ".json"
 	var map_path = path_without_extension + ".map"
 	debug_log(path_without_extension)
@@ -399,6 +408,7 @@ func load_map(original_path, path_without_extension: String, mod_name):
 	debug_log(map_path)
 	var new_map = Map.new()
 	new_map.path = map_path
+	new_map.music_path = music_path
 	new_map.pack_path = original_path
 	new_map.mod_name = mod_name
 
