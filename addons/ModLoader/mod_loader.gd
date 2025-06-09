@@ -1,7 +1,7 @@
 extends Node
 
 var debug_file_path = OS.get_executable_path().get_base_dir() + "/debug.txt"
-var debug = false
+var debug = true
 
 var all_textures = []
 
@@ -231,7 +231,7 @@ func mod_log(text = ""):
 
 func debug_log(message = ""):
 	if debug:
-		if message.strip_edges() == "":
+		if str(message.strip_edges()) == "":
 			print(message)
 		else:
 			print("Mod Loader: %s" % message)
@@ -347,19 +347,19 @@ func load_map_folder(original_path, extra, mod_name):
 		else:
 			if file_name.get_extension() == "map":
 				var base_name = file_name.get_basename()
-
+				
 				var music_path = "%s/%s.mp3" % [path, base_name]
 				var music_access = FileAccess.open(music_path, FileAccess.READ)
 				if not music_access:
 					music_path = null
 					debug_log("No music found for %s/%s.map" % [path, base_name])
 
+
 				var json_access = FileAccess.open("%s/%s.json" % [path, base_name], FileAccess.READ)
 				if json_access:
 					load_map(original_path, "%s/%s" % [path, base_name], mod_name, music_path)
 				else:
 					debug_log("Failed to open map %s/%s.json" % [path, base_name])
-
 
 		file_name = folder.get_next()
 
@@ -384,10 +384,11 @@ func load_map(original_path, path_without_extension: String, mod_name, music_pat
 
 	var new_config = LevelConfig.new()
 
-	var level_index = len(GameManager.game_data.level_configs)
+	var level_index = str(len(GameManager.game_data.level_configs))
 
 	new_config.level_name = map_json["level_name"]
 	new_config.level_index = level_index
+	new_config.ghost_file_name = new_config.level_name
 
 	new_config.display_name = map_json["display_name"]
 	if len(map_json["medal_times"]) == 3:
@@ -403,6 +404,7 @@ func load_map(original_path, path_without_extension: String, mod_name, music_pat
 
 
 	new_config.is_automatically_unlocked = map_json["is_automatically_unlocked"]
+	new_config.is_speedometer_automatically_unlocked = true
 	new_config.display_in_level_select = true
 
 	debug_log(map_path)

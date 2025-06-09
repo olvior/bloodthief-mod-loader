@@ -33,11 +33,10 @@ func _ready():
 		audio_player.finished.connect(_on_audio_playing_finished)
 		self.add_child(audio_player)
 
-
-
 	# now we build
 	new_func_godot_map.global_map_file = path
-	ModLoader.debug_log(path)
+	ModLoader.debug_log("Path is %s" % path)
+	ModLoader.debug_log("Config is %s" % config)
 	ModLoader.debug_log(new_func_godot_map.verify_parameters())
 	new_func_godot_map.verify_and_build()
 
