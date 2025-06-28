@@ -52,6 +52,7 @@ From the `map_creation_files`, move the `maps` folder into the game folder that 
 - You should edit the json file in the `example_map` folder within the `maps` folder
 - Make sure the json file has the same name as the map file
 - Rename the files and the folder for the name of your map, if you're making a map pack you can have multiple json and .map files in one folder
+- The folder the map is in should not include spaces (use underscores or dashes instead), as it might cause issues
 - If you're going to share the map prefix the folder name with your username to make sure they end up unique
 
 ## How to use TrenchBroom
