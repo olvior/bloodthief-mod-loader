@@ -1,6 +1,6 @@
 {
   "level_name": "ExampleMap",
   "display_name": "Example map",
-  "medal_times": [5.5, 10, 15, 30],
+  "medal_times": [5.455, 10, 15, 30],
   "is_automatically_unlocked": true,
 }
