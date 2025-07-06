@@ -1,12 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://bcj1xief0677b"]
+[gd_scene load_steps=18 format=3 uid="uid://bcj1xief0677b"]
 
-[ext_resource type="Script" path="res://scripts/resource_defs/level_config.gd" id="2_v4onh"]
-[ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map.gd" id="3_10dsc"]
-[ext_resource type="Script" path="res://addons/ModLoader/maps/map_level_loader.gd" id="3_qdax8"]
-[ext_resource type="Resource" uid="uid://57syh37w31ca" path="res://addons/ModLoader/maps/map_settings.tres" id="4_b2yif"]
-[ext_resource type="PackedScene" uid="uid://dhy2lak2xclva" path="res://scenes/player.tscn" id="5_n05at"]
+[ext_resource type="Script" uid="uid://dqw77tfm5620m" path="res://scripts/resource_defs/level_config.gd" id="2_v4onh"]
+[ext_resource type="Script" uid="uid://meus1g3pbqg0" path="res://addons/func_godot/src/map/func_godot_map.gd" id="3_10dsc"]
+[ext_resource type="Script" uid="uid://d24v6xbajhbkf" path="res://addons/ModLoader/maps/map_level_loader.gd" id="3_qdax8"]
 [ext_resource type="BankAsset" uid="uid://cf6kuu1tkaphm" path="res://addons/FMOD/editor/resources/banks/{5f938199-6098-49f5-b0dd-951f159503e8}.tres" id="4"]
+[ext_resource type="Resource" uid="uid://57syh37w31ca" path="res://addons/ModLoader/maps/map_settings.tres" id="4_b2yif"]
 [ext_resource type="BankAsset" uid="uid://dn1xqiysffwo" path="res://addons/FMOD/editor/resources/banks/{404667d6-a74a-4f0f-a3fb-a332941082e9}.tres" id="5"]
+[ext_resource type="PackedScene" uid="uid://c8men2xy6gruk" path="res://scenes/player.tscn" id="5_n05at"]
+[ext_resource type="Environment" uid="uid://cnslvu1yvyl0r" path="res://environments/jake_practice2_environment.tres" id="8_p35r5"]
+[ext_resource type="CameraAttributesPractical" uid="uid://b1p15tgrkp62i" path="res://environments/easy_camera_attributes.tres" id="9_85hin"]
 
 [sub_resource type="EventAsset" id="EventAsset_kqos5"]
 is_3d = true
@@ -53,21 +55,41 @@ name = "kindling"
 [sub_resource type="Resource" id="Resource_6daem"]
 script = ExtResource("2_v4onh")
 level_name = "loader"
-level_index = -1
+description = ""
+level_index = "-1"
 scene_path = "res://addons/ModLoader/maps/map_level_loader.tscn"
 display_name = "no one should see this"
-leaderboard_name = ""
+out_of_bounds_leaderboard_name = ""
+in_bounds_leaderboard_name = ""
+combined_leaderboard_name = ""
+ghost_file_name = ""
 next_level_name = ""
-achievement_for_beating = ""
+achievement_for_beating = 0
 fmod_bank_asset = SubResource("BankAsset_qes66")
 fmod_track_event_asset = SubResource("EventAsset_id1bi")
 fmod_ambient_event_asset = SubResource("EventAsset_kqos5")
+god_killer_medal_time_secs = 0.0
 hex_medal_time_secs = 0.0
 blood_medal_time_secs = 0.0
 bone_medal_time_secs = 0.0
 is_automatically_unlocked = false
+display_if_locked = true
+is_speedometer_automatically_unlocked = false
 display_in_level_select = true
 use_retro_shader = false
+use_prior_level_audio = false
+required_player_level = 0
+hex_medal_prize = 0
+blood_medal_prize = 0
+bone_medal_prize = 0
+dung_medal_prize = 0
+always_show_timer_settings = false
+secrets = Array[String]([])
+eyes = Array[String]([])
+draw_unshaded = false
+unlocked_secret_level_name = ""
+should_compile_shaders = false
+should_pause_music_in_pause = false
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_fe5w6"]
 sample_partition_type = 2
@@ -95,3 +117,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 51.1124, 0)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_fe5w6")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("8_p35r5")
+camera_attributes = ExtResource("9_85hin")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.970837, 0.103633, 0.216186, -0.239439, 0.373856, 0.896047, 0.0120373, -0.921679, 0.387767, 0, 30, 2.859)
+light_energy = 0.2
+light_indirect_energy = 3.35
+light_volumetric_fog_energy = 0.0
+light_angular_distance = 1.0
+light_bake_mode = 1
+shadow_enabled = true

@@ -21,9 +21,12 @@ func _ready():
 	nav_region.connect("bake_finished", _bake_nav_finished)
 
 	# we need to know the path to the map file
-	config = ModLoader.current_config
+	self.config = ModLoader.current_config
+	self.name = self.config.level_name
 	var map = ModLoader.map_by_index[config.level_index]
 	var path = map.path
+	
+	ModLoader.debug_log("my current name is " + name)
 
 	if map.music_path:
 		var audio_stream := AudioStreamMP3.load_from_file(map.music_path)
