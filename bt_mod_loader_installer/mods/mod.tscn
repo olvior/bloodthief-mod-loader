@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://sbtqnevie3x2"]
 
 [ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://assets/text.tres" id="1_6qsjx"]
-[ext_resource type="Script" path="res://mods/mod.gd" id="2_t5vt0"]
+[ext_resource type="Script" uid="uid://bgon3405hs2rr" path="res://mods/mod.gd" id="2_t5vt0"]
 
 [node name="Mod" type="MarginContainer"]
 anchors_preset = 15

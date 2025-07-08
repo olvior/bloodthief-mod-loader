@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhsdfupl4blcq"]
 
-[ext_resource type="Script" path="res://mods/mods_scene_local.gd" id="1_cogfq"]
+[ext_resource type="Script" uid="uid://bdsjejkseitke" path="res://mods/mods_scene_local.gd" id="1_cogfq"]
 [ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://assets/text.tres" id="2_cyadk"]
 
 [node name="mods_scene" type="Control"]

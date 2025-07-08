@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://5vpjflc3ah06"]
 
 [ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://assets/text.tres" id="1_bw6ca"]
-[ext_resource type="Script" path="res://maps/maps_scene.gd" id="1_ip2vp"]
+[ext_resource type="Script" uid="uid://2ampvujb6c55" path="res://maps/maps_scene.gd" id="1_ip2vp"]
 
 [node name="maps_scene" type="Control"]
 layout_mode = 3

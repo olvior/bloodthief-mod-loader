@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqg74m7o6k3lf"]
 
 [ext_resource type="Theme" uid="uid://c0figasdpxdvo" path="res://assets/text.tres" id="1_cq6wb"]
-[ext_resource type="Script" path="res://maps/map.gd" id="2_i73qr"]
+[ext_resource type="Script" uid="uid://dae2hpvlxd8t5" path="res://maps/map.gd" id="2_i73qr"]
 
 [node name="Map" type="MarginContainer"]
 anchors_preset = 15
