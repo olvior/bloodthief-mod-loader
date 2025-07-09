@@ -18,40 +18,46 @@ var main_nodes = [
 
 var path
 
+
 func _ready() -> void:
 	Manager.main = self
+
 
 func set_button_theme_on(button: Button):
 	button.add_theme_color_override("font_color", Color("ffffff"))
 	button.add_theme_color_override("font_hover_color", Color("ffffff"))
 	button.add_theme_color_override("font_pressed_color", Color("ffffff"))
 
+
 func set_button_theme_off(button: Button):
 	button.add_theme_color_override("font_color", Color("575757"))
 	button.add_theme_color_override("font_hover_color", Color("575757"))
 	button.add_theme_color_override("font_pressed_color", Color("575757"))
 
+
 func _on_tab_button_down(index: int):
 	if index == current_tab_index:
 		# nothing needs to be done
 		return
-	
+
 	# do themeing
 	set_button_theme_off(tab_buttons[current_tab_index])
 	set_button_theme_on(tab_buttons[index])
-	
+
 	# remove old instance
 	current_tab_node.queue_free()
-	
+
 	# create instance
 	current_tab_node = main_nodes[index].instantiate()
 	current_tab_node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	self.add_child(current_tab_node)
-	
+
 	current_tab_index = index
 
 
 const CHUNK_SIZE = 1024
+
+
 func hash_file(path):
 	# Check that file exists.
 	if not FileAccess.file_exists(path):
@@ -74,26 +80,26 @@ func hash_file(path):
 
 func unzip(path_to_zip: String, path_to_unzipped: String) -> void:
 	print("Unzipping " + path_to_zip + " to " + path_to_unzipped)
-	var zr : ZIPReader = ZIPReader.new()
-	
+	var zr: ZIPReader = ZIPReader.new()
+
 	if zr.open(path_to_zip) == OK:
 		for filepath in zr.get_files():
-			var zip_directory : String = path_to_zip.get_base_dir()
-		
-			var da : DirAccess = DirAccess.open(zip_directory)
-			
-			var extract_path : String = path_to_unzipped + '/'
-			
+			var zip_directory: String = path_to_zip.get_base_dir()
+			var da: DirAccess = DirAccess.open(zip_directory)
+			var extract_path: String = path_to_unzipped + "/"
+
 			da.make_dir_recursive(extract_path)
-			
 			da = DirAccess.open(extract_path)
 			print(da)
-			
+
 			da.make_dir_recursive(filepath.get_base_dir())
-			
+
 			print(extract_path + filepath)
 			print(filepath, " is the path")
-			
-			var fa : FileAccess = FileAccess.open("%s/%s" % [extract_path, filepath], FileAccess.WRITE)
+
+			var fa: FileAccess = FileAccess.open(
+				"%s/%s" % [extract_path, filepath], FileAccess.WRITE
+			)
 			if fa:
 				fa.store_buffer(zr.read_file(filepath))
+

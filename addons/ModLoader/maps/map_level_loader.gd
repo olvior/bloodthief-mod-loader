@@ -5,6 +5,7 @@ var new_func_godot_map: FuncGodotMap
 
 var audio_player: AudioStreamPlayer
 
+
 func _ready():
 	# we have to make our own func godot node so we take take over the texture loading
 	new_func_godot_map = load("res://addons/ModLoader/maps/overrides/func_godot_map.gd").new()
@@ -25,7 +26,7 @@ func _ready():
 	self.name = self.config.level_name
 	var map = ModLoader.map_by_index[config.level_index]
 	var path = map.path
-	
+
 	ModLoader.debug_log("my current name is " + name)
 
 	if map.music_path:
@@ -43,20 +44,25 @@ func _ready():
 	ModLoader.debug_log(new_func_godot_map.verify_parameters())
 	new_func_godot_map.verify_and_build()
 
+
 func _build_complete() -> void:
 	ModLoader.debug_log("Success! Unwrapping UV2...")
 	new_func_godot_map.unwrap_uv2()
 
+
 func _build_failed() -> void:
 	printerr("Failed to build the map file! :(")
+
 
 func _unwrap_uv2_complete() -> void:
 	ModLoader.debug_log("UV2 unwrapping completed!")
 	nav_region.bake_navigation_mesh()
 
+
 func _bake_nav_finished():
 	ModLoader.debug_log("Nav bake finished")
 	super._ready()
+
 
 func _on_audio_playing_finished():
 	audio_player.play()

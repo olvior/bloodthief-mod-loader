@@ -1,22 +1,24 @@
 extends Control
 
-var mods_dict: Dictionary= {}
-var database_mods_dict: Dictionary= {}
-var mod_scene: PackedScene= preload("res://mods/mod.tscn")
+var mods_dict: Dictionary = {}
+var database_mods_dict: Dictionary = {}
+var mod_scene: PackedScene = preload("res://mods/mod.tscn")
 
 @onready var list_node = $MarginContainer/ScrollContainer/VBoxContainer
+
 
 func _ready():
 	scan_mod_folders()
 	get_data("https://raw.githubusercontent.com/olvior/bloodthief-mod-list/main/list.json")
 	Manager.mods_scene = self
 
+
 func scan_mod_folders():
-	var mods_path :String= Manager.main.path + "/mods-unpacked"
-	var mods_fallback_path :String= Manager.main.path + "/mods"
+	var mods_path: String = Manager.main.path + "/mods-unpacked"
+	var mods_fallback_path: String = Manager.main.path + "/mods"
 
 	mods_dict.clear()
-	
+
 	print("Scanning mod folders...")
 
 	# Process both paths
@@ -24,6 +26,7 @@ func scan_mod_folders():
 	process_mod_directory(mods_fallback_path)
 
 	print("Finished scanning. Found mods: ", mods_dict.keys())
+
 
 func process_mod_directory(directory_path):
 	print("Checking directory:", directory_path)
@@ -37,7 +40,7 @@ func process_mod_directory(directory_path):
 		print("Error: Failed to list directory contents -", directory_path)
 		return
 
-	var file_name :String= dir.get_next()
+	var file_name: String = dir.get_next()
 	while file_name != "":
 		print("Found file/directory:", file_name)
 		if dir.current_is_dir():
@@ -48,39 +51,47 @@ func process_mod_directory(directory_path):
 			else:
 				print("No manifest found in", file_name)
 		file_name = dir.get_next()
-		
 
 	dir.list_dir_end()
 
+
 func parse_manifest(manifest_path):
 	print("Parsing manifest:", manifest_path)
-	var file :FileAccess= FileAccess.open(manifest_path, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(manifest_path, FileAccess.READ)
 	if file == null:
 		print("Error: Failed to open manifest file:", manifest_path)
 		return
 
-	var content :String= file.get_as_text()
-	var manifest_data :Variant= JSON.parse_string(content)
+	var content: String = file.get_as_text()
+	var manifest_data: Variant = JSON.parse_string(content)
 
 	if manifest_data == null:
 		print("Error: Failed to parse JSON from:", manifest_path)
 		return
 
 	# Debug print mod info
-	print("Loaded mod:", manifest_data.get("name_pretty", "Unknown"), "Namespace:", manifest_data["namespace"])
+	print(
+		"Loaded mod:",
+		manifest_data.get("name_pretty", "Unknown"),
+		"Namespace:",
+		manifest_data["namespace"]
+	)
 
 	mods_dict[manifest_data["namespace"] + "-" + manifest_data["name"]] = manifest_data
 
+
 func clear_mods_list(getContainer) -> void:
-	for i : Node in getContainer.get_children():
+	for i: Node in getContainer.get_children():
 		i.queue_free()
+
 
 func populate_database_mods_list():
 	print("Populating database mod list...")
 	for mod in database_mods_dict.values():
 		add_mod_to_list(mod, list_node, true)
 
-func add_mod_to_list(mod, getContainer, fromDatabase :bool= false):
+
+func add_mod_to_list(mod, getContainer, fromDatabase: bool = false):
 	var new_mod_object: MarginContainer = mod_scene.instantiate()
 	new_mod_object.debug_label = $DebugLabel
 	getContainer.add_child(new_mod_object)
@@ -93,16 +104,17 @@ func get_data(link):
 	var http = HTTPRequest.new()
 	add_child(http)
 	http.connect("request_completed", _http_request_completed)
-	
+
 	var request = http.request(link)
 	if request != OK:
 		push_error("Http request error")
+
 
 func _http_request_completed(result, _response_code, _headers, body):
 	if result != OK:
 		push_error("Download Failed")
 		return
-	
+
 	database_mods_dict = JSON.parse_string(body.get_string_from_utf8())
 	populate_database_mods_list()
 	print("Downloaded")

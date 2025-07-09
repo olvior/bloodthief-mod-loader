@@ -13,8 +13,13 @@ var all_mods = {}
 # make nodes with is
 var ModNode = preload("res://addons/ModLoader/mod_node.gd")
 
+
 func _init():
-	ProjectSettings.set_setting("application/config/version", ProjectSettings.get_setting("application/config/version") + " - Modded")
+	ProjectSettings.set_setting(
+		"application/config/version",
+		ProjectSettings.get_setting("application/config/version") + " - Modded"
+	)
+
 
 func _ready():
 	if not FileAccess.file_exists(debug_file_path):
@@ -44,12 +49,13 @@ func _ready():
 
 	load(level_override_path).take_over_path(level_path)
 
-
 	debug_log("finished")
+
 
 ###############
 # MOD LOADING #
 ###############
+
 
 func start_loading_unpacked():
 	# open the mods folder
@@ -61,7 +67,6 @@ func start_loading_unpacked():
 	if not mods_folder:
 		printerr("Failed to open mods-unpacked folder, make sure it exists")
 		return
-
 
 	debug_log("Searching through mods-unpacked/")
 
@@ -76,10 +81,10 @@ func start_loading_unpacked():
 			mod_folders.append(file_name)
 		file_name = mods_folder.get_next()
 
-
 	# loop over all the mod folders and add them in
 	for mod_path in mod_folders:
 		var _error = load_mod("%s/%s" % [mods_folder_path, mod_path], mod_path, mods_folder_path)
+
 
 func start_loading_packed():
 	# open the mods/ directory
@@ -93,7 +98,6 @@ func start_loading_packed():
 	if not mods_packed_folder:
 		printerr("Failed to open mods folder, make sure it exists")
 		return
-
 
 	# loop through it to find zips
 	mods_packed_folder.list_dir_begin()
@@ -118,7 +122,9 @@ func start_loading_packed():
 	for mod in mod_zips:
 		var mod_name_wihout_zip = mod.substr(0, len(mod) - 4)
 		debug_log(mod_name_wihout_zip)
-		var _error = load_mod("res://" + mod.substr(0, len(mod) - 4), mod_name_wihout_zip, mods_folder_path)
+		var _error = load_mod(
+			"res://" + mod.substr(0, len(mod) - 4), mod_name_wihout_zip, mods_folder_path
+		)
 
 
 func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
@@ -143,15 +149,18 @@ func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
 	debug_log("%s/mod_main.gd" % mod_path)
 	debug_log(current_script)
 
-
-
 	# add it as a child
 	var new_node = ModNode.new()
 	new_node.set_script(current_script)
 
 	# make sure it extends ModNode
 	if new_node.get_class() != "ModNode":
-		printerr("Failed to load %s, it does not extend ModNode, instead extends %s" % [mod_name, new_node.get_class()])
+		printerr(
+			(
+				"Failed to load %s, it does not extend ModNode, instead extends %s"
+				% [mod_name, new_node.get_class()]
+			)
+		)
 		new_node.queue_free()
 		return FAILED
 
@@ -180,8 +189,6 @@ func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
 
 	all_mods["%s-%s" % [manifest_dict["namespace"], manifest_dict["name"]]] = new_node
 
-
-
 	new_node.name = "%s-%s" % [manifest_dict["namespace"], manifest_dict["name"]]
 	new_node.name_space = manifest_dict["namespace"]
 	new_node.name_without_namespace = manifest_dict["name"]
@@ -201,9 +208,9 @@ func load_mod(mod_path, mod_name, mods_folder_path) -> Error:
 # LOG STUFF #
 #############
 
+
 func init_logs():
 	var logs_dir = DirAccess.open("user://logs")
-
 
 	if logs_dir.file_exists("mod_loader.log"):
 		var old_log_file = FileAccess.open("user://logs/mod_loader.log", FileAccess.READ)
@@ -229,6 +236,7 @@ func mod_log(text = ""):
 
 	print(text)
 
+
 func debug_log(message = ""):
 	if debug:
 		if str(message.strip_edges()) == "":
@@ -237,31 +245,34 @@ func debug_log(message = ""):
 			print("Mod Loader: %s" % message)
 
 
-
 ##################
 # SETTINGS STUFF #
 ##################
 
+
 func init_settings_menu():
-	var settings_menu_script = load("res://addons/ModLoader/mods_settings/settings_menu_override.gd")
+	var settings_menu_script = load(
+		"res://addons/ModLoader/mods_settings/settings_menu_override.gd"
+	)
 	settings_menu_script.take_over_path("res://scripts/ui/settings_menu.gd")
+
 
 ###############
 # MAP LOADING #
 ###############
+
 
 func load_maps():
 	debug_log("\n")
 
 	var maps_folder_path = OS.get_executable_path().get_base_dir() + "/maps"
 	var maps_folder = DirAccess.open(maps_folder_path)
-
+	print(maps_folder_path)
 	debug_log("Maps path: " + maps_folder_path)
 
 	if not maps_folder:
 		debug_log("Failed to open maps/ folder, make sure it exists")
 		return
-
 
 	debug_log("Searching through maps/")
 
@@ -323,7 +334,6 @@ func load_textures(path_to_textures, extra_path, mod_name):
 				tex.take_over_path(take_over_path)
 				debug_log(take_over_path)
 
-
 		file_name = folder.get_next()
 
 
@@ -337,7 +347,6 @@ func load_map_folder(original_path, extra, mod_name):
 		debug_log("Failed to open %s folder" % path)
 		return
 
-
 	folder.list_dir_begin()
 	var file_name = folder.get_next()
 
@@ -347,13 +356,12 @@ func load_map_folder(original_path, extra, mod_name):
 		else:
 			if file_name.get_extension() == "map":
 				var base_name = file_name.get_basename()
-				
+
 				var music_path = "%s/%s.mp3" % [path, base_name]
 				var music_access = FileAccess.open(music_path, FileAccess.READ)
 				if not music_access:
 					music_path = null
 					debug_log("No music found for %s/%s.map" % [path, base_name])
-
 
 				var json_access = FileAccess.open("%s/%s.json" % [path, base_name], FileAccess.READ)
 				if json_access:
@@ -363,8 +371,8 @@ func load_map_folder(original_path, extra, mod_name):
 
 		file_name = folder.get_next()
 
-
 	debug_log("\n")
+
 
 class Map:
 	var path: String
@@ -372,7 +380,9 @@ class Map:
 	var pack_path: String
 	var mod_name: String
 
+
 var map_by_index = {}
+
 
 func load_map(original_path, path_without_extension: String, mod_name, music_path):
 	var json_path = path_without_extension + ".json"
@@ -402,7 +412,6 @@ func load_map(original_path, path_without_extension: String, mod_name, music_pat
 		new_config.blood_medal_time_secs = map_json["medal_times"][2]
 		new_config.bone_medal_time_secs = map_json["medal_times"][3]
 
-
 	new_config.is_automatically_unlocked = map_json["is_automatically_unlocked"]
 	new_config.is_speedometer_automatically_unlocked = true
 	new_config.display_in_level_select = true
@@ -410,7 +419,7 @@ func load_map(original_path, path_without_extension: String, mod_name, music_pat
 	debug_log(map_path)
 	var new_map = Map.new()
 	new_map.path = map_path
-	new_map.music_path = music_path
+	#new_map.music_path = music_path
 	new_map.pack_path = original_path
 	new_map.mod_name = mod_name
 
@@ -418,13 +427,12 @@ func load_map(original_path, path_without_extension: String, mod_name, music_pat
 
 	new_config.scene_path = "res://addons/ModLoader/maps/map_level_loader.tscn"
 
-
 	GameManager.game_data.level_configs.append(new_config)
-
 
 
 var current_config: LevelConfig
 var current_completion: LevelCompletionData
+
 
 func set_next_level_config(level_config_and_completion: LevelConfigAndCompletionData):
 	debug_log(level_config_and_completion)

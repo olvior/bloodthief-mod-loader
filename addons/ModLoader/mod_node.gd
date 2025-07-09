@@ -1,14 +1,14 @@
 extends Node
 class_name ModNode
 
-var path_to_dir: String # path to the mod's directory
+var path_to_dir: String  # path to the mod's directory
 
 var name_space: String
 var name_without_namespace: String
 
 var name_pretty: String
 
-var dependencies = {} # dict that holds the nodes
+var dependencies = {}  # dict that holds the nodes
 
 var save_file_path: String:
 	get:
@@ -18,13 +18,13 @@ var save_file_folder: String:
 	get:
 		return "user://mods/%s-%s" % [name_space, name_without_namespace]
 
-
 var settings = {
-	"settings_page_name" = name_pretty,
-	"settings_list" = [
+	"settings_page_name": name_pretty,
+	"settings_list": [
 
-	]
+	],
 }
+
 
 func post_init():
 	for setting in settings["settings_list"]:
@@ -35,10 +35,18 @@ func post_init():
 
 	ModLoader.debug_log("%s mod loaded" % name_pretty)
 
-func get_class(): # overrides function to tell the class apart
+
+func get_class():  # overrides function to tell the class apart
 	return "ModNode"
 
-func add_input_event(action_name: StringName, keys: Array[Key], mouses: Array[MouseButton] = [], physical: bool = true, deadzone: float = 0.5) -> Error:
+
+func add_input_event(
+	action_name: StringName,
+	keys: Array[Key],
+	mouses: Array[MouseButton] = [],
+	physical: bool = true,
+	deadzone: float = 0.5
+) -> Error:
 	if InputMap.has_action(action_name):
 		ModLoader.debug_log("%s tried to add an input action that already exits!" % name_pretty)
 		return FAILED
@@ -76,9 +84,23 @@ class Setting:
 	var callback
 	var s_range
 
-	enum {SETTING_INT, SETTING_FLOAT, SETTING_SELECTION, SETTING_BOOL, SETTING_TEXT_INPUT, SETTING_BUTTON}
+	enum {
+		SETTING_INT,
+		SETTING_FLOAT,
+		SETTING_SELECTION,
+		SETTING_BOOL,
+		SETTING_TEXT_INPUT,
+		SETTING_BUTTON
+	}
 
-	func _init(parent, setting_name_pretty: String, setting_type, default_value, number_range = Vector2(0, 0), selections: Array[String] = []):
+	func _init(
+		parent,
+		setting_name_pretty: String,
+		setting_type,
+		default_value,
+		number_range = Vector2(0, 0),
+		selections: Array[String] = []
+	):
 		parent_class = parent
 		s_name_pretty = setting_name_pretty
 		s_type = setting_type
@@ -136,3 +158,4 @@ class Setting:
 
 		var save_file = FileAccess.open(file_path, FileAccess.WRITE)
 		save_file.store_string(save_string)
+

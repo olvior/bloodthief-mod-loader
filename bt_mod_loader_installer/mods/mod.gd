@@ -26,6 +26,7 @@ var enabled_list: Array[bool] = [true, false, false, true]
 var disabled_list: Array[bool] = [true, false, true, false]
 var uninstalled_list: Array[bool] = [false, true, true, true]
 
+
 func check_if_installed():
 	mod_path = main.path + "/mods-unpacked/" + id
 
@@ -35,28 +36,30 @@ func check_if_installed():
 	elif DirAccess.dir_exists_absolute(mod_path + "_disabled"):
 		change_buttons(disabled_list)
 
+
 var my_path: String
 var my_disabled_path: String
 var is_disabled = false
+
+
 func check_if_database_installed():
 	my_path = main.path + "/mods/" + id + ".zip"
 	my_disabled_path = main.path + "/mods/disabled/" + id + ".zip"
-	
+
 	if FileAccess.file_exists(my_path):
 		is_installed = true
 		change_buttons(enabled_list)
-	
+
 	elif FileAccess.file_exists(my_disabled_path):
 		is_disabled = true
 		change_buttons(disabled_list)
-	
+
 	else:
 		change_buttons(uninstalled_list)
-	
-	
-	
+
 	if not is_installed:
 		$VBoxContainer/HBoxContainer/disable.disabled = true
+
 
 func init(new_manifest, fromDatabase: bool):
 	from_database = fromDatabase
@@ -69,11 +72,12 @@ func init(new_manifest, fromDatabase: bool):
 	author_label.text = "Author(s): " + ", ".join(manifest.get("authors", []))
 	#tags_label.text = "Tags: " + ", ".join(manifest.get("tags", []))
 	description_label.text = manifest.get("description_rich", "No description available.")
-	
+
 	if from_database:
 		check_if_database_installed()
 	else:
 		check_if_installed()
+
 
 func download(link: String, path: String):
 	debug_label.text = "Downloading"
@@ -85,8 +89,9 @@ func download(link: String, path: String):
 	var request = http.request(link)
 	if request != OK:
 		push_error("Http request error")
-	
+
 	Manager.mods_scene.scan_mod_folders()
+
 
 func _http_request_completed(result, _response_code, _headers, _body):
 	if result != OK:
@@ -99,11 +104,12 @@ func _http_request_completed(result, _response_code, _headers, _body):
 			print("Was given: ", manifest["SHA-256"])
 			debug_label.text = "Hash does not match\nCanceled download"
 			DirAccess.remove_absolute(my_path)
-			
+
 			return
-		
+
 		debug_label.text = "Installed"
 		check_if_database_installed()
+
 
 func change_buttons(button_list: Array[bool]):
 	install_button.disabled = button_list[0]
@@ -111,38 +117,41 @@ func change_buttons(button_list: Array[bool]):
 	disable_button.disabled = button_list[2]
 	enable_button.disabled = button_list[3]
 
+
 func _on_install_button_up():
 	download(manifest["download"], my_path)
 	#Manager.mods_scene.populate_database_mods_list()
 
+
 func _on_disable_button_up():
 	if from_database:
 		DirAccess.rename_absolute(my_path, my_disabled_path)
-	
+
 	else:
 		DirAccess.rename_absolute(mod_path, mod_path + "_disabled")
-	
+
 	change_buttons(disabled_list)
+
 
 func _on_enable_button_up():
 	if from_database:
 		DirAccess.rename_absolute(my_disabled_path, my_path)
-	
+
 	else:
 		DirAccess.rename_absolute(mod_path + "_disabled", mod_path)
-	
+
 	change_buttons(enabled_list)
+
 
 func _on_uninstall_button_up():
 	print(my_path)
 	if from_database:
 		OS.move_to_trash(my_path)
-	
+
 	else:
 		OS.move_to_trash(mod_path)
 		Manager.mods_scene.populate_mods_list()
 		(Manager.mods_scene.mods_dict as Dictionary).erase(id)
-	
-	
+
 	change_buttons(uninstalled_list)
 	is_installed = false
