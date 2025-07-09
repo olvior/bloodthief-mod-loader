@@ -32,13 +32,13 @@ The script then creates a child node for each mod found and also calls the `init
 To get started making a map, you'll have to start by setting up TrenchBroom.
 First install [TrenchBroom](https://trenchbroom.github.io/)
 
-- First, download the zip called [`map_creation_files`](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.8.0/map_creation_files.zip).
+- First, download the zip called [`map_creation_files`](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.9.0/map_creation_files.zip).
 - Then unzip it anywhere
-- Then move the `Bloodthief.zip` file to the TrenchBroom game config folder
+- Then move the `Bloodthief` file to the TrenchBroom game config folder
     - Windows: C:\Users\<username>\AppData\Roaming\TrenchBroom\games
     - Linux: ~/.TrenchBroom/games
-- Make sure the `Bloodthief` folder is inside the `games` folder, then unzip it
-- Then open TrenchBroom, click new map, click open preferences, click Bloodthief, set the game path to the same path as where you moved the `Bloodthief.zip` file to.
+- Make sure the `Bloodthief` folder is inside the `games` folder
+- Then open TrenchBroom, click new map, click open preferences, click Bloodthief, set the game path to the same path as where you moved the `Bloodthief` folder to.
 - Create a map with Bloodthief
 - All the textures and entities should be loaded
 
@@ -46,7 +46,7 @@ First install [TrenchBroom](https://trenchbroom.github.io/)
 
 First use the mod loader installer [windows](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.exe) [linux](https://github.com/olvior/bloodthief-mod-loader/releases/latest/download/bt_mod_installer.x86_64) and install the mod loader
 
-Then download the [map creation files](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.8.0/map_creation_files.zip)
+Then download the [map creation files](https://github.com/olvior/bloodthief-mod-loader/releases/download/v0.9.0/map_creation_files.zip)
 
 From the `map_creation_files`, move the `maps` folder into the game folder that Steam downloaded Bloodthief into.
 - You should edit the json file in the `example_map` folder within the `maps` folder
