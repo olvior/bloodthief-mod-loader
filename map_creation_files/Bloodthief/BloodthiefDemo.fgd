@@ -1,10 +1,8 @@
 @BaseClass color(123 200 60) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) = Mover
 [
 	translation(string) : "" : "0.0 0.0 0.0"
-	targetname(string) : "" : ""
 	duration(float) : "" : "1.0"
 	move_delay(float) : "" : "0.0"
-	trigger_count(integer) : "" : 1
 	auto_move_after_checkpoint(integer) : "" : 999
 	start_motion_target(string) : "" : ""
 	end_motion_target(string) : "" : ""
@@ -58,7 +56,8 @@
 
 @BaseClass color(204 204 204) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) = Target
 [
-	trigger_count(integer) : "" : 1
+	targetname(string) : "The name this will get triggered by (use target property to trigger this)" : ""
+	trigger_count(integer) : "How many things should target it" : 1
 ]
 
 @BaseClass color(204 204 204) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) = Surface
@@ -127,6 +126,7 @@
 [
 	dont_spawn_after_checkpoint(integer) : "" : 999
 	bubble_shield_id(string) : "If it has any value, a shield will be applied" : ""
+	target(string) : "What this triggers" : ""
 ]
 
 @PointClass color(213 213 0) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) = vt_torch : "Will be a torch in game, producing light"
@@ -134,10 +134,9 @@
 	mangle(string) : "" : "0.0 0.0 0.0"
 ]
 
-@PointClass color(218 0 218) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) = vt_portcullis : "Wil be a portcullis in-game"
+@PointClass color(218 0 218) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target) = vt_portcullis : "Wil be a portcullis in-game"
 [
 	mangle(string) : "" : "0.0 0.0 0.0"
-	targetname(string) : "The name that this porticullis will be targeted by" : ""
 ]
 
 
@@ -254,7 +253,6 @@
 
 @PointClass color(255 0 0) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target, Enemy) = vt_vampire : "A vampire"
 [
-	targetname(string) : "Used to make it start" : ""
 	should_launch(integer) : "" : 0
 ]
 
@@ -267,7 +265,6 @@
 
 @PointClass color(255 0 0) size(-8.0 -8.0 -8.0, 8.0 8.0 8.0) base(Target, Enemy) = vt_skull : "A skull enemy"
 [
-	targetname(string) : "" : ""
 	should_launch(integer) : "" : 1
 	radius(float) : "" : "5.0"
 	speed(float) : "" : "2.0"
@@ -310,7 +307,7 @@
 
 @SolidClass color(204 204 204) = vt_water : "This is water in-game" []
 
-@SolidClass color(204 204 204) base(Breakable, GlobalIllumination, Mover) = vt_breakable : "A breakable area"
+@SolidClass color(204 204 204) base(Breakable, GlobalIllumination, Mover, Target) = vt_breakable : "A breakable area"
 [
 	translation(string) : "How much it moves" : "0.0 0.0 0.0"
 	target(string) : "What this activates" : ""
@@ -331,13 +328,12 @@
 	is_secret_ending(integer) : "If it's a secret ending, yes = 1, no = 0" : 0
 ]
 
-@SolidClass color(204 204 204) base(Toast) = vt_toast_area : "Shows a toast"
+@SolidClass color(204 204 204) base(Toast, Target) = vt_toast_area : "Shows a toast"
 [
 	toast_text(string) : "Text that appears" : ""
 	should_pause(integer) : "No = 0, yes = 1" : 0
 	time_scale(float) : "Changes the timescale when playing" : "1.0"
 	is_tutorial(integer) : "" : 0
-	targetname(string) : "This target's name" : ""
 	full_speed_action(string) : "Action that brings you back to full speed" : ""
 ]
 
@@ -353,7 +349,6 @@
 [
 	target(string) : "What it triggers" : ""
 	exit_target(string) : "" : ""
-	targetname(string) : "It's target name" : ""
 	trigger_dependency_count(integer) : "" : 0
 	required_keys_comma_sep(string) : "" : ""
 	required_artifacts_comma_sep(string) : "" : ""
@@ -371,7 +366,7 @@
 
 @SolidClass color(204 204 204) = vt_blood_area : "This is blood" []
 
-@SolidClass base(GlobalIllumination, PositionMod, Mover) = vt_damage_mover : "For things that move and damage" []
+@SolidClass base(GlobalIllumination, PositionMod, Mover, Target) = vt_damage_mover : "For things that move and damage" []
 
 @SolidClass = vt_damage_area : "For things that damage on hit"
 [
