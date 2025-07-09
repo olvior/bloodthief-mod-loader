@@ -62,6 +62,7 @@ func _unwrap_uv2_complete() -> void:
 func _bake_nav_finished():
 	ModLoader.debug_log("Nav bake finished")
 	super._ready()
+	super._func_godot_map_build_complete()
 
 
 func _on_audio_playing_finished():
