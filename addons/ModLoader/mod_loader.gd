@@ -3,6 +3,7 @@ extends Node
 var debug_file_path = OS.get_executable_path().get_base_dir() + "/debug.txt"
 var debug = true
 
+var redo_input_event_subscribers: Array[Callable] = []
 var all_textures = []
 
 # Dictionary with {"namespace-name": mod_node}
@@ -44,10 +45,14 @@ func _ready():
 
 	load_maps()
 
-	var level_override_path = "res://addons/ModLoader/maps/level_select_screen.gd"
-	var level_path = "res://scripts/ui/level_select/level_select_screen.gd"
+	var overrider = "res://addons/ModLoader/maps/level_select_screen.gd"
+	var overridee = "res://scripts/ui/level_select/level_select_screen.gd"
+	load(overrider).take_over_path(overridee)
 
-	load(level_override_path).take_over_path(level_path)
+	overrider = load("res://addons/ModLoader/keybinds/input_map.gd")
+	overridee = "res://scripts/services/input_map_service.gd"
+	overrider.take_over_path(overridee)
+	InputMapService.set_script(overrider)
 
 	debug_log("finished")
 

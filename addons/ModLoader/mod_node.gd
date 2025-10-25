@@ -1,6 +1,7 @@
 extends Node
 class_name ModNode
 
+var _input_actions: Array = []
 var path_to_dir: String  # path to the mod's directory
 
 var name_space: String
@@ -33,20 +34,31 @@ func post_init():
 		ModLoader.debug_log(setting.load_value(setting.s_name_pretty, setting.value))
 		setting.value = setting.load_value(setting.s_name_pretty, setting.value)
 
+	ModLoader.redo_input_event_subscribers.append(redo_input_events)
 	ModLoader.debug_log("%s mod loaded" % name_pretty)
 
 
 func get_class():  # overrides function to tell the class apart
 	return "ModNode"
 
+func redo_input_events():
+	print(len(_input_actions))
+	for i in _input_actions:
+		print("A")
+		add_input_event(i[0], i[1], i[2], i[3], i[4], true)
 
 func add_input_event(
 	action_name: StringName,
 	keys: Array[Key],
 	mouses: Array[MouseButton] = [],
 	physical: bool = true,
-	deadzone: float = 0.5
+	deadzone: float = 0.5,
+	redo: bool = false
 ) -> Error:
+	if not redo:
+		# remember me!
+		_input_actions.append([action_name, keys, mouses, physical, deadzone])
+
 	if InputMap.has_action(action_name):
 		ModLoader.debug_log("%s tried to add an input action that already exits!" % name_pretty)
 		return FAILED
