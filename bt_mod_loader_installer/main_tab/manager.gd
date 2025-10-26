@@ -23,11 +23,11 @@ func _on_file_dialog_file_selected(new_path):
 func _ready():
 	var probably_path = ""
 	if OS.get_name() == "Windows":
-		probably_path = "C:/Program Files (x86)/Steam/steamapps/common/Bloodthief Demo"
+		probably_path = "C:/Program Files (x86)/Steam/steamapps/common/Bloodthief"
 		print("Windows")
 
 	elif OS.get_name() == "Linux":
-		probably_path = ".steam/steam/steamapps/common/Bloodthief Demo"
+		probably_path = ".local/share/Steam/steamapps/common/Bloodthief"
 		print("Linux")
 		var data_dir = OS.get_data_dir()  # ~/.local/share
 		var data_dir_split = data_dir.rsplit("/")  # ["", "home", "home", ".local", "share"]
